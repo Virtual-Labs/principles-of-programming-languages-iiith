@@ -1,0 +1,10 @@
+The order of transformations of the factorial program:
+-----------------------------------------------------
+
+1. direct.ss: direct style
+2. cps.ss: continuation passing style
+3. rep-ind.ss: representation independence
+4. data-rep.ss: continuations  represented as lists
+5. register.ss: imperative form (register) transformation
+6. trampoline.ss: trampolining and stepping
+

@@ -1,0 +1,463 @@
+#+TITLE: Experiment 4 - Arithmetic Interpreter
+
+#+TAGS: readings(r) hw(h)
+#+SETUPFILE: ../../../org-templates/level-2.org
+#+LINK_HOME: ../../content.html
+#+LINK_UP: ../../content.html#sec-6
+
+* Prerequisites for the Experiment
+
+You should have read Section 3.2, Chapter - 3 from the text book *EOPL*. 
+
+* Learning Objectives of the Experiment 
+The goal of this experiment is to design and implement the abstract syntax, evaluator and parser for a simple Arithmetic language which evaluates simple Arithmetic expressions. 
+
+* Theory
+The usual pipeline for a regular programming language to be compiled/interpreted involves the following phases:
+
+(program text) –> [FRONT END] –> (syntax tree) –> [INTERPRETER] –> (output)
+
+The FRONT END converts the program text into abstract syntax trees. Now, because our program is just the strings of characters (which are meaningless to the INTERPRETER), the FRONT END needs to group these characters into meaningful units - i.e. parsing.
+
+*Abstract Syntax*
+
+For any programming language, a concrete syntax is a particular representation of its inductive datatype. However, while designing a programming language, in order to process it we need an internal representation of this concrete form. Such an internal representation is called the abstract syntax. This kind of an internal representation describes the data structures for representing, encoding, transmitting and decoding the data.
+
+In scheme the define-datatype form provides a convenient way of defining such an internal representation.
+
+For example: the abstract syntax of the following scheme expression can be visualized in the form of a tree - called the abstract syntax tree:
+
+(+ 6 2)
+
+*Parsing*
+
+Parsing is the process of analyzing an input sequence (in our case, the program text) in order to determine its grammatical structure. The parser is responsible for organizing this sequence into hierarchical syntactic structures such as expressions, statements and blocks. It necessarily creates an abstract syntax tree of the input sequence.
+
+For example given an english sentence "Adam is a good boy", we can parse it and organise it as clauses,
+
+(Adam, NOUN) (is, VERB) (a, DETERMINER) (good, ADJECTIVE) (boy, NOUN).
+
+Similarly for the above expression (+ 6 2), we can parse it as:
+
+(+ operator) (6 operand) (2 operand)
+
+where:
+
+operator ::= + | - | / | *
+
+operand ::= exp
+
+and we can represent an exp in Backus Naur form as:
+
+exp ::= number | boolean | (operator exp exp)
+
+NOTE: the concrete syntax is primarily useful for the end-users, while the abstract syntax is primarily useful for computers, and it is the parser which is responsible for converting the concrete syntax to an abstract syntax.
+
+*Evaluation*
+
+The evaluator is responsible for evaluating the abstract syntax tree produced by the parser in order to come up with the output of the input program sequence.
+
+For example: for the following scheme expression, the evaluator output would be the folllwing
+
+(+ 6 2) ---> internal representation ---> Evaluation ---> 8
+
+* Procedure
+
+#+BEGIN_EXAMPLE
+Instructions
+1. Create a file named "arithmetic.ss". 
+2. You can include all the modules in this file, OR,
+3. You can "require" all the modules in this file.
+4. All the modules are verifiable individually. You can also test your code by placing them in a single file. 
+5. Make sure you upload all the files before testing them. 
+#+END_EXAMPLE
+
+** Module 1 - Design the Abstract Syntax for the Arithmetic Interpreter
+
+: Create a module "arithmetic-ast.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Write the function to define the abstract syntax tree for the expressions.
+
+#+BEGIN_EXAMPLE
+Things to know for this module:
+ - What is a constructor?
+ - What is an abstract syntax?
+ - What is /define-datatype/ construct?
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+An arithmetic expression either consists of numbers or boolean values or expressions with primary operators 
+-  +,-,/,* and operands. Thus, the grammar of such a language can be written as:
+
+ast ::= num-ast | prim-app-ast
+
+where
+
+num-ast implies an ast consisting of just numbers, for example: 5, 6, 2, 0 etc.
+prim-app-ast consists of an arithmetic operator and its operands (which in turn are again of the form ast)
+
+Thus, we define the abstract syntax for the Arithmetic language as a datatype named "ast". The type predicate for 
+the datatype ast is "ast?". It shall have constructors for various elements of the Arithmetic language - number and
+prim-app. 
+
+The constructor number creates ast for only numbers. 
+number : number? -> ast?
+
+The constructor prim-app creates ast for the expressions which takes two arguments - a defined arithmetic operator 
+denoted by op and list of operands denoted by rands. 
+(prim-app op rands) -> ast?
+op : op-symbol?
+rands : list-of ast?
+#+END_EXAMPLE
+
+ + Step 1 - Write the constructor for numbers from its given signature. 
+A /number/ takes an argument /datum/ of type /number?/. 
+
+ + Step 2 - Write the constructor for expressions from its given signature.  
+A /prim-app/ takes two arguments /op/ and /rands/. Type
+predicate for /op/ is /op-symbol?/ and type predicate for rands is
+/list-of ast?/.
+
+ + Step 3 - Put all the constructors together.  
+Use /define-datatype/
+special form. The name of the function should be /ast/. The type
+predicate for /ast/ should be /ast?/. It takes constructors /number/
+and /prim-app/.
+
+#+begin_example
+The template of the abstract syntax should be:
+
+ (define-datatype ast ast?
+    [...number constructor...]
+    [...expressions constructor...])
+#+end_example
+
+*** Task 2 - Create a list of operator symbols and check for a given operator if it is present in the defined list or not.
+
+ + Step 1 - Create a list of operator symbols.
+Use /define/. 
+Name the function /*op-symbols*/.
+Add the symbols for +, -, * and / as a constant. 
+
+ + Step 2 - Check for a given operator symbol if it is present in the defined list or not.
+Use /define/. 
+Name the function /op-symbol?/. 
+Create a local function using /lambda/ and give the argument /x/. 
+If x is present in the list of defined symbols /*op-symbols*/, return true else false. 
+
+#+begin_example
+The template of the abstract syntax should be:
+
+(op-symbol?
+    (lambda (x)
+     (if (...condition...)
+       then ...return value...
+       else ...return value...)))
+#+end_example
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 2 - Define the Semantic Domains of the Interpreter
+
+: Create a module "arithmetic-semanticdomain.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Define the domain values of the expressions. 
+
+#+BEGIN_EXAMPLE
+Things to know
+ - What are expressible values?
+#+end_example
+
+#+BEGIN_EXAMPLE
+While designing any programming language, it is highly important to specify the set of values that the language 
+manipulates.
+
+Each language has, the following sets of values:
+1. Expressible Values : set of values that are the results of evaluation of expressions (ASTs), and,
+2. Denotable Values : set of values which are bound to variables.
+
+In our case, since any expression evaluates to either a number, the set of expressible values would be number. Thus, an 
+expressible value has the type predicate expressible-value? which has the following signature:
+
+expressible-value? : any/c -> boolean?
+#+end_example
+
+ + Step 1 - Define the function to specify the expressible values from its signature.   
+Define a predicate /expressible-value?/.  It takes an
+argument /thing/. Since any expression evaluates to number, the set of
+expressible values would be (number). Thus, /thing/ is checked against
+the type predicate /number?/.
+
+#+begin_example
+The template of the abstract syntax should be:
+
+ (define expressible-value?
+    (lambda (thing)
+      (...specify thing as a number...)))
+#+end_example
+
+** Module 3 - Define the operators. 
+
+: Create a module "arithmetic-op.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Define a function to check if the given number is zero or not. 
+
+ + Step 1 - Name the function /non-zero?/. 
+ 
+ + Step 2 - Specify a local function within the function /non-zero/ using keyword /lambda/.  Use /n/ as an argument to /lambda/. 
+
+ + Step 3 - Evaluate if /n/ is of type /number?/ and is not equal to /zero?/. 
+
+#+begin_example
+The template of the abstract syntax should be:
+
+ (define nonzero?
+    (lambda (n)
+      (...body of the function...)))
+#+end_example
+
+*** Task 2 - Define operators. 
+
+ + Step 1 - Define plus operator. 
+Use /define/. Name the operator /+op/. 
+Use /make-op/ to provide the fields - /+/, symbol /+/ and a list which specifies the signature. The plus operator takes two ast's and gives an ast.
+
+ + Step 2 - Define minus operator. 
+Use /define/. Name the operator /-op/. 
+Use /make-op/ to provide the fields - /-/, symbol /-/ and a list which specifies the signature. The minus operator takes two ast's and gives an ast.
+
+ + Step 3 - Define multiply operator. 
+Use /define/. Name the operator /*op/. 
+Use /make-op/ to provide the fields - /*/, symbol /*/ and a list which specifies the signature. The multiply operator takes two ast's and gives an ast.
+
+ + Step 4 - Define division operator. 
+Use /define/. Name the operator /. 
+Use /make-op/ to provide the fields - /, symbol \/ and a list which specifies the signature. The division operator takes two ast's and gives an ast.
+
+ + Step 5 - Define a structure /op/. 
+Use /define-struct/ construct. Name the structure /op/. Add three fields to the structure /name/, /prim/ and /sig/. 
+It includes the operator definitions /+op/, /-op/, /*op/ and //op/. 
+
+#+begin_example
+The template of the abstract syntax should be:
+
+ (define-struct op (name prim sig))
+  (...structure of plus...)
+  (...structure of minus...)
+  (...structure of multiply...)
+  (...structure of divide...)
+#+end_example
+
+*** Task 3 - Define a module to check if the given operator is present in the defined list of operators. 
+
+ + Step 1 - Define a list of operators. 
+    - Use /define/ keyword to define a list of operators in a function /*ops*/.
+    - It includes a list of plus, minus, multiply and divide operators defined in the last task. 
+    - Make a list using keyword /list/ and add all the defined operator names. 
+
+ + Step 2 - Check for the given operator. 
+    - Use /define/. Name the module /op-find/. 
+    - Create a local function using /lambda/. Use /opsym/ as an argument to /lambda/. 
+    - Use /findf/ to find for the operator in /*ops*/. 
+    - Create another local function using /lambda/ and give an argument /op/. 
+    - Use the equal keyword /eq?/ to check for the equality of /opsym/ and /op-name/ of the argument /op/. 
+
+#+begin_example
+The template of the abstract syntax should be:
+
+ (define op-find
+    (lambda (opsym)
+      (...body of the function...)))
+#+end_example
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 4 - Define the Evaluator for the Arithmetic Interpreter
+
+: Create a module "arithmetic-eval.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Define the evaluator. 
+#+BEGIN_EXAMPLE
+The evaluator takes an ast and returns the value obtained by evaluating the ast, i.e. an expressible value. Hence its 
+signature would look like:
+
+(eval-ast ast) → expressible-value?
+ast : ast?
+
+For the naive case, where the ast consists of just a number, the returned value would necessarily be the value of the 
+number. However, in the case of an expression, we would need first evaluate each of the operands and then apply the 
+operator on the obtained evaluated values. Thus, we’d need a procedure "apply-prim-op" which takes an operator and a list 
+of expressible values, and applies the operator on them.
+#+END_EXAMPLE
+
+ + Step 1 - Define procedure /eval-ast/.
+Use /define/ to define the procedure /eval-ast/.
+Create a local function using keyword /lambda/. Use /a/ as an argument to /lambda/. 
+Specify cases on /ast a/.
+ 
+ + Step 2 - Define the evaluator for numbers. 
+/number/ takes an argument /datum/ and returns /datum/. 
+
+ + Step 3 - Define evaluator for expressions. 
+/prim-app/ takes two arguments /op/ and /rands/. 
+Create a binding using keyword /let/. 
+It binds the recursive call of /eval-ast/ on /rest/ of the elements of /rands/ to the id /args/ and applies the function /apply-prim-op/ on /op/ and /args/. 
+
+#+begin_example
+The template of the abstract syntax should be:
+
+ (define eval-ast
+    (lambda (a)
+      (cases ast a
+        [...evaluator for numbers...]
+	[...evaluator for expressions...])))
+#+end_example
+
+*** Task 2 - Define the function to compare the signatures. 
+
+ + Step 1 - Define a function /match-sig?/. 
+
+ + Step 2 - Create a local function using /lambda/. 
+
+ + Step 3 - Use the arguments /sig?/ and /val/. 
+
+ + Step 4 - Return /sig?/ and /val/. 
+
+*** Task 3 - Define a procedure to type check the input. 
+
+ + Step 1 - Use /define/ and create procedure /apply-prim-op/. 
+
+ + Step 2 - Create a local function using the keyword /lambda/. Use /opsym/ and /args/ as arguments.
+
+ + Step 3 - Use let* to create following three bindings:
+   1. Id /op/ binds to the procedure /op-find/ that takes /opsym/ as
+      its input argument.  
+   2. Id /sig/ binds to the struct /op-sig/, followed by /op/ as its
+      argument.
+   3. Id args-sig binds to the remainder of the list (excluding the
+      first member) /sig/ using /rest/.
+
+ + Step 4 - Specify a condition using keyword /cond/.
+   + If /and/ of both conditions return false, apply /op-prim/ field of structure /op/ on arguments /args/ using keyword /apply/. 
+      - First Condition: Length of /args-sig/ is equal to length of /args/ (use the keyword /length/) 
+      - Second Condition: Apply keyword /andmap/ on the function call of /match-sig?/ which takes two arguments /args-sig/ and /args/
+   + Else, if true /#t/, produce the error message "apply-prim-op "incorrect number or type of arguments to ~a"" with the argument /opsym/ being printed out. 
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 5 - Design the Parser for Arithmetic Interpreter
+
+: Create a module "arithmetic-parser.ss". Require the modules relevant and provide the functions defined in this module.
+
+#+BEGIN_EXAMPLE
+The concrete syntax of this language is as follows:
+
+exp ::= <number> | <boolean> | (<op> exp ...)
+op ::= one of <op-symbols>
+
+where <op-symbols> = (+,-,/,*)
+#+END_EXAMPLE
+
+*** Task 1 - Write the parser function.
+
+#+BEGIN_EXAMPLE
+The task of a parser is to convert any given program sequence into an ast. Hence, the signature of the parser procedure 
+would be:
+
+(parse code) → ast?
+code : any/c?
+
+Now, while going through the input sequence if we find the current literal to be a terminal i.e. a number, then we output
+the corresponding node of the ast i.e. (number literal). In case of an operator expression, we parse the operator as
+(prim-app op), and then call the parse function for the list of expressions (i.e. the operands).
+#+END_EXAMPLE
+
+ + Step 1 - Define a procedure /parse/. 
+Use /define/ keyword to create procedure /parse/. 
+Create a local function using the keyword /lambda/ and give the argument /d/. 
+Specify the conditions using the keyword /cond/. 
+
+ + Step 2 - Define the parser for numbers. 
+If the type predicate for /d/ is /number?/, return /number d/. 
+
+ + Step 3 - Define parser for expressions. 
+If /d/ is a /list?/, /d/ is /not/ /null?/ and the first element of /d/ is found in the function /*op-symbols*/ using the keywords /first/ and /memq/, call the function /prim-app/ with the arguments first element of /d/ using the keyword /first/ and a recursive call to /parse/ on the rest of the elements of /d/ using the keyword /rest/ and use keyword /map/ to iterate on the list /d/. 
+
+ + Step 4 - Call function /parse-error/. 
+Else, call the function /parse-error/ with the argument /d/.
+
+#+begin_example
+The template of the abstract syntax should be:
+
+(define parse
+    (lambda (d)
+      (cond
+        [...parse numbers...]
+        [...parse expressions...]
+	[else (...return value...)])))
+#+end_example
+
+*** Task 2 - Define /parse-error/. 
+
+ + Step 1 - Define the function /parse-error/ with the keyword /define/. Create a local function using the keyword /lambda/ and give argument /d/.
+
+ + Step 2 - Display the error "parse-error "invalid syntax ~a"" and display the argument /d/.
+
+#+begin_example
+The template of the abstract syntax should be:
+
+  (define parse-error
+    (lambda (d)
+      (...error message with the argument...)))
+#+end_example
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 6 - Write the run function to execute the interpreter
+
+: Create a module "arithmetic-run.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Define the /run/. 
+
+ + Step 1 - Use /define/ keyword to create a function /run/. Create a local function using the keyword /lambda/ and pass the argument /e/.
+
+ + Step 2 - Call the function /eval-ast/. As an argument to /eval-ast/, call the function /parse/ and pass /e/ as an argument to /parse/. 
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+* Exercise
+
+*Design an interpreter for Boolean numbers.*
+
+The syntax is:
+
+#+begin_example
+exp ::= bool | exp | (op (bool)+)
+bool ::= 0 | 1
+op ::= & | || | ~
+#+end_example
+
+Define all the modules and include them in a file /boolean.ss/. The module names
+should be prefixed by /bool/ instead of /arithmetic-num/ from the experiment 
+modules. Let the other functions names be the same.
+
+* Further Readings
+* Feedback 
+Please provide your feedback
+[[http://virtual-labs.ac.in/feedback/][here]].
+

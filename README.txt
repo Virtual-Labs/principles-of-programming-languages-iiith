@@ -1,49 +1,33 @@
-===========================================================
+Congrats !!
 
-Congratulations!
-
-You have successfully checked out a copy of the latest
-stable release of Virtual Lab Developer Kit. The current
-stable release is 1.5 . The kit contains all that is
-necessary to indicate the structure, that your lab should
-follow.
+* You have successfully downloaded and extracted the
+  ui.tgz .
 
 
-Kindly make a note of a few changes. New Tabs have been
-added for: 
-  1) Target Audience
-  2) Courses Aligned
-  3) Pre-requisite Softwares 
+* Changes: New Tabs have been added for 
+	-    Target Audience
+	-    Courses Aligned
+	-    Pre-requisite Softwares 
 
-In order to be consistent with all other labs, you therefore
-need to add the above mentioned 3 more sections to the home
-page of your virtual lab. Now, thus, you should have the
-following sections on the home page of your lab:
+You need to added 3 more sections on virtual lab home page
 
-  1) Introduction
-  2) List Of Experiments
-  3) Target Audience
-  4) Courses Aligned
-  5) Pre-requisite Softwares
-  6) Feedback
+3) Target Audience
+4) Courses Aligned
+5) Pre-requisite Softwares
 
+You can make the above said changes by editing content.html. To update the changes
 
-You can make the required changes by editing "content.html"
-in the following manner:
-
-> Open "content.html" in your preferred editor and search
-  for last closing html tag </section>.
-> Open the "change.html" file in your choice of editor.
-> Select all the content of file "change.html". 
-> Copy the content and paste it after the last closing html
-  tag </section> (you searched for before).
+1)  open content.html in your fav editor and search for last closing html tag </section>.
+2) Open the change.html file and open it in your fav. editor.
+3) Copy all content of change.html 
+4) Paste it after the last closing html tag </section> (you searched in Step1).
+5) Go to ui/src and run  " make theme=blue-icon"     on command terminal  to change theme to blue
 
 
-This is how your content.html will look like once done with
-the changes:
+We had attached change.html in folder.  You can copy the whole content and paste it in content.html .
 
-/*********************************************************/
 
+Below is snapshot how content.html will look like
 <!-- Second section of the article-->
 <section id="lab-article-section-2">
 
@@ -73,45 +57,27 @@ element, You can also include images with <img> tag -->
 
 </section>
 
-// All the content from "change.html" will follow here.
+// PASTE the CHANGE.html content here..
 
 
-/*********************************************************/
+/*****************************************************************/
 
-Now you need to create a fresh build directory for your
-virtual lab. To do this,
 
-> Run makefile by the following commands at the same level
-  as that of makefile as indicated below: 
 
-/*********************************************************/
 
-  $ make clean           //cleans the build directory 
-  $ make all             //creates a fresh build directory
 
-/*********************************************************/
 
-Once, you do a make, you get a fresh copy of the build
-directory. Now in order to change the theme of your virtual
-lab,
 
-> Go to src folder and run "make theme=blue-icon" on your
-  command line in the terminal, to change your lab theme to
-  blue-icon as follows:
 
-/*********************************************************/
 
-  $ make theme=blue-icon //changes the theme to blue-icon
+* Now run makefile by the following commands inside the 'ui/src' folder to
+  change the default theme :
 
-/*********************************************************/
+Go to Command Terminal
+	 $ cd ui_extracted_folder // Where u have extracted the ui kit
+	 $ cd ui/src
+         $ make clean all 
+	 $ make theme=blue-icon
 
-Now, in order to test the template, and view your virtual
-lab, open the file "build/index.html" in the browser.
+* Now, open ui/build/index.html in the browser to test the template.
 
-With this, you have succesfully checked the template. You
-can now keep on adding more experiments to develop your
-virtual lab.
-
-For any further doubts, send mail to support@virtual-labs.ac.in.
-
-===========================================================

@@ -1,0 +1,36 @@
+Store-passing interpreter  with explicit references.
+
+[Corresponds to exercise 4.12 of EOPL]
+
+Changes to AST:
+---------------
+
+* new-ref
+* deref
+* setref
+
+
+changes to semantic-domains:
+-----------------------------
+add void to expressible values
+add ref(expressible-value) to expressible-value
+
+denotable-values = expressible-values
+storable-values = expressible-values
+
+earlier env-rec.ss folded into semantic-domains.ss, because
+environments and semantic-domains are mutually recursive.
+This refactoring should be done in the RECURSION language
+implementation as well.
+
+
+changes to eval-ast
+-------------------
+
+* signature of eval-ast
+
+* eval-asts
+
+* signature of eval-closure
+
+* semantic checks when store operations are performed.

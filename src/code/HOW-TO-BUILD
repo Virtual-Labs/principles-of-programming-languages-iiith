@@ -1,0 +1,28 @@
+Building the tgz file
+----------------------
+
+  
+     make -k all login=<your-login-on-pascal>
+
+This command does the following:
+ 
+  0. Deletes the directory /tmp/popl.
+
+  1. Checks out a fresh copy of the popl-vlab/code directory into /tmp/popl/code.
+
+  2. Builds the time-stamped .tgz file into /tmp/popl/build/<filename>.tgz.
+
+
+Exporting the file the server
+-----------------------------
+
+  make -k export
+
+This command
+
+  scp's to pascal and installs the tgz in /var/www.  You
+  need sudo access on pascal for this to work.
+
+
+
+

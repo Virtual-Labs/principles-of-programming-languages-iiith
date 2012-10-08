@@ -1,0 +1,497 @@
+#+TITLE: Experiment 6 - Block-Structured Language
+
+#+TAGS: readings(r) hw(h)
+#+SETUPFILE: ../../../org-templates/level-2.org
+#+LINK_HOME: ../../content.html
+#+LINK_UP:  ../../content.html#sec-6
+
+* Prerequisites for the Experiment
+
+You should have read Section 3.2, Chapter - 3 from the text book *EOPL*. 
+* Learning Objectives of the Experiment 
+
+The goal of this experiment is to design and implement the abstract
+syntax, parser and evaluator of a block structured language along with
+defining the semantic domains, environment and operators applicable in
+the language.
+
+* Theory
+
+While using programming languages and bound identifiers as seen in the
+previous experiment, we often write functions of multiple variables
+sharing the same identifiers. Thus same identifiers are used at
+several places in the function. How would we then distinguish between
+the values stored in each of these identifiers? This association of an
+environment with a block of code is known as "lexical scoping". We say
+that a program has lexical scope when the scope of an identifier can
+be determined by a lexical analysis of that particular block of code.
+
+Building a Lexical Language will again require the following three steps:
+
+*Abstract Syntax*
+
+As mentioned in the previous experiment, concatenated environments due
+to nested blocks can be thought of as a stack of environments with the
+top-most common identifiers hiding the ones behind it.
+
+*Parsing*
+
+This converts the input sequence (in concrete syntax) into abstract
+syntax tree, so that the evaluator can evaluate it.
+
+*Evaluation*
+
+The evaluator is responsible for evaluating the abstract syntax tree
+produced by the parser in order to come up with the output of the
+input program sequence.
+
+* Procedure
+
+#+BEGIN_EXAMPLE
+Instructions
+1. Create a file named "lexical.ss". 
+2. You can include all the modules in this file, OR,
+3. You can "require" all the modules in this file.
+4. All the modules are verifiable individually. You can also test your code by placing them in a single file. 
+5. Make sure you upload all the files before testing them. 
+#+END_EXAMPLE
+
+** Module 1 - Design the Abstract Syntax for the Block-Structured Language
+
+: Create a module "lexical-ast.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Write the function to define the abstract syntax tree for the expressions.
+
+#+BEGIN_EXAMPLE
+A lexical expression either consists of numbers or boolean values or expressions with primary operators +,-,/,* 
+and operands as well as assume blocks and identifiers. Thus, the grammar of such a language can be written as follows:
+
+ast ::= num-ast | prim-app-ast | assume-ast | id-ref-ast
+
+where
+
+num-ast implies an ast consisting of only numbers, for example: 5, 6, 2, 0 etc.
+prim-app-ast consists of an arithmetic operator and its operands (which in turn are again of the form - ast)
+id-ref-ast consists of an identifier only, for example ’x’.
+assume-ast consists of a list of bindings and a body which are again of the form ast
+
+Thus, we define the abstract syntax for the block structured language as a datatype named "ast". The type predicate for 
+the datatype ast is "ast?". It shall have constructors for various elements of the block structured language - number, 
+prim-app, id-ref, assume.
+
+The constructor number creates ast for only numbers. 
+number : number? -> ast?
+
+The constructor prim-app creates ast for the expressions which takes two arguments - a defined arithmetic operator 
+denoted by op and list of operands denoted by rands. 
+(prim-app op rands) -> ast?
+op : op-symbol?
+rands : list-of ast?
+
+The constructor id-ref defines an identifier as an ast. It takes an argument sym. The type predicate for sym is id?.
+(id-ref sym) -> ast?
+sym : id?
+
+The constructor assume takes a list of bindings denoted by binds and a body denoted by body and returns an ast. 
+(assume binds body) → ast?
+binds : (list-of bind?)
+body : ast?
+#+END_EXAMPLE
+
+ + Step 1 - Write the constructor for numbers from its given signature. 
+A /number/ takes an argument /datum/ of type /number?/. 
+
+ + Step 2 - Write the constructor for expressions from its given signature.  
+A /prim-app/ takes two arguments /op/ and /rands/. Type
+predicate for /op/ is /op-symbol?/ and type predicate for rands is
+/list-of ast?/.
+
+ + Step 3 - Write the constructor for an identifier from its given signature.
+An identifier /id-ref/ takes a variable /sym/ of the type /id?/.
+
+ + Step 4 - Write the constructor for binding the identifier to its value from its signature.  
+/assume/ takes two arguments /binds/ and
+/body/. The type predicate for /binds/ is /bind?/. It is a list of all
+available bindings. The type predicate for /body/ is an /ast?/.
+
+ + Step 5 - Use /define-datatype/ to define the abstract syntax for the Block-Structured language.  
+The name of the function should be
+/ast/. The type predicate of the function is /ast?/. It has a
+constructor /number/, /prim-app/, /id-ref/ and /assume/.
+
+*** Task 2 - Create a list of operator symbols and check for a given operator if it is present in the defined list or not.
+
+ + Step 1 - Create a list of operator symbols.
+Use /define/. 
+Name the function /*arithmetic-op-symbols*/.
+Add the symbols for +, -, * and /. 
+
+ + Step 2 - Check for a given operator symbol if it is present in the defined list or not.
+Use /define/. 
+Name the function /arthmetic-op-symbol?/. 
+
+*** Task 3 - Define other functions. 
+
+ + Step 1 - Define  the type /bind?/.  
+Use /define-datatype/ to define
+the function  /bind/.  The  type predicate of  the function  /bind/ is
+/bind?/.   It  defines  a  constructor  /make-bind/  which  takes  two
+arguments /b-id/ and  /b-ast/. The type predicate for  /b-id/ is /id?/
+and type predicate for /b-ast/ is /ast?/.
+
+ + Step 2 - Define function /bind-id/.  
+
+Use /define/ to build a function /bind-id/. It takes an argument /b/
+using /lambda/. Specify /cases/ on /bind b/. It uses the constructor
+ /make-bind/ which takes two arguments /b-id/ and /b-ast/ and returns b-id/.
+
+ + Step 3 - Define function /bind-ast/.
+
+Use /define/ to build a function /bind-ast/. It takes an argument /b/
+ using /lambda/. Specify /cases/ on /bind b/.  It uses the constructor
+/make-bind/ which takes two arguments /b-id/ and /b-ast/ and returns /b-ast/.
+ 
+ + Step 4 - Define /id?/. 
+Define /id?/ to take values of the type /symbol?/. 
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 2 - Define the Semantic Domains for the Block-Structured Language
+
+: Create a module "lexical-semanticdomain.ss". Require the modules relevant and provide the functions defined in this module.
+
+#+BEGIN_EXAMPLE
+While designing any programming language, it is highly important to specify the set of values that the language 
+manipulates.
+
+Each language has, the following sets of values:
+1. Expressible Values : set of values that are the results of evaluation of expressions (ASTs), and,
+2. Denotable Values : set of values which are bound to variables.
+#+END_EXAMPLE
+
+*** Task 1 - Define the domain values of the expressions. 
+
+#+BEGIN_EXAMPLE
+In our case, since any expression evaluates to a number, the set of expressible values would be number. Thus, an 
+expressible value has the type predicate expressible-value? which has the following signature:
+expressible-value? : any/c -> boolean?
+#+END_EXAMPLE
+
+ + Step 1 - Define the function to specify the expressible values from its signature.   
+Define a predicate /expressible-value?/.  It takes an
+argument /thing/. Since any expression evaluates to number, the set of
+expressible values would be (number). Thus, /thing/ is checked against
+the type predicate /number?/.
+
+*** Task 2 - Define the domain values of the results of evaluation of the expressions.
+
+#+BEGIN_EXAMPLE
+Similarly, the denotable values are denoted by the type predicate denotable-value? and has the following signature:
+expressible-value? : any/c -> boolean?
+#+END_EXAMPLE
+
+ + Step 1 - Define the function to specify the denotable values from its signature.  
+Define a predicate /denotable-value?/. It takes an argument /thing/. Since any expression evaluates to number, the set of
+denotable values would be (number). Thus, /thing/ is checked against the type predicate /number?/.
+
+** Module 3 - Define the environment
+
+: Create a module "lexical-env.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Define Abstract Syntax for empty and extended environments.
+
+#+BEGIN_EXAMPLE
+The first variant of an environment is the empty environment. The empty environment is constructed using a constructor, 
+which we name as empty-env. The signature of the empty-env is: 
+
+(empty-env) → env?
+#+END_EXAMPLE
+
++ Step 1 - Define the constructor for the empty environment.
+The constructor is named empty-env. It takes no arguments. 
+
+#+BEGIN_EXAMPLE
+In the theory, we considered the composition of environments. Composition is a form of construction. In all the use
+cases for environments we will encounter, we will come across the need to construct a new environment from an existing 
+environment and a set of identifiers and their (respective) denotable values, instead of two environments. Therefore, 
+we talk of an extended environment built from a list of identifiers, a list of denotable values, and an existing (old) 
+environment.
+
+The extended environment is denoted as extended-env. It takes three arguments - identifiers, denotable values and an 
+old environment. The signature for the extended-env is as follows:
+
+(extended-env ids vals old-env) → env?
+ids : (listof symbol?)
+vals : (listof denotable-value?)
+old-env : env?
+#+END_EXAMPLE
+
++ Step 2 - Define the constructor for the extended environment.  
+The name of the constructor is /extended-env/. It takes /ids/, /vals/ and
+/old-env/. Write the type predicates along with the arguments.
+
+#+BEGIN_EXAMPLE
+The environment is defined using the construct define-datatype. The datatype for the environment is called "env". The 
+type predicate for env is "env?". It takes two constructors - empty-env and extended-env.
+#+END_EXAMPLE
+
++ Step 3 - Define /env/.  
+Use the construct /define-datatype/ to
+define /env/. The type predicate for /env/ is /env?/. It takes two
+constructors - /empty-env/ and /extended-env/.
+
+*** Task 2 - Define a look-up function to look up an identifier using an environment. 
+
+#+BEGIN_EXAMPLE
+The lookup function takes an environment and an identifier and returns either a denotable value raises an 
+"identifier not bound" error. The lookup function is defined as "lookup-env" and it takes two arguments - 
+an identifier "id" and an environment "env". The signature of the lookup function is as follows:
+
+(lookup-env id env) → denotable-value?
+id : symbol?
+env : env?
+#+END_EXAMPLE
+
+ + Step 1 - Define a module /empty-env?/ to check if the given environment is empty or not.
+   1. Use /define/ to define a type /empty-env?/. Create a local function using /lambda/ and use /e/ as an argument. 
+   2. Specify cases on the /env e/. 
+      - Case 1: for /empty-env ()/, it returns true /#t/. 
+      - Case 2: Else false /#f/. 
+
+ + Step 2 - Define a module /extended-env?/ to check if the given environment is empty or not.
+   1. Use /define/ to define a type /extended-env?/. Create a local function using /lambda/ and use /e/ as an argument. 
+   2. Specify cases on the /env e/. 
+      - Case 1: for /empty-env ()/, it returns false /#f/. 
+      - Case 2: Else true /#t/. 
+
+ + Step 3 - Define a procedure /list-index/. 
+   1. Use /define/ to build a procedure /list-index/. Create a local function using /lambda/. Use arguments /ls/ and /a/.
+   2. Create a binding using /letrec/. Bind an id /loop/ to the local function created by /lambda/. It takes /ls/ and /ans/ as its arguments.
+   3. Specify if-else condition inside the /lambda/. 
+      - If list is null?, return -1.
+      - If the first element of list is equal to /a/, return /ans/. 
+      - If true, run the procedure /loop/ on rest of the list and increment /ans/ by 1.
+   4. Along with the binding at the level of /loop/ in letrec, it also calls the function /loop/ with the arguments /ls/ and /0/. 
+
+ + Step 4 - Define procedure /lookup-env/ to check if an identifier is bound in a given environment.
+   1. Use /define/ to build a procedure /lookup-env/. Create a local function using /lambda/ with arguments /e/ and /x/.
+   2. Specify the cases on /env e/. 
+      - Case 1: /empty-env/ raises error: "unbound identifier ~a".
+      - Case 2: /extended-env/ which takes arguments /syms/, /vals/ and /outer-env/. Use /let/ to bind the id /j/ to the value returned by /list-index/ which takes arguments /syms/ and /x/. Specify if-else condition using keyword /cond/. If /j/ equals /-1/, recursively call the function /lookup-env/ and give the arguments /outer-env/ and /x/. Else, if it returns true, return the element in /vals/ at position /j/.
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 4 - Define the operators. 
+
+: Create a module "lexical-op.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Define a function to check if the given number is zero or not. 
+ + Step 1 - Name the function /non-zero?/. 
+ 
+ + Step 2 - Specify a local function within the function /non-zero/ using keyword /lambda/.  Use /n/ as an argument to /lambda/. 
+
+ + Step 3 - Evaluate if /n/ is of type /number?/ and is not equal to /zero?/. 
+
+*** Task 2 - Define operators. 
+
+ + Step 1 - Define plus operator. 
+   - Use /define/. Name the operator /+op/. 
+   - Use /make-op/ to provide the fields - /+/, symbol /+/ and a list which specifies the signature. The plus operator takes two ast's and gives an ast.
+
+ + Step 2 - Define minus operator. 
+   - Use /define/. Name the operator /-op/. 
+   - Use /make-op/ to provide the fields - /-/, symbol /-/ and a list which specifies the signature. The minus operator takes two ast's and gives an ast.
+
+ + Step 3 - Define multiply operator. 
+   - Use /define/. Name the operator /*op/. 
+   - Use /make-op/ to provide the fields - /*/, symbol /*/ and a list which specifies the signature. The multiply operator takes two ast's and gives an ast.
+
+ + Step 4 - Define division operator. 
+   - Use /define/. Name the operator /\/op/. 
+   - Use /make-op/ to provide the fields - /\//, symbol /\// and a list which specifies the signature. The division operator takes two ast's and gives an ast.
+
+ + Step 5 - Define a structure /op/. 
+   - Use /define-struct/ construct. Name the structure /op/. Add three fields to the structure /name/, /prim/ and /sig/. 
+   - It includes the operator definitions /+op/, /-op/, /*op/ and /\/op/. 
+
+*** Task 3 - Define a module to check if the given operator is present in the defined list of operators. 
+    
+ + Step 1 - Define a list of operators. 
+    - Use /define/ keyword to define a list of operators in a function /*ops*/.
+    - It includes a list of plus, minus, multiply and divide operators defined in the last task. 
+    - Make a list using keyword /list/ and add all the defined operator names. 
+
+ + Step 2 - Check for the given operator. 
+    - Use /define/. Name the module /op-find/. 
+    - Create a local function using /lambda/. Use /opsym/ as an argument to /lambda/. 
+    - Use /findf/ to find for the operator in /*ops*/. 
+    - Create another local function using /lambda/ and give an argument /op/. 
+    - Use the equal keyword /eq?/ to check for the equality of /opsym/ and /op-name/ of the argument /op/. 
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 5 - Define the Evaluator
+
+: Create a module "lexical-eval.ss". Require the modules relevant and provide the functions defined in this module.
+
+#+BEGIN_EXAMPLE
+The evaluator takes an ast and returns the value obtained by evaluating the ast, i.e. an expressible value. For the naive 
+case, where the ast consists of just a number, the returned value would necessarily be the value of the number.
+
+However, in the case of an expression, we would first need to evaluate each of the operands and then apply the operator on 
+the obtained evaluated values. Thus, we would need a procedure "apply-prim-op" which takes an operator and a list of 
+expressible values, and later applies the operator on them.
+
+If it is an assume expression, we create an environment with the identifiers and variables given, and proceed to evaluate 
+the body.
+
+In case of an identifer, we call the "lookup-env" function to evaluate it and get a value.
+#+END_EXAMPLE
+
+*** Task 1 - Define the Evaluator for Block-Structured Languages. 
+
+#+BEGIN_EXAMPLE
+The function "eval-ast" takes two arguments "a", an ast, and "env", the environment to which the ast belongs and evaluates 
+according to the specific cases of the four constructors defined in the datatype "ast". The signature of the eval-ast is:
+
+(eval-ast ast) → expressible-value?
+ast : ast?
+#+END_EXAMPLE
+
+ + Step 1 - Define procedure /eval-ast/.
+   1. Use /define/ to define the procedure /eval-ast/.
+   2. Create a local function using keyword /lambda/. Use /a/ and /env/ as arguments to /lambda/. 
+   3. Specify cases on /ast a/.
+ 
+ + Step 2 - Define the evaluator for numbers. 
+/number/ takes an argument /datum/ and returns /datum/. 
+
+ + Step 3 - Define evaluator for expressions. 
+   1. /prim-app/ takes two arguments /op/ and /rands/. 
+   2. Create a binding using keyword /let/. 
+   3. It binds the recursive call of /eval-ast/ on /rest/ of the elements of /rands/ to the id /args/ and applies the function /apply-prim-op/ on /op/ and /args/. 
+
+ + Step 4 - Define the evaluator for the identifier. 
+   1. We call the /lookup-env/ to evaluate the identifier and return a value.
+   2. /id-ref/ takes two arguments /sym/ and the result of the procedure /lookup-env/ which takes two arguments /env/ and /sym/.  
+ 
+ + Step 5 - Define  the evaluator for the assume expression.  
+   1. We create an environment with the identifiers and variables given and proceed to evaluate the body. 
+   2. /assume/ takes arguments /binds/ and /body/. 
+   3. It creates a dynamic binding using /let*/  to bind  a procedure  /bind-id/ to  its list  of  arguments in /binds/ and binds it to the id /ids/. /map/ keyword is used to apply procedure /bind-id/ to all the
+elements in /bind/. 
+   4. Another binding is created on the procedure /bind-ast/ to which takes the argument /binds/ to the id /asts/. /map/ keyword is used to apply the procedure /bind-ast/ to all the elements of /binds/. 
+   5. A third binding is created with the id /vals/. The binding is created on the recursive call of /eval-ast/ and /map/ is used to apply this procedure on all elements of /asts/. The recursive call of /eval-ast/ takes an argument /a/ using /lambda/ and calls itself (/eval-ast/) with the arguments /a/ and /env/. 
+   6. A fourth binding is created on the procedure /extended-env/ which takes the arguments /ids/, /vals/ and /env/ and binds them to the id /new-env/.
+   7. Call the procedure /eval-ast/ with the arguments /body/ and /new-env/. 
+
+*** Task 2 - Define the function to compare the signatures. 
+Define a function /match-sig?/. Create a local function using /lambda/. Use the arguments /sig?/ and /val/. Return /sig?/ and /val/. 
+
+*** Task 3 - Define a procedure to type check the input. 
+ + Step 1 - Use /define/ and create procedure /apply-prim-op/. 
+
+ + Step 2 - Create a local function using the keyword /lambda/. Use /opsym/ and /args/ as arguments.
+
+ + Step 3 - Use let* to create following three bindings:
+   1. Id /op/ binds to the procedure /op-find/ that takes /opsym/ as
+      its input argument.  
+   2. Id /sig/ binds to the struct /op-sig/, followed by /op/ as its
+      argument.
+   3. Id args-sig binds to the remainder of the list (excluding the
+      first member) /sig/ using /rest/.
+
+ + Step 4 - Specify a condition using keyword /cond/.
+   1. If /and/ of both conditions return false, apply /op-prim/ field of structure /op/ on arguments /args/ using keyword /apply/. 
+     - First Condition: Length of /args-sig/ is equal to length of /args/ (use the keyword /length/) 
+     - Second Condition: Apply keyword /andmap/ on the function call of /match-sig?/ which takes two arguments /args-sig/ and /args/
+   2. Else, if true /#t/, produce the error message "apply-prim-op "incorrect number or type of arguments to ~a"" with the argument /opsym/. 
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 6 - Design the Parser
+
+: Create a module "lexical-parser.ss". Require the modules relevant and provide the functions defined in this module.
+
+#+BEGIN_EXAMPLE
+The concrete syntax of this language is as follows:
+
+exp ::= <number> | <boolean> | <identifier> | (<op> exp ...) | (assume (listof<identifiers> listof<exp>) exp)
+op ::= one of <op-symbols>
+where <op-symbols> = (+,-,/,*)
+
+The task of a parser is to convert any given program sequence into an ast. While going through the input sequence 
+if we find the current literal to be a terminal which is a number, then we output the corresponding node of the 
+ast i.e. (number literal). 
+
+In case of an operator expression, we parse the operator as (prim-app op), and then call the parse function for the 
+list of expressions (i.e. the operands).
+
+If it is an assume expression, we simply write out the assume function along with the ’bind’ to create an expression 
+that can be evaluated.
+
+In case of an identifer, we replace it with a (id-ref <identifier>).
+#+END_EXAMPLE
+
+*** Task 1 - Define the parser function for the Block-structured Language.
+
+#+BEGIN_EXAMPLE
+The function "parse" takes an argument "d". The signature of the parser is:
+
+(parse code) → ast?
+code : any/c?
+#+END_EXAMPLE
+
+ + Step 1 - Define a procedure /parse/. 
+   - Use /define/ keyword to create procedure /parse/. 
+   - Create a local function using the keyword /lambda/ and give the argument /d/. 
+   - Specify the conditions using the keyword /cond/. 
+
+ + Step 2 - Define the parser for numbers. 
+If the type predicate for /d/ is /number?/, return /number d/. 
+
+ + Step 3 - Define parser for expressions. 
+If /d/ is a /list?/, /d/ is /not/ /null?/ and the first element of /d/ is found in the function /*op-symbols*/ using the keywords /first/ and /memq/, call the function /prim-app/ with the arguments first element of /d/ using the keyword /first/ and a recursive call to /parse/ on the rest of the elements of /d/ using the keyword /rest/ and use keyword /map/ to iterate on the list /d/. 
+
+ + Step 4 - Define the parser for the identifier. 
+If anything comes in the form /? id? x/ it should be replaced as /id-ref x/.
+
+ + Step 5 - Define the parser for the assume expression. 
+If /assume/ is found, make a list of identifiers of the form /? id? x/. 
+
+ + Step 6 - Call function /parse-error/. 
+Else, call the function /parse-error/ with the argument /d/.
+
+*** Task 2 - Define /parse-error/. 
+
++ Step 1 - Define the function /parse-error/ with the keyword /define/. Create a local function using the keyword /lambda/ and give argument /d/.
+
++ Step 2 - Display the error "parse-error "invalid syntax ~a"" and display the argument /d/.
+
+** Module 7 - Run the interpreter
+
+: Create a module "lexical-run.ss". Require the modules relevant and provide the functions defined in this module.
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+* Exercise
+* Further Readings
+
+* Feedback 
+Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].
+

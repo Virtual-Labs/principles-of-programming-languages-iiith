@@ -1,0 +1,29 @@
+digraph modules {
+	node [style=filled,color="#CCCC66"];
+	 eopl -> "ast.ss";
+
+	 eopl -> "eval-ast.ss";
+
+	 eopl -> "semantic-domains.ss";
+	 "ast.ss" -> "semantic-domains.ss";
+	 "store-list.ss" -> "semantic-domains.ss";
+	 
+	 "ast.ss" -> "eval-ast.ss";
+	 "semantic-domains.ss" -> "eval-ast.ss";
+	 "store-list.ss" -> "eval-ast.ss";
+
+	 "semantic-domains.ss" -> "init-env.ss";
+
+	 "ast.ss" -> "run.ss";
+	 "init-env.ss" -> "run.ss";
+	 "semantic-domains.ss" -> "run.ss";
+	 "eval-ast.ss" -> "run.ss";
+
+	 "ast.ss" -> "parser.ss";
+
+	 "run.ss" -> "top.ss";
+	 "parser.ss" -> "top.ss";
+}
+	 
+	 
+

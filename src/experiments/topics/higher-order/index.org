@@ -1,0 +1,198 @@
+#+TITLE: Experiment 3 - Higher-Order Functions
+
+#+TAGS: readings(r) hw(h)
+#+SETUPFILE: ../../../org-templates/level-2.org
+#+LINK_HOME: ../../content.html
+#+LINK_UP:  ../../content.html#sec-6
+
+* Prerequisites for the Experiment
+
+You should have read Chapter - 1 of the text book *EOPL*. 
+* Learning Objectives of the Experiment 
+The goal of this experiment is to learn how to define the functions using higher order functions. 
+
+* Theory
+
+*Order of Functions*
+
+A general hierarchy of order of functions: 
+
+Order 0 : Non function data
+
+Order 1 : Functions with domain and range of order 0
+
+Order 2 : Functions with domain and range of order 1
+
+Order k : Functions with domain and range of order k-1
+
+With the above understanding, we can now define higher-order functions to be - Functions of order i, i>=2.
+
+*Higher-Order Functions*
+
+A /higher-order function/:
+- takes one or more functions as input, and
+- returns a function
+
+A typical example of this would be composite functions - i.e. if f and g are two functions then fog is the composite function defined as fog(x) = f(g(x)).
+
+Often, while using  inductive datatypes, we end up  building them in a
+recursive nature  (yet not explicitly recursive,  the constructor acts
+upon  an  instance  of a  certain  type  to  return  one of  the  same
+type). Many a  times, our operations on such  instances require us to
+traverse  the  datatype. This  traversal  can  have  multiple uses  in
+practice, yet the traversal is still of the same type. Hence, it makes
+sense to try  and use a higher order function  for the traversal which
+will  take  as an  argument,  the operation  that  is  required to  be
+done.  As is  seen, higher  order functions  are an  integral  part of
+inductive datatypes.
+
+* Procedure
+
+#+BEGIN_EXAMPLE
+Instructions
+1. Create a file named "higher-order.ss". 
+2. You can copy all the modules in this file, OR,
+3. You can "require" all the modules in this file.
+4. All the modules are verifiable individually. You can also test your code by placing them in a single file. 
+5. Make sure you upload all the files before testing them. 
+#+END_EXAMPLE
+
+** Module 1 - Reduce a given list.
+
+*** Task 1 - Define the function /list-reduce/. 
+
+: Create a module named "list-reduce.ss". Require the modules relevant and provide the functions defined in this module.
+
+#+BEGIN_EXAMPLE
+"list-reduce" takes a list and returns a list. It has been explained in terms of type variables A and B:
+
+[A, [(B, A) -> A]] -> [(listof B) -> A]
+#+END_EXAMPLE
+
++ Step 1 - The function /list-reduce/ takes 2 arguments /seed/ and /bop/ using the keyword /lambda/. 
++ Step 2 - Pass a list /ls/ as an argument using the keyword /lambda/.
++ Step 3 - Specify if-else condition using the keyword /cond/.
+  - If list /ls/ is /null?/, return /seed/.
+  - Else, call the function /bop/ which takes two arguments - first element of the list /ls/ using the keyword /first/ and
+    recursively call function /list-reduce/ that takes /seed/ and /bop/
+    as the 2 arguments and operates on the remainder of the list /ls/ using
+    the keyword /rest/ for the third argument.
+
+*** Task 2 - Define the function /list-reduce/ function using an auxiliary variable.
+
+: Create a module "list-reduce-auxiliary.ss". Require the modules relevant and provide the functions defined in this module.
+
++ Step 1 - Define the function /list-reduce/ that takes /seed/ and
+  /bop/ as its input arguments using the keyword /lambda/.
++ Step 2 - Create a binding /f/ using the keyword /letrec/. 
++ Step 3 - The argument for the binding /f/ takes an argument /ls/ using the keyword /lambda/. Specify an if-else condition on this list /ls/ using the keyword /cond/. 
+  - If list /ls/ is null, return /seed/.
+  - Else, call function /bop/ which takes two arguments - first element of the list /ls/ using the keyword /first/ and recursively call the binding /f/ and give it the rest of the list /ls/ as an argument using the keyword /rest/.
++ Step 4 - Bind the id /f/ to the code in the above step. 
+ 
+** Module 2 - Use list-reduce to generate list-length function
+
+: Create a module named "listlength.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Write the function /list-length/ using /list-reduce/.  
+
+#+BEGIN_EXAMPLE
+Here, we implement the "listlength" function using "list-reduce" function. The signature of the function is as follows:
+
+listlength : list? -> number?
+#+END_EXAMPLE
+
+ + Step 1 - Define a function /list-length/.
+ 
+ + Step 2 - Pass the function /list-reduce/ as its only argument.
+ 
+ + Step 3 - The /list-reduce/ function takes 2 arguments
+  - number 0 and
+  - function defined using /lambda/ that takes /a/ and /ir/ as
+    its arguments.
+     +  it returns /ir/ incremented by 1.
+
+** Module 3 - list-map function
+
+: Create a module named "list-map.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Write the list-map function
+
+#+BEGIN_EXAMPLE
+The list-map function takes a function f and a list ls and returns a new list whose each element is the result of 
+applying f to the corresponding element of ls. Formally speaking:
+
+(length (list-map f ls)) = (length ls), and
+(list-ref (list-map f ls) i) = (f (list-ref ls i)), for 0<=i<=(length ls)
+
+Expressing list-map in terms of type predicates A and B, [(A -> B) , (listof A)] -> (listof B)
+#+END_EXAMPLE
+
+ + Step 1 - Define the function /list-map/. 
+
+ + Step 2 - Create a function using the keyword /lambda/ and give the arguments /f/ and /ls/. 
+
+ + Step 3 - Specify conditionals using the keyword /cond/. 
+    - If /ls/ is /null?/, return empty list denoted by /()/ as a constant. 
+    - Else, create a list using the keyword /cons/. The first element is /f/ which takes the first element of the list /ls/ using the keyword /first/. And, second element is a result of the recursive call to /list-map/ which takes arguments /f/ and rest of the elements of the list /ls/ using the keyword /rest/. 
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 5 - Implement filter
+
+: Create a module named "filter.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Write the filter function.
+
+#+BEGIN_EXAMPLE
+"filter" takes a predicate "pred?" on elements of type A and a list ls of elements of type A, and 
+returns another list of elements from ls that satisfy pred?. Expressing it in terms of type predicate A:
+
+[(A -> boolean?), (listof A)] -> (listof A)
+#+END_EXAMPLE
+
+ + Step 1 - Define the function /filter/.
+
+ + Step 2 - Use keyword /lambda/ to provide two arguments /pred?/ and /ls/. 
+
+ + Step 3 - Specify conditionals using the keyword /cond/. 
+    - If /ls/ is null, return an empty list denoted by /()/ as a constant. 
+    - If /pred?/ is satisfied by the first element of the list /ls/, create a list using the keyword /cons/ which takes the first element of the list /ls/ using the keyword /first/. And, the second element is a recursive call to the function /filter/ which takes two arguments /pred?/ and the rest of the elements of the list /ls/ using the keyword /rest/.
+    - Else, again put a recursive call to /filter/ using the arguments /pred?/ and rest of the elements of the list /ls/. 
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+** Module 6 - Implement count 
+
+: Create a module named "filter.ss". Require the modules relevant and provide the functions defined in this module.
+
+*** Task 1 - Write the count function.
+
+#+BEGIN_EXAMPLE
+"count" takes a predicate "pred" and a list "ls" and returns the number of elements in ls that satisfy pred?.
+returns another list of elements from ls that satisfy pred?. Expressing it in terms of type predicate A:
+
+[(A -> boolean?), (listof A)] -> (listof A)
+#+END_EXAMPLE
+
+ + Step 1 - Define  the function /count/. 
+ 
+ + Step 2 - Use keyword /lambda/ to provide two arguments /pred?/ and /ls/. 
+
+ + Step 3 - Use the keyword /length/ and call function /filter/ as an argument to /length/. /filter/ takes two arguments - /pred?/ and /ls/. 
+
+#+BEGIN_EXAMPLE
+After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
+the module by test files by pressing the Test button.
+#+END_EXAMPLE
+
+* Exercise
+* Further Readings
+* Feedback 
+Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].

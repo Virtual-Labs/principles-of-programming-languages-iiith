@@ -1,0 +1,63 @@
+How to install and run POPL-VLABS 
+
+
+* Installing PHP 
+We have been using PHP 5.3.  5.2 should also work.
+
+  sudo apt-get install php5
+
+* Install mod-php5
+
+  sudo apt-get install libapache2-mod-php5
+  
+
+* Installing Racket
+
+  - Install the latest version of Racket in the default
+    location by downloading the installation from the
+    website (rather than apt-get install, which might give
+    you the old version).
+
+  - set the variable RACKET_HOME to point to the
+    installation directory of Racket.
+
+
+* Installing Scribble inside Racket
+
+  - Scribble should be available by default in the racket
+    distribution in the location
+
+      $RACKET_HOME/bin/scribble
+
+* Installing Python
+
+  - Install version 2.6 (not 3.0) 
+
+    sudo apt-get install python2.6
+
+* Make the build
+
+  - Run  the makefile in the popl-vlab/src directory
+
+* Export the build to the server
+
+  - Remote copy the build directory to /var/www/
+
+  - Set the permissions of build to 755
+
+  - ensure that build/usr and build/tmp are globally
+    writable
+
+* Access the lab url
+
+  - http://localhost/build/index.html
+
+  - 
+
+
+
+
+
+
+
+

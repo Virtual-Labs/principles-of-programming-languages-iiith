@@ -1,0 +1,142 @@
+#+TITLE: Experiment 9 - Language with Objects 
+
+#+TAGS: readings(r) hw(h) 
+#+SETUPFILE: ../../../org-templates/level-2.org
+#+LINK_HOME: ../../content.html
+#+LINK_UP:  ../../content.html#sec-6
+
+* Prerequisites for the Experiment
+
+You should have read Chapter 9 of the text book *EOPL*. 
+* Learning Objectives of the Experiment 
+
+The goal of this experiment is to understand how to define an object, its methods or functions and how to invoke the method name on the object. 
+
+* Theory
+** Object Oriented Programming
+Object-oriented programming (OOP) is a programming language model, organized around objects rather than actions, data or logic.
+
+Object-oriented programming takes the view that it is the objects we really care about as we want to manipulate them rather than the logic required to manipulate them.
+
+The first step in OOP is to identify all the objects you want to manipulate and how they relate to each other.
+
+Once you have identified an object, you generalize it as a class of objects and define the kind of data it contains and any logic sequences that can manipulate it.
+
+Each distinct logic sequence is known as a method.
+
+A real instance of a class is called an object. You communicate with objects - and they communicate with each other - with well-defined interfaces called messages.
+
+** Objects
+In order to identify the objects one wants to manipulate, it is
+necessary to identify their state and behavior. An object essentially
+stores its state(s) in variables and the behavior is exhibited through
+the methods. Methods operate on an object’s internal state and serve
+as the primary mechanism for object-to-object communication. Hiding
+internal state and requiring all interaction to be performed through
+an object’s methods is known as data encapsulation.
+
+Building the code into individual objects, provides a number of benefits:
+
+1. Modularity: The source code of one object is independent of the other objects.
+
+2. Information-Hiding: Since we can only interact with the object’s methods, the details of internal implementation are hidden.
+
+3. Code re-use: A existing object can be re-used in another program.
+
+* Procedure
+
+#+BEGIN_EXAMPLE
+Instructions
+1. Create a file named "objects.ss". 
+2. You can include all the modules in this file, OR,
+3. You can "require" all the modules in this file.
+#+END_EXAMPLE
+
+** Module 1 - Create an object
+
+#+BEGIN_EXAMPLE
+Concrete Syntax for objects:
+1. (<obj> <field>) returns the value of <field> if it exists; an error otherwise.
+2. <obj> is a scheme expression that evaluates to an object.
+3. <field> is an expression that evaluates to a symbol.
+4. (<obj> <field> <val>) sets the value of <field> to <value>.
+5. <val> evaluates to any scheme value.
+#+END_EXAMPLE
+
+*** Task 1 - Write a module to define an object
+
+ + Step 1 - Define a procedure for creating an object.  Use the
+   keyword /define/ and  name the  function /make-obj/.   
+
+ + Step 2 - Create a binding using keyword /let/.  Bind the keyword
+   /table/ to the keyword /make-hash/.  Define a local function using
+   the keyword /lambda/ and use /msg/ and /args/ as arguments.
+
+ + Step 3 - Specify a  conditional  on args.  
+   - If  /args/ is  /null?/, 
+     + either return the  /msg/ in /table/ using the  keyword /hash-ref/ 
+     + else produce the error message: "obj: do not know method ~a" with the value of /msg/.  
+     + And, map the /msg/ to the first element of argument /args/ in /table/. 
+
+** Module 2 - Create a method for an object
+
+#+BEGIN_EXAMPLE
+Methods are functions that operate on objects. By convention, the object is the first formal parameter of the method 
+and is named this or self.
+
+Create a method incr-x which increments the value of an object by some amount. The function will have the following 
+signature:
+incr-x: obj? number? -> void?
+#+END_EXAMPLE
+
+*** Task 1 - Define a method. 
+
+ + Step 1 - Define the method to increment a variable from its
+   signature. Use /define/ keyword to define a function /incr-x/.
+
+ + Step 2 - Create a local function using the keyword /lambda/ and
+   give the arguments /this/ and /v/. /this/ is used to denote the
+   current object.
+
+ + Step 3 - Use the keyword /this/ to refer to the current object. Add
+   /v/ to /this/. /v/ is the arbitrary amount with which the object is
+   incremented.
+
+** Module 3 - Create the lookup function to bind the method and object
+
+#+BEGIN_EXAMPLE
+/send/ sets up a protocol for invoking the method name on the object. It looks up the method corresponding to the 
+method name, and then applies that to the list consisting of the object and the rest of the arguments.
+#+END_EXAMPLE
+
+*** Task 1 - Write the lookup function for the increment method defined in the last module. 
+
++ Step 1 - Define the /send/ protocol. Use /define/ keyword to define /send/.
+
++ Step 2 - Use the keyword /lambda/ to create local function. Give the
+  arguments /object/, /method-name/ and arguments /args/. Include
+  object, method and list of arguments as a argument in the function.
+
++ Step 3 - Use /apply/ keyword. It takes two arguments /object/ with
+  the /method-name/ and /object/ with the list of arguments /args/
+  defined by the keyword /cons/. Bind the object to the method and the
+  arguments given.
+
+* Exercise
+
+#+BEGIN_EXAMPLE
+Implement a class point, for representing a two-dimensional point as per the implementation details provided in the 
+Programming section.
+
+The class should have the following methods:
+set - for setting up the values of the coordinates.
+get - for getting the values of the coordinates.
+dist - for calculating the distance between the point and another point (which is passed as an argument).
+rotate - for updating the coordinate values when the system is rotated about the origin by some specified angle.
+translate - for updating the coordinate values when the system is translated to anothe point.
+#+END_EXAMPLE
+
+* Further Readings
+* Feedback 
+Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].
+
