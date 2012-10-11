@@ -43,6 +43,12 @@ function create_user_account($username, $password, $confirm_password) {
 
   $password_hash = "{SHA}" . base64_encode(sha1($password, TRUE));
   exec("/usr/sbin/ldapsetpasswd " . escapeshellarg($username) . " $password_hash");
+
+  //logging into the 12 server to create the home directory
+  $conn = ssh2_connect('10.2.48.12', 22);
+  ssh2_auth_password($conn, $username, $password);
+  ssh2_exec($conn, 'su -u ls -la');
+
 }
 
 function assert_valid_username($username) {
@@ -62,6 +68,6 @@ function connect() {
 
   ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
 
-  return $ldap_conn;
   echo "User Registered. Please proceed to login.";
+  return $ldap_conn;
 }

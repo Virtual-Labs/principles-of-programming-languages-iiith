@@ -50,7 +50,7 @@ if ($_FILES["file"]["size"] < 20000)
 
 			//runing test cases on the files			
 			$test_result_file = $file . "-result";
-			$test_result = "racket " . $upload_path . $file . "/" . $file . "-test.rkt > " . $upload_path .$test_result_file . ";";
+			$test_result = "racket " . $upload_path . $file . "/" . $file . "-test.rkt > " . $upload_path . $test_result_file . ";";
 			exec($test_result);
 
 			//showing contents of the result
@@ -63,8 +63,8 @@ if ($_FILES["file"]["size"] < 20000)
 			ssh2_scp_send($conn, $upload_path . $test_result_file, '/home/evaluator/test_results/' . $_SESSION['username'] . '_' . $test_result_file, 0644);
 
 			//copying the files to the user directory
-			ssh2_exec($conn, 'sudo -u' . $_SESSION['username'] . ' /usr/bin/evaluate /home/evaluator/upload_files/' . $_SESSION['username'] . '_' . $file_orig_name);
-			ssh2_exec($conn, 'sudo -u' . $_SESSION['username'] . ' /usr/bin/evaluate /home/evaluator/test_results/' . $_SESSION['username'] . '_' . $test_result_file);
+			ssh2_exec($conn, 'sudo -u ' . $_SESSION['username'] . ' /usr/bin/evaluate /home/evaluator/upload_files/' . $_SESSION['username'] . '_' . $file_orig_name);
+			ssh2_exec($conn, 'sudo -u ' . $_SESSION['username'] . ' /usr/bin/evaluate /home/evaluator/test_results/' . $_SESSION['username'] . '_' . $test_result_file);
 
 			//deleting tmp folder
 			exec("rm ../tmp/*");
