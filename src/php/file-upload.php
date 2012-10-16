@@ -35,7 +35,7 @@ if ($_FILES["file"]["size"] < 20000)
 			//moving the upload file to upload folder
 			move_uploaded_file($_FILES["file"]["tmp_name"], $upload_path . $_FILES["file"]["name"]);
 			echo "Successfully uploaded : \"" . $_FILES["file"]["name"] . "\"", "\n";
-			$file_orig_name = $_FILES["file"]["name"];
+			$upload_file_name = $_FILES["file"]["name"];
 
 			//extracting the file name without any extension
 			$file_name = $file_parts['filename'];
@@ -59,24 +59,19 @@ if ($_FILES["file"]["size"] < 20000)
 			echo $string; 
 
 			//sending the test result to the server
-			ssh2_scp_send($conn, $upload_path . $_FILES["file"]["name"], ‎'/home/evaluator/upload_files/' . $_SESSION['username'] . '_' . $file_orig_name, 0644);
+			ssh2_scp_send($conn, $upload_path . $upload_file_name, '/home/evaluator/upload_files/' . $_SESSION['username']. '_' . $upload_file_name, 0644);
 			ssh2_scp_send($conn, $upload_path . $test_result_file, '/home/evaluator/test_results/' . $_SESSION['username'] . '_' . $test_result_file, 0644);
-
+			
 			//copying the files to the user directory
-			ssh2_exec($conn, 'sudo -u ' . $_SESSION['username'] . ' /usr/bin/evaluate /home/evaluator/upload_files/' . $_SESSION['username'] . '_' . $file_orig_name);
+			ssh2_exec($conn, 'sudo -u ' . $_SESSION['username'] . ' /usr/bin/evaluate /home/evaluator/upload_files/' . $_SESSION['username'] . '_' . $upload_file_name);
 			ssh2_exec($conn, 'sudo -u ' . $_SESSION['username'] . ' /usr/bin/evaluate /home/evaluator/test_results/' . $_SESSION['username'] . '_' . $test_result_file);
 
 			//deleting tmp folder
-			exec("rm ../tmp/*");
+			exec("rm -rf ../tmp/*");
 		}
 		else
 		        echo "File Type not recognized.";
 		  
-		/*if ($ext == "zip")
-		{	
-			$output = "sudo -Hu www-data chmod 777 ../upload/* ;sudo -Hu www-data unzip ../upload/" . $_FILES["file"]["name"] . " -d ../upload/; sudo -Hu www-data chmod 777 ../upload/*";
-			exec($output);
- 		}*/
 	}
 	else
 	{
@@ -89,3 +84,10 @@ else
 	echo "File size exceeds the permitted limit of 20 KB.";
 }	
 echo "<br /><a href='member-index.php'>Upload and Test more...</a><br /><br />";
+
+		/*if ($ext == "zip")
+		{	
+			$output = "sudo -Hu www-data chmod 777 ../upload/* ;sudo -Hu www-data unzip ../upload/" . $_FILES["file"]["name"] . " -d ../upload/; sudo -Hu www-data chmod 777 ../upload/*";
+			exec($output);
+ 		}*/
+
