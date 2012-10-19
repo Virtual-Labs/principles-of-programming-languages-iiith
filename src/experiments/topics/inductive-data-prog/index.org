@@ -6,8 +6,8 @@
 #+LINK_UP:  ../../content.html#sec-6
 
 * Prerequisites for the Experiment
-
-You should have read Chapter - 1 from the text book *EOPL*. 
+You should have read Chapter 1 - Inductive Sets of Data, from the text
+book *EOPL*. 
 * Learning Objective of the Experiment 
 
 The objective of this experiment is to design and implement recursive procedures on inductive data types. 
@@ -27,30 +27,30 @@ Instructions
 1. Create a file named "inductive-data-prog.ss". 
 2. You can include all the modules in this file, OR,
 3. You can "require" all the modules in this file.
-4. All the modules are verifiable individually. You can also test your code by placing them in a single file. 
+4. All the modules are verifiable individually. You can also test your
+code by placing them in a single file. 
 5. Make sure you upload all the files before testing them. 
 #+END_EXAMPLE
 
-** Module 1 - Compute Factorial of A Number
+** Module 1 - Compute Factorial of a Number
 
 #+BEGIN_EXAMPLE
 Recipe for the design:
 
-Check for the base case(s) first.
+- Check for the base case(s) first.
+  - Do note that  these base cases turn out to  be the ’end-condition’
+for your recursive program, i.e.  the point(s) where the recursive
+program stops calling itself and terminates.
+- Define your problem recursively, and call the function recursively
 
-n : nat?
-if n is 0, then n! = 1
+- Factorial of a number
+ - input          - n : nat?
+ - base case      - if n is 0, then n! = 1
+ - recursive call - else n! = n * (n-1)!
 
-Do note that  these base cases turn out to  be the ’end-condition’ for your recursive program, i.e.  the point(s) 
-where the recursive program stops calling itself and terminates.
-
-Define your problem recursively, and call the function recursively
-else n! = n * (n-1)!
-
-The signature of the function is:
-
-(! num) → nat?
-  num : nat?
+ - The signature of the function is:
+      (! num) → nat?
+       num : nat?
 #+END_EXAMPLE
 
 *** Task 1 - Define the function to compute the factorial of a number. 
@@ -61,11 +61,13 @@ The signature of the function is:
 + Step 2 - Pass an argument /n/ using the keyword /lambda/.
 + Step 3 - Specify the if-else condition using the keyword /cond/.
   - If /n/ is 0, return 1.
-  - Else multiply /n/ with the result of the recursive function /!/ which takes /n-1/ as the argument. 
+  - Else multiply /n/ with the result of the recursive function /!/
+    which takes /n-1/ as the argument. 
 
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel.
+The test cases your program passes successfully will be displayed.
 #+END_EXAMPLE
 
 *** Task 2 - Define the function to compute the factorial of a number using an accumulator. 
@@ -73,17 +75,25 @@ the module by test files by pressing the Test button.
 : Create a module "factorial-acc.ss".
 
 #+BEGIN_EXAMPLE
-When we define a function according to the above method, this is how each call appears:
+When we define a function according to the above method, this is how
+each call appears:
 
 (fact 3)
 = (* 3 (fact 2))
 = (* 3 (* 2 (fact 1)))
 = (* 3 (* 2 (* 1 (fact 0))))
 
-This kind of growing context may result in a stack-overflow problem. Also, the above logic fails for cases like (fact -1),
-where it results in an infinite loop.
+This kind of growing context may result in a stack-overflow
+problem. 
 
-In order to overcome this issue, we use "accumulators". Accumulator is the value in which we store the result so far. 
+Also, the above logic fails for cases like (fact -1), where it results
+in an infinite loop.
+
+In order to overcome these issues, we use "accumulators". 
+
+Accumulator is the value in which we store the "cumulative" result
+from each step. That is, the computation of the previous result with
+the current is done and then stored.
 #+END_EXAMPLE
 
 + Step 1 - Name the function /fact-acc/. 
@@ -91,12 +101,15 @@ In order to overcome this issue, we use "accumulators". Accumulator is the value
 + Step 3 - Specify an if-else condition using the keyword /cond/.
   - If /n/ is 0, return a.
   - Else, call /fact-acc/ recursively giving the arguments /n-1/ and /a*n/. 
-+ Step 4 - Define another function /fact/ which calls /fact-acc/ and also provide an argument /n/. 
-+ Step 5 - Make a call to the function /fact-acc/ and give the arguments /n/ and 1. 
++ Step 4 - Define another function /fact/ which calls /fact-acc/ and
+  also provide an argument /n/. 
++ Step 5 - Make a call to the function /fact-acc/ and give the
+  arguments /n/ and 1. 
 
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel.
+The test cases your program passes successfully will be displayed.
 #+END_EXAMPLE
 
 ** Module 2 - Compute the length of a list. 
@@ -104,7 +117,8 @@ the module by test files by pressing the Test button.
 : Create a module "list-length.ss".
 
 #+BEGIN_EXAMPLE
-This function computes the length of the list. The signature of the function is:
+This function computes the length of the list. The signature of the
+function is:
 
 (list-length ls) → nat?
   ls : list?
@@ -116,11 +130,13 @@ This function computes the length of the list. The signature of the function is:
 + Step 2 - Use the keyword /lambda/ to pass the argument /ls/. 
 + Step 3 - Specify an if-else condition using the keyword /cond/. 
   - If /ls/ is null, return 0.
-  - Else, call /list-length/ recursively passing the rest of the list /ls/ using the keyword /rest/ and add 1 to this call. 
+  - Else, call /list-length/ recursively passing the rest of the list
+    /ls/ using the keyword /rest/ and add 1 to this call. 
 
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel.
+The test cases your program passes successfully will be displayed.
 #+END_EXAMPLE
 
 ** Module 3 - Compute the sum of the elements in a list. 
@@ -128,7 +144,8 @@ the module by test files by pressing the Test button.
 : Create a module "list-sum.ss".
 
 #+BEGIN_EXAMPLE
-This function computes the sum of all the elements in a list. The signature of the function is:
+This function computes the sum of all the elements in a list. The
+signature of the function is:
 
 (list-sum ls) → nat?
   ls : list?
@@ -142,15 +159,18 @@ This function computes the sum of all the elements in a list. The signature of t
   - If /ls/ is null, return 0.
   - Else
     + Fetch the first element of the list /ls/ using the keyword /first/. 
-    + Call the function /list-sum/ recursively by passing the rest of the list /ls/ as argument using the keyword /rest/. 
+    + Call the function /list-sum/ recursively by passing the rest of
+      the list /ls/ as argument using the keyword /rest/. 
     + Add both these elements. 
 
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel. 
+The test cases your program passes successfully will be displayed.
 #+END_EXAMPLE
 
-* Exercise
+* Further Exercises
+- none
 
 * Further Readings
 

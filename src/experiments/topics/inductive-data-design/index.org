@@ -7,11 +7,12 @@
 
 * Prerequisites for the Experiment
 
-You should have read Section 1.1, Chapter - 1 from the text book *EOPL*. 
+You should have read Section 1.1 - Recursively Specified Data of
+Chapter 1 - Inductive Sets of Data, from the text book *EOPL*. 
+
 * Learning Objective of the Experiment 
 The objective of  this experiment is to define  the natural numbers as
 an inductive datatype using the representation of lists.
-
 * Theory 
 
 Informally, an inductive datatype is a datatype whose
@@ -40,9 +41,10 @@ built one at a time, step by step.
 Mathematically, the set *N* of natural numbers is the
 smallest set of values satisfying the conditions
 
-   - 1. *Z()* belongs to *N*
+   - *z()* belongs to *N*
 
-   - 2. if /n/ belongs to *N* then *s(n)* belongs to *N*
+   - if /n/ belongs to *N* then *s(n)* belongs to *N* where *s(n)* is
+     called the successor of /n/
 	
 An equivalent short hand for the above is the set of the
 following rules:
@@ -58,69 +60,73 @@ following rules:
 
 #+end_example
 
-Here, we have two rules, called ZERO and SUCC (for
-successor).  Each rule consists of two parts divided by a
-horizontal line, which may be read as an "if-then". The
-part(s) above the line is called /hypothesis/ or
-/antecedent/; the part below the line is called the
-/consequent/ or /conclusion/.  The colon denotes
-membership in the set *N*.  *Z* and *s* are
-constructors.  You may think of constructors as
-functions.  In the above case, *Z* takes nothing and
-returns an element of *N*.  *s* takes an element
-of *N* and returns another element of *N*.
+- Here, we have two rules, called ZERO and SUCC (for successor).  Each
+  rule consists of two parts divided by a horizontal line, which may
+  be read as an "if-then". 
+   - The part(s) above the line is called /hypothesis/ or
+     /antecedent/; 
+   - The part below the line is called the /consequent/ or
+     /conclusion/.  
+- The colon denotes membership ie /n:N/ denotes the membership of /n/
+  in the set *N*.  
+- *z* and *s* are constructors.  You may think of constructors as
+  functions.  
+   - In the above case, *z* takes nothing and returns an element of
+     *N*.  
+   - *s* takes an element of *N* and returns another element of *N*.
+- Depending on our choice of *z* and *s*, different /representations/
+  of *N* are possible.  
+- The constraints on the constructors are the following:
 
-Depending on our choice of *Z* and *s*,
-different /representations/ of *N* are
-possible.  The constraints on the constructors are the
-following:
+  -  Each constructor is injective.
 
-  - 1.  Each constructor is injective.
+  -  Each constructor is distinct from the other.
 
-  - 2.  Each constructor is distinct from the other.
+  - The above two constraints guarantee that every element of the
+    inductive type is /uniquely/ constructed using the constructors.  
 
-The above two constraints guarantee that every element of the
-inductive type is /uniquely/ constructed using the
-constructors.  From this we may then conclude that /if
-n is an element of N/, then exactly one of the following is true:
 
-1. n = *z()*
-2. n = *s(m)* for a unique m
-	
-In the particular case of *N*, the /m/ above is called
-/the predecessor of n/.
+- From this we may then conclude that /if n is an element of N/, then
+  exactly one of the following is true:
+     - n = *z()* or
+     - n = *s(m)* for a unique m
+     - In the particular case of *N*, the /m/ above is called /the
+       predecessor of n/.
 
 * Procedure
 
 #+BEGIN_EXAMPLE
 Instructions
 
-  - 1. Create a file named "inductive-data-design.ss". 
+  - Create a file named "inductive-data-design.ss". 
 
-  - 2. Write the scheme program in this file. 
+  - Write the scheme program in this file. 
 
 #+END_EXAMPLE
 
 ** Module 1 - Denote natural numbers as a list. 
 
 #+BEGIN_EXAMPLE
-A natural number is either zero or a successor of
-another natural number.
+A natural number is either zero or a successor of another natural
+number.
 
-The type predicate for natural numbers is called nat?.The signature for the datatype /nat/ is:
+The type predicate for natural numbers is called nat?.
 
+The signature for the datatype nat is:
 nat? : any/c -> boolean?
 
 It shall have two constructors z (for zero) and s (for
-successors).  The predicates z?  and s? will denote the
-corresponding subtypes of nat?.
+successors).  
 
-More specifically, you will need to define the following
-functions with the signatures given below:
+The predicates z?  and s? will denote the corresponding subtypes of
+nat?.
+
+More specifically, you will need to define the following functions
+with the signatures given below:
 
 z : () -> z?   [Hint: z could return the empty list]
 z?: any/c -> bool
-s : nat? -> nat? [Hint: s could cons the symbol 'a to its argument]
+s : nat? -> nat? [Hint: s could cons a symbol to its argument]
 s?: any/c -> bool
 nat?  = (or/c z? s?)
 #+END_EXAMPLE
@@ -141,71 +147,89 @@ Things you need to know:
 
 #+END_EXAMPLE
 
-+ Step 1 - Define the constructor for zero as the function "z" that takes no argument and returns the empty list.  
++ Step 1 - Define the constructor for zero as the function "z" that
+  takes no argument and returns the empty list.  
 
-/z/ takes an empty list and returns an element of type /z?/ which is a boolean.
-Define /z/ as the element 0 which can be represented as an empty list (). 
+         - /z/ takes an empty list and returns an element of type /z?/
+           which is a boolean.
+
+         - Define /z/ as the element 0 which can be represented as an
+           empty list (). 
 
 + Step 2 - Define the type predicate /z?/.
 
-/z?/ takes any Scheme value and returns a Boolean. It compares the given Scheme value to check if it belongs to the type /z/. 
-Pass an argument /thing/ to the function /z?/. Use /eq?/ to compare the argument given /thing/ with the datatype /z/.  
+         - /z?/ takes any Scheme value and returns a Boolean. 
+
+         - It compares the given Scheme value to check if it belongs
+           to the type /z/. 
+
+         - Pass an argument /thing/ to the function /z?/. 
+
+         - Use /eq?/ to compare the argument given /thing/ with the
+           datatype /z/.  
 
 *** Task 2 - Define the constructor /s/ and its predicate as a function. 
 
-+ Step 1 - Define the constructor for successor as the function "s" that takes a constant "n" and creates a list of alphabet "a" n number of times. 
-/s/ takes any element of type /nat?/ and gives back an element of type /s?/ which is a boolean. 
-We represent natural numbers with a list of character 'a'. 
-Define /s/ with another argument /n/. Use the keyword /cons/ to create a list of 'a' n number of times. 
++ Step 1 - Define the constructor for successor as the function "s"
+  that takes a constant "n" and creates a list of alphabet "a" n
+  number of times. 
+
+   - /s/ takes any element of type /nat?/ and gives back an element of
+     type /s?/ which is a boolean. 
+   - represent natural numbers with a list of character 'a'. 
+   -  Define /s/ with another argument /n/. Use the keyword /cons/ to
+      create a list of 'a' n number of times. 
+
  
 + Step 2 - Define the predicate /s?/.  
-/s?/ takes any Scheme value and
-returns a Boolean.  
-Pass  an argument  /thing/ to  the function
-/s?/.  The argument  /thing/ should be a /list?/.  The /first/ element
-of /thing/ should be the constant 'a'. And, rest of the list should be
-of type /nat?/. 
+
+    - /s?/ takes any Scheme value and returns a Boolean.  
+    - Pass  an argument  /thing/ to  the function /s?/. The argument
+      /thing/ should be a /list?/.  
+    - The /first/ element of /thing/ should be the constant 'a'. And,
+      rest of the list should be of type /nat?/. 
 
 *** Task 3 - Define the predecessor function on /s/ as a function. 
 
 + Step 1 - Define /prev/. 
-/prev/ takes an element of type /s?/ and gives back an element of type natural number /nat?/. 
-Define /prev/ along with another argument /a/. The body of the function returns the rest of the elements of the list /a/ using the keyword /rest/. 
+    - /prev/ takes an element of type /s?/ and gives back an element
+      of type natural number /nat?/. 
+    - Define /prev/ along with another argument /a/. The body of the
+      function returns the rest of the elements of the list /a/ using
+      the keyword /rest/. 
 
 *** Task 4 - Define the type predicate /nat?/ as a function.
-/nat?/ has an element which either belongs to /z?/ or /s?/ subtype. 
-Define /nat?/ along with another argument /thing/. The argument /thing/ belongs to /z?/ or /s?/ subtypes. Use the keyword /or/ to specify both the statements. 
++ Step 1 - Define /nat?/
+    - /nat?/ has an element which either belongs to /z?/ or /s?/
+      subtype. 
+    - Define /nat?/ along with another argument /thing/. The argument
+      /thing/ belongs to /z?/ or /s?/ subtypes. Use the keyword /or/
+      to specify both the statements. 
 
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel. 
+The number of test cases your code has passed will be displayed.
 #+END_EXAMPLE
 
-* Exercise
+* Additional Exercises
 #+BEGIN_EXAMPLE
-Problem 1.
-
-Nullary constructors can instead be replaced by constants.
-
-Change the definition of z from a nullary function that produces the empty list to the empty list itself.
-
-Do you need to change any other definitions in the nat module?  [Which one?: Ans: z?]
+Problem 1:
+ - Nullary constructors can instead be replaced by constants.
+ - Change the definition of z from a nullary function that produces
+   the empty list to the empty list itself.
+ - Do you need to change any other definitions in the nat module?
+   [Which one?: Ans: z?]
 #+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
-Problem 2.
-
-Redo nat? but this time using strings as the underlying representation.
+Problem 2:
+ - Redo nat? but this time using strings as the underlying
+   representation.
 #+END_EXAMPLE
 
 * Further Readings
 
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].
-
-
-
-
-
-
 
