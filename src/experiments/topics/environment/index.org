@@ -7,7 +7,8 @@
 
 * Prerequisites for the Experiment
 
-You should have read Section 2.2, Chapter - 2 from the text book *EOPL*. 
+You should have read Chapter - 2, Data Abstraction from the text book
+*EOPL*. 
 * Learning Objectives of the Experiment 
 
 The goal of this experiment is to learn how to create and define an
@@ -15,7 +16,7 @@ empty environment and an extended environment from an existing
 environment. We also define a lookup function which looks up an identifier in a given environment. 
 
 * Theory
-Real programming languages have identifiers, like x, y, etc. When a
+Real programming languages have identifiers, like /x/, /y/, etc. When a
 program runs, these identifiers are bound to denotable values. In
 other words, the identifiers in a program denote values (whose type is
 "denotable values") In this experiment our goal is to design and
@@ -30,13 +31,13 @@ assume throughout that identifiers are represented by symbols.
 
 *Example*
 
-Consider the environment e given below:
+Consider the environment /e/ given below:
 
 {(x,3), (y, 5)}
 
 This environment consists of two bindings. Naturally, the ordering of
-the bindings isn’t relevant. Looking up x in e returns 3; looking up y
-returns 5. The binding of any other identifier in e is undefined. We
+the bindings isn’t relevant. Looking up /x/ in /e/ returns /3/; looking up /y/
+returns /5/. The binding of any other identifier in /e/ is undefined. We
 may assume that carrying out a lookup for an identifier not in the
 domain of e results in the raising of an error.
 
@@ -63,37 +64,45 @@ Instructions
 1. Create a file named "environment.ss". 
 2. You can include all the modules in this file, OR,
 3. You can "require" all the modules in this file.
-4. All the modules are verifiable individually. You can also test your code by placing them in a single file. 
+4. All the modules are verifiable individually. You can also test your
+code by placing them in a single file. 
 5. Make sure you upload all the files before testing them. 
 #+END_EXAMPLE
 
 ** Module 1 - Define Abstract Syntax for empty and extended environments.
 
-: Create a module "env.ss". Require the modules relevant and provide the functions defined in this module.
+: Create a module "env.ss". 
+Require the modules relevant and provide the functions defined in this module.
 
 *** Task 1 - Define an empty environment. 
 
 #+BEGIN_EXAMPLE
-The first variant of an environment is the empty environment. The empty environment is constructed using a constructor, 
-which we name as empty-env. The signature of the empty-env is: 
+The first variant of an environment is the empty environment. The
+empty environment is constructed using a constructor, which we name as
+empty-env. The signature of the empty-env is: 
 
 (empty-env) → env?
 #+END_EXAMPLE
 
 + Step 1 - Define the constructor for the empty environment.
-The constructor is named empty-env. It takes no arguments. 
+   - The constructor is named empty-env. 
+   - It takes no arguments. 
 
 *** Task 2 - Define an extended environment from a given old environment. 
 
 #+BEGIN_EXAMPLE
-In the theory, we considered the composition of environments. Composition is a form of construction. In all the use
-cases for environments we will encounter, we will come across the need to construct a new environment from an existing 
-environment and a set of identifiers and their (respective) denotable values, instead of two environments. Therefore, 
-we talk of an extended environment built from a list of identifiers, a list of denotable values, and an existing (old) 
-environment.
+In the theory, we considered the composition of
+environments. Composition is a form of construction. In all the use
+cases for environments we will encounter, we will come across the need
+to construct a new environment from an existing environment and a set
+of identifiers and their (respective) denotable values, instead of two
+environments. Therefore, we talk of an extended environment built from
+a list of identifiers, a list of denotable values, and an existing
+(old) environment.
 
-The extended environment is denoted as extended-env. It takes three arguments - identifiers, denotable values and an 
-old environment. The signature for the extended-env is as follows:
+The extended environment is denoted as extended-env. It takes three
+arguments - identifiers, denotable values and an old environment. The
+signature for the extended-env is as follows:
 
 (extended-env ids vals old-env) → env?
 ids : (listof symbol?)
@@ -102,29 +111,34 @@ old-env : env?
 #+END_EXAMPLE
 
 + Step 1 - Define the constructor for the extended environment.  
-The name of the constructor is /extended-env/. It takes /ids/, /vals/ and
-/old-env/. Write the type predicates along with the arguments.
+   - The name of the constructor is /extended-env/. 
+   - It takes /ids/, /vals/ and /old-env/. 
+   - Write the type predicates along with the arguments.
 
 *** Task 3 - Define the datatype /env/. 
 
 #+BEGIN_EXAMPLE
-The environment is defined using the construct define-datatype. The datatype for the environment is called "env". 
-The type predicate for env is "env?". It takes two constructors - empty-env and extended-env.
+The environment is defined using the construct define-datatype. The
+datatype for the environment is called "env". The type predicate for
+env is "env?". It takes two constructors - empty-env and extended-env.
 #+END_EXAMPLE
 
 + Step 1 - Define /env/.  
-Use the construct /define-datatype/ to
-define /env/. The type predicate for /env/ is /env?/. It takes two
-constructors - /empty-env/ and /extended-env/.
+   - Use the construct /define-datatype/ to define /env/. 
+   - The type predicate for /env/ is /env?/. 
+   - It takes two constructors - /empty-env/ and /extended-env/.
 
 ** Module 2 - Define a look-up function to look up an identifier using an environment. 
 
-: Create a module "lookup.ss". Require the modules relevant and provide the functions defined in this module.
+: Create a module "lookup.ss". 
+Require the modules relevant and provide the functions defined in this module.
 
 #+BEGIN_EXAMPLE
-The lookup function takes an environment and an identifier and returns either a denotable value raises an 
-"identifier not bound" error. The lookup function is defined as "lookup-env" and it takes two arguments - 
-an identifier "id" and an environment "env". The signature of the lookup function is as follows:
+The lookup function takes an environment and an identifier and returns
+either a denotable value raises an "identifier not bound" error. The
+lookup function is defined as "lookup-env" and it takes two
+arguments - an identifier "id" and an environment "env". The signature
+of the lookup function is as follows:
 
 (lookup-env id env) → denotable-value?
 id : symbol?
@@ -133,8 +147,9 @@ env : env?
  
 *** Task 1 - Define the predicate /empty-env?/. 
 
- + Step 1 - Use /define/ to define a type /empty-env?/. Create a local
-   function using /lambda/ and use /e/ as an argument.
+ + Step 1 - Use /define/ to define a type /empty-env?/. 
+    - Create a local function using /lambda/ and use /e/ as an
+      argument.
 
  + Step 2 -Specify cases on the /env e/. 
    - Case 1: for /empty-env ()/, it returns true /#t/. 
@@ -142,36 +157,51 @@ env : env?
 
 *** Task 2 - Define the predicate /empty-env?/. 
 
- + Step 1 - Use /define/ to define a type /extended-env?/. Create a
-   local function using /lambda/ and use /e/ as an argument.
+ + Step 1 - Use /define/ to define a type /extended-env?/. 
+    - Create a local function using /lambda/ and use /e/ as an
+      argument.
  
  + Step 2 - Specify cases on the /env e/. 
    - Case 1: for /empty-env ()/, it returns false /#f/. 
    - Case 2: Else true /#t/. 
 
 *** Task 3 - Define a procedure /list-index/. 
- + Step 1 - Use /define/ to build a procedure /list-index/. Create a local function using /lambda/. Use arguments /ls/ and /a/.
+ + Step 1 - Use /define/ to build a procedure /list-index/. 
+    - Create a local function using /lambda/. 
+    - Use arguments /ls/ and /a/.
 
- + Step 2 - Create a binding using /letrec/. Bind an id /loop/ to the local function created by /lambda/. It takes /ls/ and /ans/ as its arguments.
+ + Step 2 - Create a binding using /letrec/. 
+    - Bind an id /loop/ to the local function created by /lambda/. 
+    - It takes /ls/ and /ans/ as its arguments.
 
  + Step 3 - Specify if-else condition inside the /lambda/. 
-   - If list is null?, return -1.edur
+   - If list is null?, return -1.
    - If the first element of list is equal to /a/, return /ans/. 
-   - If true, run the procedure /loop/ on rest of the list and increment /ans/ by 1.
+   - If true, run the procedure /loop/ on rest of the list and
+     increment /ans/ by 1.
  
- + Step 4 - Along with the binding at the level of /loop/ in letrec, it also calls the function /loop/ with the arguments /ls/ and /0/. 
+ + Step 4 - Along with the binding at the level of /loop/ in letrec,
+   it also calls the function /loop/ with the arguments /ls/ and /0/. 
 
 *** Task 4 - Define procedure /lookup-env/ to check if an identifier is bound in a given environment.
 
- + Step 1 - Use /define/ to build a procedure /lookup-env/. Create a local function using /lambda/ with arguments /e/ and /x/.
+ + Step 1 - Use /define/ to build a procedure /lookup-env/. 
+    - Create a local function using /lambda/ with arguments /e/ and
+      /x/.
  
  + Step 2 - Specify the cases on /env e/. 
     - Case 1: /empty-env/ raises error: "unbound identifier ~a".
-    - Case 2: /extended-env/ which takes arguments /syms/, /vals/ and /outer-env/. Use /let/ to bind the id /j/ to the value returned by /list-index/ which takes arguments /syms/ and /x/. Specify if-else condition using keyword /cond/. If /j/ equals /-1/, recursively call the function /lookup-env/ and give the arguments /outer-env/ and /x/. Else, if it returns true, return the element in /vals/ at position /j/.
+    - Case 2: /extended-env/ which takes arguments /syms/, /vals/ and
+      /outer-env/. Use /let/ to bind the id /j/ to the value returned
+      by /list-index/ which takes arguments /syms/ and /x/. Specify
+      if-else condition using keyword /cond/. If /j/ equals /-1/,
+      recursively call the function /lookup-env/ and give the
+      arguments /outer-env/ and /x/. Else, if it returns true, return
+      the element in /vals/ at position /j/.
     
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel.
 #+END_EXAMPLE
 
 * Exercise

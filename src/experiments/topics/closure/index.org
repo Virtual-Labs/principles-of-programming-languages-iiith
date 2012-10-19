@@ -6,32 +6,45 @@
 #+LINK_UP: ../../content.html#sec-6
 
 * Prerequisites for the Experiment
-
-You should have read Section 3.3, Chapter - 3 from the text book *EOPL*. 
-
+You should have read Chapter - 3, Expressions from the text book
+*EOPL*. 
 * Learning Objectives of the Experiment 
-The goal of this experiment is to design and implement the abstract syntax, evaluator and parser for a simple Arithmetic language which evaluates expressions. 
-
+The goal of this experiment is to design and implement the abstract
+syntax, evaluator and parser for a simple Arithmetic language which
+evaluates expressions. 
 * Theory
-A first-class object is an entity that can be passed as a parameter, assigned to a variable, or returned from a subroutine. Such first class objects can be constructed at runtime. Treating functions as first class objects is a necessity for functional programming, particularly in higher order functions. Higher order functions are those functions which either take one or more functions as input or output a function. These are also known as operators or functionals in mathematics. Thus, functions are now denotable values.
+A first-class object is an entity that can be passed as a parameter,
+assigned to a variable, or returned from a subroutine. Such first
+class objects can be constructed at runtime. Treating functions as
+first class objects is a necessity for functional programming,
+particularly in higher order functions. Higher order functions are
+those functions which either take one or more functions as input or
+output a function. These are also known as operators or functionals in
+mathematics. Thus, functions are now denotable values.
 
-Building a Language with Closures will require again the following four steps:
+Building a Language with Closures will require again the following
+four steps:
 
 *Abstract Syntax*
 
-Similar to the previous languages, we decide to use a list based abstract syntax for representing procedures.
+Similar to the previous languages, we decide to use a list based
+abstract syntax for representing procedures.
 
 (function ((identifier x) (identifier y)) exp)
 
-This represents a procedure which takes two arguments x and y and evaluates an expression in its body.
+This represents a procedure which takes two arguments x and y and
+evaluates an expression in its body.
 
 *Parsing*
 
-This converts the input sequence (in concrete syntax) into abstract syntax tree representation.
+This converts the input sequence (in concrete syntax) into abstract
+syntax tree representation.
 
 *Evaluation*
 
-The evaluator is responsible for evaluating the abstract syntax tree produced by the parser to come up with the output of the input program sequence.
+The evaluator is responsible for evaluating the abstract syntax tree
+produced by the parser to come up with the output of the input program
+sequence.
 
 For example: for the following scheme expression;
 
@@ -52,190 +65,232 @@ Instructions
 1. Create a file named "closure.ss". 
 2. You can include all the modules in this file, OR,
 3. You can "require" all the modules in this file.
-4. All the modules are verifiable individually. You can also test your code by placing them in a single file. 
+4. All the modules are verifiable individually. You can also test your
+code by placing them in a single file. 
 5. Make sure you upload all the files before testing them. 
 #+END_EXAMPLE
 
 ** Module 1 - Design the Abstract Syntax for the Language with Closures
 
-: Create a module "closure-ast.ss". Require the modules relevant and provide the functions defined in this module.
+: Create a module "closure-ast.ss". 
+Require the modules relevant and provide the functions defined in this module.
 
 *** Task 1 - Write the function to define the abstract syntax tree for the expressions.
 
 #+BEGIN_EXAMPLE
-A closure expression either consists of numbers or boolean values or expressions with primary operators - +,-,/,* 
-and operands as well as assume blocks, identifiers, functions and apply operations. Thus, the grammar of such a 
-language can be written as:
+A closure expression either consists of numbers or boolean values or
+expressions with primary operators - +,-,/,* and operands as well as
+assume blocks, identifiers, functions and apply operations. Thus, the
+grammar of such a language can be written as:
 
 ast ::= num-ast | assume-ast | id-ref-ast | function-ast | app-ast
 
 where
+ - num-ast implies an ast consisting of only numbers, for example: 5,
+   6, 2, 0 etc.
+ - assume-ast consists of a list of bindings and a body which are
+   again of the form ast.
+ - id-ref-ast consists of an identifier only, example ’x’.
+ - function-ast consists of a list of formals which are identifiers
+   and a body which is a ast.
+ - app-ast consists of an operator and an operation (which in turn are
+   again of the form - ast). This is used since operations are now not
+   always inbuilt, so using prim-app is not going to be always
+   correct.
 
-num-ast implies an ast consisting of only numbers, for example: 5, 6, 2, 0 etc.
-assume-ast consists of a list of bindings and a body which are again of the form ast.
-id-ref-ast consists of an identifier only, example ’x’.
-function-ast consists of a list of formals which are identifiers and a body which is a ast.
-app-ast consists of an operator and an operation (which in turn are again of the form - ast). This is used since 
-operations are now not always inbuilt, so using prim-app is not going to be always correct.
-
-Thus, we define the abstract syntax for the language with functions as a datatype named "ast". The type predicate for 
-the datatype ast is "ast?". It shall have constructors for various elements of the language - number, app, id-ref,
-assume and function.
+Thus, we define the abstract syntax for the language with functions as
+a datatype named "ast". The type predicate for the datatype ast is
+"ast?". It shall have constructors for various elements of the
+language - number, app, id-ref, assume and function.
 
 The constructor number creates ast for only numbers. 
 number : number? -> ast?
 
-The constructor app takes an operator and list of operands both of which are of the form "ast".
+The constructor app takes an operator and list of operands both of
+which are of the form "ast".
 (app rator rands) → ast?
 rator : ast?
 rands : (list-of ast?)
 
-The constructor id-ref defines an identifier as an ast. It takes an argument sym. The type predicate for sym is id?.
+The constructor id-ref defines an identifier as an ast. It takes an
+argument sym. The type predicate for sym is id?.
 (id-ref sym) -> ast?
 sym : id?
 
-The constructor assume takes a list of bindings denoted by binds and a body denoted by body and returns an ast. 
+The constructor assume takes a list of bindings denoted by binds and a
+body denoted by body and returns an ast. 
 (assume binds body) → ast?
 binds : (list-of bind?)
 body : ast?
 
-The constructor function consists of a list of formals which are identifiers and a body which is an "ast".
+The constructor function consists of a list of formals which are
+identifiers and a body which is an "ast".
 (function formals body) → ast?
 formals : (list-of id?)
 body : ast?
 #+END_EXAMPLE
 
- + Step 1 - Write the constructor for numbers from its given signature. 
-A /number/ takes an argument /datum/ of type /number?/. 
+ + Step 1 - Write the constructor for numbers from its given
+   signature. 
+    - A /number/ takes an argument /datum/ of type /number?/. 
 
- + Step 2 - Write the constructor for expressions from its given signature.  
-We do not use prim-app from the previous experiments. 
-Instead, we declare /app/ which takes operator /rator/ and operands /rands/ as arguments and returns a value whose type predicate is an /ast?/. 
-The type predicate of /rator/ is /ast?/.
-The type predicate of /rands/ is list of asts /list-of ast?/. 
+ + Step 2 - Write the constructor for expressions from its given
+   signature.  
+   - We do not use prim-app from the previous experiments. 
+   - Instead, we declare /app/ which takes operator /rator/ and
+     operands /rands/ as arguments and returns a value whose type
+     predicate is an /ast?/. 
+   - The type predicate of /rator/ is /ast?/.
+   - The type predicate of /rands/ is list of asts /list-of ast?/. 
 
- + Step 3 - Write the constructor for an identifier from its given signature.
-An identifier /id-ref/ takes a variable /sym/ of the type /id?/.
+ + Step 3 - Write the constructor for an identifier from its given
+   signature.
+    -  An identifier /id-ref/ takes a variable /sym/ of the type
+       /id?/.
 
- + Step 4 - Write the constructor for binding the identifier to its value from its signature.  
-/assume/ takes two arguments /binds/ and
-/body/. The type predicate for /binds/ is /bind?/. It is a list of all
-available bindings. The type predicate for /body/ is an /ast?/.
+ + Step 4 - Write the constructor for binding the identifier to its
+   value from its signature.  
+    - /assume/ takes two arguments /binds/ and /body/. 
+    - The type predicate for /binds/ is /bind?/. It is a list of all
+      available bindings. 
+    - The type predicate for /body/ is an /ast?/.
 
  + Step 5 - Write the signature for /function/.
-The /function/ takes list of /formals/ and /body/ as arguments and returns a value whose type predicate is an /ast?/.
-The type predicate for /formals/ is list of ids /list-of id?/.
-The type predicate for /body/ is /ast?/. 
+    - The /function/ takes list of /formals/ and /body/ as arguments
+      and 
+    - returns a value whose type predicate is an /ast?/.
+    - The type predicate for /formals/ is list of ids /list-of id?/.
+    - The type predicate for /body/ is /ast?/. 
 
- + Step 6 - Use /define-datatype/ to define the abstract syntax for the Language with Functions.  
-The name of the function should be
-/ast/. The type predicate of the function is /ast?/. It has a
-constructor /number/, /app/, /id-ref/, /assume/ and /function/.
+ + Step 6 - Use /define-datatype/ to define the abstract syntax for
+   the Language with Functions.  
+    - The name of the function should be /ast/. 
+    - The type predicate of the function is /ast?/. 
+    - It has a constructor /number/, /app/, /id-ref/, /assume/ and
+      /function/.
 
 *** Task 2 - Define other functions. 
 
  + Step 1 - Define  the type /bind?/.  
-Use /define-datatype/ to define
-the function  /bind/.  The  type predicate of  the function  /bind/ is
-/bind?/.   It  defines  a  constructor  /make-bind/  which  takes  two
-arguments /b-id/ and  /b-ast/. The type predicate for  /b-id/ is /id?/
-and type predicate for /b-ast/ is /ast?/.
+    - Use /define-datatype/ to define the function  /bind/.  
+    - The  type predicate of  the function  /bind/ is /bind?/.   
+    - It  defines  a  constructor  /make-bind/  which  takes  two
+      arguments /b-id/ and  /b-ast/. 
+    - The type predicate for  /b-id/ is /id?/ and 
+    - type predicate for /b-ast/ is /ast?/.
 
  + Step 2 - Define function /bind-id/.  
-
-Use /define/ to build a function /bind-id/. It takes an argument /b/
-using /lambda/. Specify /cases/ on /bind b/. It uses the constructor
- /make-bind/ which takes two arguments /b-id/ and /b-ast/ and returns b-id/.
+    - Use /define/ to build a function /bind-id/. 
+    - It takes an argument /b/ using /lambda/. 
+    - Specify /cases/ on /bind b/. 
+    - It uses the constructor /make-bind/ which takes two arguments
+      /b-id/ and /b-ast/ and returns b-id/.
 
  + Step 3 - Define function /bind-ast/.
-
-Use /define/ to build a function /bind-ast/. It takes an argument /b/
- using /lambda/. Specify /cases/ on /bind b/.  It uses the constructor
-/make-bind/ which takes two arguments /b-id/ and /b-ast/ and returns /b-ast/.
+    - Use /define/ to build a function /bind-ast/. 
+    - It takes an argument /b/ using /lambda/. 
+    - Specify /cases/ on /bind b/.  
+    - It uses the constructor /make-bind/ which takes two arguments
+      /b-id/ and /b-ast/ and returns /b-ast/.
   
  + Step 4 - Define /id?/. 
-Define /id?/ to take values of the type /symbol?/. 
+    - Define /id?/ to take values of the type /symbol?/. 
 
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel.
 #+END_EXAMPLE
 
 ** Module 2 - Define the Semantic Domains for the Language with Closures
 
-: Create a module "closure-semanticdomain.ss". Require the modules relevant and provide the functions defined in this module.
+: Create a module "closure-semanticdomain.ss". 
+Require the modules relevant and provide the functions defined in this module.
 
 #+BEGIN_EXAMPLE
-While designing any programming language, it is highly important to specify the set of values that the language 
-manipulates.
+While designing any programming language, it is highly important to
+specify the set of values that the language manipulates.
 
 Each language has, the following sets of values:
-1. Expressible Values : set of values that are the results of evaluation of expressions (ASTs), and,
+1. Expressible Values : set of values that are the results of
+evaluation of expressions (ASTs), and,
 2. Denotable Values : set of values which are bound to variables.
 #+END_EXAMPLE
 
 *** Task 1 - Define the domain values of the inputs for the language. 
 
 #+BEGIN_EXAMPLE
-In our case, since any expression evaluates to a number, the set of expressible values would be a number or a 
-procedure. Thus, an expressible value has the type predicate expressible-value? which has the following signature:
+In our case, since any expression evaluates to a number, the set of
+expressible values would be a number or a procedure. Thus, an
+expressible value has the type predicate expressible-value? which has
+the following signature:
 
 expressible-value? : any/c -> boolean?
 #+END_EXAMPLE
 
- + Step 1 - Define the function to specify the expressible values from its signature. 
-Define a predicate /expressible-value?/. It can return any value from number or proc. 
-Thus, use /or\/c/ to specify that the return type can be a /number?/ or /proc?/. 
+ + Step 1 - Define the function to specify the expressible values from
+   its signature. 
+    - Define a predicate /expressible-value?/. 
+    - It can return any value from number or proc. Thus, use /or\/c/
+      to specify that the return type can be a /number?/ or /proc?/. 
 
 *** Task 2 - Define the domain values of the expressions for the language. 
 
 #+BEGIN_EXAMPLE
-Similarly, the denotable values are denoted by the type predicate denotable-value? and has the following signature:
+Similarly, the denotable values are denoted by the type predicate
+denotable-value? and has the following signature:
 
 denotable-value? : any/c -> boolean?
 #+END_EXAMPLE
 
- + Step 1 - Define the function to specify the denotable values from its signature. 
-Define a predicate /denotable-value?/. It can return any value from number or proc. 
-Thus, use /or\/c/ to specify that the return type can be a /number?/ or /proc?/. 
+ + Step 1 - Define the function to specify the denotable values from
+   its signature. 
+    - Define a predicate /denotable-value?/. 
+    - It can return any value from number or proc. Thus, use /or\/c/
+      to specify that the return type can be a /number?/ or /proc?/. 
 
 *** Task 3 - Define type /proc?/. 
 
  + Step 1 - Write the constructor for /prim-proc/. 
-/prim-proc/ takes two arguments /prim/ and /sig/. 
-The type predicate for /prim/ is /procedure?/.
-The type predicate for /sig/ is list of procedures /list-of procedure?/.
+    - /prim-proc/ takes two arguments /prim/ and /sig/. 
+    - The type predicate for /prim/ is /procedure?/.
+    - The type predicate for /sig/ is list of procedures /list-of
+      procedure?/.
 
  + Step 2 - Write the constructor for /closure/. 
-/closure/ takes three arguments /formals/, /body/ and /env/. 
-The type predicate for /formals/ is list of symbols represented as /list-of symbol?/.
-The type predicate for /body/ is /ast?/.
-The environment is of the type /env?/. 
+    - /closure/ takes three arguments /formals/, /body/ and /env/. 
+    - The type predicate for /formals/ is list of symbols represented
+      as /list-of symbol?/.
+    - The type predicate for /body/ is /ast?/.
+    - The environment is of the type /env?/. 
 
  + Step 3 - Use /define-datatype/ to define /proc/.
-The name of the function is /proc/. 
-The type predicate for the function is /proc?/. 
-It consists of two constructors /prim-proc/ and /closure/.
+    - The name of the function is /proc/. 
+    - The type predicate for the function is /proc?/. 
+    - It consists of two constructors /prim-proc/ and /closure/.
 
 *** Task 4 - Define types /prim-proc?/ and /closure?/. 
 
  + Step 1 - Define /prim-proc?/. 
-Use /define/. The function name is /prim-proc?/.
-It takes an argument /p/ using /lambda/.
-Specify cases on /proc p/.
-If /prim-proc/ takes arguments /prim/ and /sig/, it returns true /#t/. 
-Else, it returns false /#f/. 
+    - Use /define/. The function name is /prim-proc?/.
+    - It takes an argument /p/ using /lambda/.
+    - Specify cases on /proc p/.
+       - If /prim-proc/ takes arguments /prim/ and /sig/, it returns
+         true /#t/. 
+       - Else, it returns false /#f/. 
 
  + Step 2 - Define /closure?/.
-Use /define/. The function name is /closure?/.
-It takes an argument /p/ using /lambda/.
-Specify cases on /proc p/.
-If /prim-proc/ takes arguments /prim/ and /sig/, it returns false /#f/. 
-Else, it returns true /#t/. 
+    - Use /define/. The function name is /closure?/.
+    - It takes an argument /p/ using /lambda/.
+    - Specify cases on /proc p/.
+       - If /prim-proc/ takes arguments /prim/ and /sig/, it returns
+         false /#f/. 
+       - Else, it returns true /#t/. 
 
 ** Module 3 - Define the environment. 
 
-: Create a module "closure-env.ss". Require the modules relevant and provide the functions defined in this module.
+: Create a module "closure-env.ss". 
+Require the modules relevant and provide the functions defined in this
+module.
 
 *** Task 1 - Define a lookup function. 
 
@@ -253,137 +308,206 @@ Else, it returns true /#t/.
   1. The name of the function is /empty-env/ using the keyword /define/. 
   2. Use a keyword /lambda/ but it takes no argument. 
   3. Another /lambda/ is used and argument /x/ is passed. 
-  4. It raises an error message: empty-env "unbound identifier ~a along with the argument /x/.
+  4. It raises an error message: empty-env "unbound identifier ~a
+     along with the argument /x/.
 
 + Step 4 - Create a function /extended-env/. 
   1. The name of the function is /extended-env/ using the keyword /define/. 
-  2. Use a keyword /lambda/ and pass three arguments - /syms/, /vals/ and /outer-env/.
-  3. Another argument /x/ is passed through another use of keyword /lambda/. 
-  4. Use /let/ to bind the id /j/  to the  value returned by  /list-index/ which  takes arguments /syms/ and /x/. 
+  2. Use a keyword /lambda/ and pass three arguments - /syms/, /vals/
+     and /outer-env/.
+  3. Another argument /x/ is passed through another use of keyword
+     /lambda/. 
+  4. Use /let/ to bind the id /j/  to the  value returned by
+     /list-index/ which  takes arguments /syms/ and /x/. 
   5. Specify if-else condition using keyword /cond/.  
-     - If /j/ equals /-1/,  recursively call the function /lookup-env/  and give the arguments /outer-env/  and /x/. 
-     - Else,  if it returns true,  return the element in /vals/ at position /j/.
+     - If /j/ equals /-1/,  recursively call the function /lookup-env/
+       and give the arguments /outer-env/  and /x/. 
+     - Else,  if it returns true,  return the element in /vals/ at
+       position /j/.
 
 + Step 5 - Define the function /list-index/. 
   1. Use /define/ to build a procedure /list-index/. 
-  2. Create a local function using /lambda/. Use arguments /ls/ and /a/.
-  3. Create a binding using /letrec/. Bind an id /loop/ to the local function created by /lambda/. It takes /ls/ and /ans/ as its arguments.
+  2. Create a local function using /lambda/. Use arguments /ls/ and
+     /a/.
+  3. Create a binding using /letrec/. Bind an id /loop/ to the local
+     function created by /lambda/. It takes /ls/ and /ans/ as its
+     arguments.
   4. Specify if-else condition inside the /lambda/. 
      1. If list is null?, return -1.
      2. If the first element of list is equal to /a/, return /ans/. 
-     3. If true, run the procedure /loop/ on rest of the list and increment /ans/ by 1.
-  5. Along with the binding at the level of /loop/ in letrec, it again calls the binding /loop/ with the arguments /ls/ and /0/. 
+     3. If true, run the procedure /loop/ on rest of the list and
+        increment /ans/ by 1.
+  5. Along with the binding at the level of /loop/ in letrec, it again
+     calls the binding /loop/ with the arguments /ls/ and /0/. 
 
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel.
 #+END_EXAMPLE
 
 ** Module 4 - Define the Evaluator for the Language with closures. 
 
-: Create a module "closure-eval.ss". Require the modules relevant and provide the functions defined in this module.
+: Create a module "closure-eval.ss". 
+Require the modules relevant and provide the functions defined in this
+module.
 
 #+BEGIN_EXAMPLE
-The evaluator takes an ast and returns the value obtained by evaluating the ast, i.e. an expressible value. Hence its 
-signature would look like:
+The evaluator takes an ast and returns the value obtained by
+evaluating the ast, i.e. an expressible value. Hence its signature
+would look like:
 
 (eval-ast ast) → expressible-value?
 ast : ast?
 
-For the naive case, where the ast consists of just a number, the returned value would necessarily be the value of the 
-number. However, in the case of an expression, we would need to first evaluate each of the operands and then apply the 
-operator on the evaluated values. Thus, we would need a procedure "apply-proc" which takes an operator and a list of 
-expressible values, and applies the operator on them.
+For the naive case, where the ast consists of just a number, the
+returned value would necessarily be the value of the number. However,
+in the case of an expression, we would need to first evaluate each of
+the operands and then apply the operator on the evaluated
+values. Thus, we would need a procedure "apply-proc" which takes an
+operator and a list of expressible values, and applies the operator on
+them.
 
-If it is an assume expression, we create an environment with the identifiers and variables given, and proceed to evaluate 
-the body.
+If it is an assume expression, we create an environment with the
+identifiers and variables given, and proceed to evaluate body.
 
-In case of an identifer, we call the lookup-env function to evaluate it to a value.
+In case of an identifer, we call the lookup-env function to evaluate
+it to a value.
 
-If it is a closure, we evalute to check if the operator is a primitive operator and apply "apply-prim-proc", else we apply 
-the function using "apply-closure". 
+If it is a closure, we evalute to check if the operator is a primitive
+operator and apply "apply-prim-proc", else we apply the function using
+"apply-closure". 
 #+END_EXAMPLE
 
 *** Task 1 - Define the Evaluator for Language with closures. 
 
  + Step 1 - Define procedure /eval-ast/.
    1. Use /define/ to define the procedure /eval-ast/.
-   2. Create a local function using keyword /lambda/. Use /a/ as an argument to /lambda/. 
+   2. Create a local function using keyword /lambda/. Use /a/ as an
+      argument to /lambda/. 
    3. Specify cases on /ast a/.
  
  + Step 2 - Define the evaluator for numbers. 
-/number/ takes an argument /datum/ and returns /datum/. 
+    - /number/ takes an argument /datum/ and returns /datum/. 
 
  + Step 3 - Define the evaluator for the identifier. 
-We call the /lookup-env/ to evaluate the identifier and return a value.
-/id-ref/ takes two arguments /sym/ and the result of the procedure /lookup-env/ which takes two arguments /env/ and /sym/.  
+    - We call the /lookup-env/ to evaluate the identifier and return a
+      value.
+    - /id-ref/ takes two arguments /sym/ and the result of the
+      procedure /lookup-env/ which takes two arguments /env/ and
+      /sym/.  
  
  + Step 4 - Define  the evaluator for the assume expression.  
-   1. We create an environment with the identifiers and variables given and proceed to evaluate the body. 
+   1. We create an environment with the identifiers and variables
+      given and proceed to evaluate the body. 
    2. /assume/ takes arguments /binds/ and /body/. 
-   3. It creates a dynamic binding using /let*/  to bind  a procedure  /bind-id/ to  its list  of  arguments in /binds/ and binds it to the id /ids/. /map/ keyword is used to apply procedure /bind-id/ to all the elements in /bind/. 
-   4. Another binding is created on the procedure /bind-ast/ to which takes the argument /binds/ to the id /asts/. /map/ keyword is used to apply the procedure /bind-ast/ to all the elements of /binds/. 
-   5. A third binding is created with the id /vals/. The binding is created on the recursive call of /eval-ast/ and /map/ is used to apply this procedure on all elements of /asts/. The recursive call of /eval-ast/ takes an argument /a/ using /lambda/ and calls itself (/eval-ast/) with the arguments /a/ and /env/. 
-   6. A fourth binding is created on the procedure /extended-env/ which takes the arguments /ids/, /vals/ and /env/ and binds them to the id /new-env/.
+   3. It creates a dynamic binding using /let*/  to bind  a procedure
+      /bind-id/ to  its list  of  arguments in /binds/ and binds it to
+      the id /ids/. /map/ keyword is used to apply procedure /bind-id/
+      to all the elements in /bind/. 
+   4. Another binding is created on the procedure /bind-ast/ to which
+      takes the argument /binds/ to the id /asts/. /map/ keyword is
+      used to apply the procedure /bind-ast/ to all the elements of
+      /binds/. 
+   5. A third binding is created with the id /vals/. The binding is
+      created on the recursive call of /eval-ast/ and /map/ is used to
+      apply this procedure on all elements of /asts/. The recursive
+      call of /eval-ast/ takes an argument /a/ using /lambda/ and
+      calls itself (/eval-ast/) with the arguments /a/ and /env/. 
+   6. A fourth binding is created on the procedure /extended-env/
+      which takes the arguments /ids/, /vals/ and /env/ and binds them
+      to the id /new-env/.
    7. Call the procedure /eval-ast/ with the arguments /body/ and /new-env/. 
 
  + Step 5 - Define the evaluator for /function/. 
    1. Specify this as a case in /ast a/. 
    2. /function/ takes two arguments /formals/ and /body/. 
-   3. The body of the /function/ evaluator includes a call to the closure constructor.
+   3. The body of the /function/ evaluator includes a call to the
+      closure constructor.
    4. /closure/ takes arguments /formals/, /body/ and /env/. 
 
  + Step 6 - Define the evaluator for /app/. 
    1. Specify this as a case in /ast a/. 
    2. /app/ takes two arguments /rator/ and /rands/. 
-   3. The body consists of a binding using the keyword /let/. It takes an id /p/ and binds it to the result of the recursive call of /eval-ast/. /eval-ast/ takes two arguments /rator/ and /env/. 
-   4. The second binding consists of the id /args/ which is bound to the recursive call of /eval-ast/. This time, the list of operands are passed as arguments. Thus, the iteration on rest of the list is done using the keyword /map/ on the list /rands/. 
+   3. The body consists of a binding using the keyword /let/. It takes
+      an id /p/ and binds it to the result of the recursive call of
+      /eval-ast/. /eval-ast/ takes two arguments /rator/ and /env/. 
+   4. The second binding consists of the id /args/ which is bound to
+      the recursive call of /eval-ast/. This time, the list of
+      operands are passed as arguments. Thus, the iteration on rest of
+      the list is done using the keyword /map/ on the list /rands/. 
    5. Specify a local function using /lambda/ and give the argument /rand/. 
-   6. Call the recursive procedure /eval-ast/ which takes the arguments /rand/ and /env/. 
+   6. Call the recursive procedure /eval-ast/ which takes the
+      arguments /rand/ and /env/. 
    7. Specify an if-else condition. 
-      - If /p/ is of type /proc?/, apply function /apply-proc/ on the arguments /p/ and /args/. 
-      - Else, produce the error message: "eval-ast "application rator is not a proc ~a" with the argument /a/. 
+      - If /p/ is of type /proc?/, apply function /apply-proc/ on the
+        arguments /p/ and /args/. 
+      - Else, produce the error message: "eval-ast "application rator
+        is not a proc ~a" with the argument /a/. 
 
 *** Task 2 - Define other functions. 
 
   + Step 1 - Define procedure /apply-proc/. 
-    1. Define a local function using /lambda/. Provide /p/ and /args/ as arguments. 
+    1. Define a local function using /lambda/. Provide /p/ and /args/
+       as arguments. 
     2. Specify cases on /proc p/. 
-       - Case 1: Constructor /prim-proc/ with arguments /prim/ and /sig/. Apply the function /apply-prim-proc/ on arguments /prim/, /sig/ and /args/.
-       - Case 2: Constructor /closure/ with arguments /formals, /body/ and /env/. Apply the function /apply-closure/ on /formals/, /body/, /env/ and /args/. 
+       - Case 1: Constructor /prim-proc/ with arguments /prim/ and
+         /sig/. Apply the function /apply-prim-proc/ on arguments
+         /prim/, /sig/ and /args/.
+       - Case 2: Constructor /closure/ with arguments /formals, /body/
+         and /env/. Apply the function /apply-closure/ on /formals/,
+         /body/, /env/ and /args/. 
 
  + Step 2 - Define procedure /apply-prim-proc/. 
-   1. Define a local function using /lambda/. Provide /prim/, /sig/ and /args/ as arguments. 
-   2. Create a dynamic binding using /let*/. Bind the id /args-sig/ to rest of the signatures passed as arguments /sig/ using the keyword /rest/. 
+   1. Define a local function using /lambda/. Provide /prim/, /sig/
+      and /args/ as arguments. 
+   2. Create a dynamic binding using /let*/. Bind the id /args-sig/ to
+      rest of the signatures passed as arguments /sig/ using the
+      keyword /rest/. 
    3. Specify a condition using keyword /cond/.
-      + If /and/ of both conditions return false, apply /prim/ on argument /args/ using the keyword /apply/. 
-        - First Condition: Length of /args-sig/ is equal to length of /args/ (use the keyword /length/) 
-        - Second Condition: Apply keyword /andmap/ on the function call of /match-arg-type/ which takes two arguments /args-sig/ and /args/
-      + Else, if true /#t/, produce the error message "apply-prim-op "incorrect number or type of arguments to ~a"" with the argument /prim/. 
+      + If /and/ of both conditions return false, apply /prim/ on
+        argument /args/ using the keyword /apply/. 
+        - First Condition: Length of /args-sig/ is equal to length of
+          /args/ (use the keyword /length/) 
+        - Second Condition: Apply keyword /andmap/ on the function
+          call of /match-arg-type/ which takes two arguments
+          /args-sig/ and /args/
+      + Else, if true /#t/, produce the error message "apply-prim-op
+        "incorrect number or type of arguments to ~a"" with the
+        argument /prim/. 
  
  + Step 3 - Define the function /match-arg-type/. 
-Create a local function using the keyword /lambda/. Give /arg-type/ and /val/ as arguments. 
-Return /arg-type/ and /val/. 
+    - Create a local function using the keyword /lambda/. 
+    - Give /arg-type/ and /val/ as arguments. 
+    - Return /arg-type/ and /val/. 
 
  + Step 4 - Define the function /apply-closure/. 
-   1. Create a local function using the keyword /lambda/. Give /formals/, /body/, /env/ and /args/ as arguments. 
-   2. Create a binding using the keyword /let/. Bind the id /new-env/ to the result of the procedure call /extended-env/. /extended-env/ takes /formals/, /args/ and /env/ as arguments. 
-   3. Call /eval-ast/ recursively with arguments /body/ and /new-env/. 
+   1. Create a local function using the keyword /lambda/. Give
+      /formals/, /body/, /env/ and /args/ as arguments. 
+   2. Create a binding using the keyword /let/. Bind the id /new-env/
+      to the result of the procedure call
+      /extended-env/. /extended-env/ takes /formals/, /args/ and /env/
+      as arguments. 
+   3. Call /eval-ast/ recursively with arguments /body/ and
+      /new-env/. 
 
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel.
 #+END_EXAMPLE
 
 ** Module 5 - Design the Parser
 
-: Create a module "closure-parser.ss". Require the modules relevant and provide the functions defined in this module.
+: Create a module "closure-parser.ss". 
+Require the modules relevant and provide the functions defined in this
+module.
 
 #+BEGIN_EXAMPLE
 The concrete syntax of this language is as follows:
 
-exp ::= <number> | <identifier> | (<op> exp ...) | (assume (listof<id> listof<exp>) exp) | 
-        (function (listof<id>) <ast>) | (app <ast> listof<ast>)
+exp ::= <number> | <identifier> | (<op> exp ...) | 
+        (assume (listof<id> listof<exp>) exp) | 
+        (function (listof<id>) <ast>) | 
+        (app <ast> listof<ast>)
 op ::= one of <op-symbols>
 
 where <op-symbols> = (+,-,/,*)
@@ -392,69 +516,105 @@ where <op-symbols> = (+,-,/,*)
 *** Task 1 - Define the parser function. 
 
 #+BEGIN_EXAMPLE
-The task of a parser is to convert any given program sequence into an ast. Hence, the signature of our parser procedure 
-would be:
+The task of a parser is to convert any given program sequence into an
+ast. Hence, the signature of our parser procedure would be:
 
 (parse code) → ast?
 code : any/c?
 
-While going through the input sequence if we find the current literal to be a terminal i.e. a number, then we output the 
-corresponding node of the ast i.e. (number literal).
+While going through the input sequence if we find the current literal
+to be a terminal i.e. a number, then we output the corresponding node
+of the ast i.e. (number literal).
 
-If it is an assume expression, we simply write out the assume function along with the ’bind’ to create an expression that
-can be evaluated.
+If it is an assume expression, we simply write out the assume function
+along with the ’bind’ to create an expression that can be evaluated.
 
 In case of an identifer, we replace it with a (id-ref <identifier>).
 
-If the expression is a function, we replace it with a closure which has a list of operands, and an ast to apply on these
-operands.
+If the expression is a function, we replace it with a closure which
+has a list of operands, and an ast to apply on these operands.
 
-In case of an application expression, we parse the closure to figure out if it is a primitive procedure or not; and then 
-call the parse function for the list of expressions (i.e. the operands).
+In case of an application expression, we parse the closure to figure
+out if it is a primitive procedure or not; and then call the parse
+function for the list of expressions (i.e. the operands).
+
 #+END_EXAMPLE
 
  + Step 1 - Define a procedure /parse/. 
-Use /define/ keyword to create procedure /parse/. 
-Create a local function using the keyword /lambda/ and give the argument /d/. 
-Use /match/ keyword on /d/ to do the syntax matching according to the cases specified. 
+    - Use /define/ keyword to create procedure /parse/. 
+    - Create a local function using the keyword /lambda/ and give the
+      argument /d/. 
+    - Use /match/ keyword on /d/ to do the syntax matching according
+      to the cases specified. 
 
  + Step 2 - Define the parser for numbers. 
-If the form of syntax is /? number? n/, it returns the form /number n/. 
+    - If the form of syntax is /? number? n/, it returns the form
+      /number n/. 
 
  + Step 3 - Define the parser for the identifier. 
-If the form of syntax is /? id? x/, it returns the form /id-ref x/. 
+    - If the form of syntax is /? id? x/, it returns the form /id-ref
+      x/. 
 
  + Step 4 - Define the parser for the functions.
-If a /list/ of functions denoted by the constant /function/ is found in the syntax, it returns the form /function x (parse body)/.
-The function contains lists of identifiers of the form /? id? x/ and a body denoted by /body/.
+    - If a /list/ of functions denoted by the constant /function/ is
+      found in the syntax, it returns the form /function x (parse
+      body)/.
+    - The function contains lists of identifiers of the form /? id? x/
+      and a body denoted by /body/.
 
  + Step 5 - Define the parser for the assume expression. 
-   1. If a /list/ of assume expression denoted by the constant /assume/ is found in the syntax, it creates a binding using the keyword /let*/ and binds the id /a/ to the result of the recursive procedure /parse/ which takes the argument /e/ and applies the procedure on the remaining elements in the list using the keyword /map/. It also creates a second binding on the id /b/ to the result of the constructor /make-bind/ which takes two arguments /x/ and /a/ and applies it on the rest of the elements in the list using the keyword /map/. And, it returns the syntax of the form /assume b (parse body)/.
-   2. The assume syntax contains lists of the expression which in turn contains list of identifiers of the form /? id? x/ and /e/ and a body denoted by /body/.
+   1. If a /list/ of assume expression denoted by the constant
+      /assume/ is found in the syntax, it creates a binding using the
+      keyword /let*/ and binds the id /a/ to the result of the
+      recursive procedure /parse/ which takes the argument /e/ and
+      applies the procedure on the remaining elements in the list
+      using the keyword /map/. It also creates a second binding on the
+      id /b/ to the result of the constructor /make-bind/ which takes
+      two arguments /x/ and /a/ and applies it on the rest of the
+      elements in the list using the keyword /map/. And, it returns
+      the syntax of the form /assume b (parse body)/.
+   2. The assume syntax contains lists of the expression which in turn
+      contains list of identifiers of the form /? id? x/ and /e/ and a
+      body denoted by /body/.
 
  + Step 6 - Define the parser for the expressions. 
-   1. If a list of operators and operands is found of the form /list rator rands .../, a binding is created using the function /let*/. Id /rator/ is bound to the result of the recursive procedure /parse/ which takes the argument /rator/ and another id /rands/ is bound to the recursive procedure /parse/ on rest of the /rands/ using the keyword /map/.
+   1. If a list of operators and operands is found of the form /list
+      rator rands .../, a binding is created using the function
+      /let*/. Id /rator/ is bound to the result of the recursive
+      procedure /parse/ which takes the argument /rator/ and another
+      id /rands/ is bound to the recursive procedure /parse/ on rest
+      of the /rands/ using the keyword /map/.
    2. It returns the form /app rator rands/.
 
  + Step 7 - Define the error. 
-If the form of syntax does not above any of the above defined, an error message is produced: parse "don't know how to parse ~a" along with the argument /d/. 
+    - If the form of syntax does not above any of the above defined,
+      an error message is produced: parse "don't know how to parse ~a"
+      along with the argument /d/. 
 
 *** Task 2 - Define the type /id?/.
-Use /define/ to create a function /id?/. Create a local function using the keyword /lamba/ and name the argument /x/. /x/ is of the type /symbol?/ /and/ is not present in the function /*keywords*/. Use the keyword /memq/ to find /x/ in the list of /*keywords*/.
+- Use /define/ to create a function /id?/. 
+- Create a local function using the keyword /lamba/ and name the
+  argument /x/. 
+- /x/ is of the type /symbol?/ /and/ is not present in the function
+  /*keywords*/. 
+- Use the keyword /memq/ to find /x/ in the list of /*keywords*/.
+
 
 ** Module 6 - Run the interpreter. 
 
-: Create a module "closure-run.ss". Require the modules relevant and provide the functions defined in this module.
-
-: Require the modules relevant and provide the functions defined in this module. 
+: Create a module "closure-run.ss".
+ Require the modules relevant and provide the functions defined in
+ this module. 
 
 *** Task 1 - Define a nonzero function. 
 
 : It checks whether a given number is 0 or not. 
 
- + Step 1 - Use /define/ keyword. The name of the function should be /nonzero?/. 
+ + Step 1 - Use /define/ keyword. The name of the function should be
+   /nonzero?/. 
 
- + Step 2 - Use the keyword /and/c/, /number?/, /not/c/ and /zero?/ to check if the given number is 0 or not. 
+ + Step 2 - Use the keyword /and/c/, /number?/, /not/c/ and /zero?/ to
+   check if the given number is 0 or not. 
 
 *** Task 2 - Define the operators. 
 
@@ -462,35 +622,55 @@ Use /define/ to create a function /id?/. Create a local function using the keywo
 
  + Step 1 - Define plus operator. 
    1. The name of the function is /+p/. 
-   2. Use the /prim-proc/ constructor to define the signature of the plus operator. 
-   3. Mention the symbol + as one of the arguments to the constructor. 
-   4. The other argument to the constructor prim-proc is the signature. A list takes two numbers denoted by /number?/ and gives back a /number?/. 
+   2. Use the /prim-proc/ constructor to define the signature of the
+      plus operator. 
+   3. Mention the symbol + as one of the arguments to the
+      constructor. 
+   4. The other argument to the constructor prim-proc is the
+      signature. A list takes two numbers denoted by /number?/ and
+      gives back a /number?/. 
 
  + Step 2 - Define minus operator. 
    1. The name of the function is /-p/. 
-   2. Use the /prim-proc/ constructor to define the signature of the plus operator. 
-   3. Mention the symbol - as one of the arguments to the constructor. 
-   4. The other argument to the constructor prim-proc is the signature. A list takes two numbers denoted by /number?/ and gives back a /number?/. 
+   2. Use the /prim-proc/ constructor to define the signature of the
+      plus operator. 
+   3. Mention the symbol - as one of the arguments to the
+      constructor. 
+   4. The other argument to the constructor prim-proc is the
+      signature. A list takes two numbers denoted by /number?/ and
+      gives back a /number?/. 
 
  + Step 3 - Define multiply operator. 
    1. The name of the function is /*p/. 
-   2. Use the /prim-proc/ constructor to define the signature of the plus operator. 
-   3. Mention the symbol * as one of the arguments to the constructor. 
-   4. The other argument to the constructor prim-proc is the signature. A list takes two numbers denoted by /number?/ and gives back a /number?/. 
+   2. Use the /prim-proc/ constructor to define the signature of the
+      plus operator. 
+   3. Mention the symbol * as one of the arguments to the
+      constructor. 
+   4. The other argument to the constructor prim-proc is the
+      signature. A list takes two numbers denoted by /number?/ and
+      gives back a /number?/. 
 
  + Step 4 - Define division operator. 
    1. The name of the function is /p. 
-   2. Use the /prim-proc/ constructor to define the signature of the plus operator. 
-   3. Mention the symbol / as one of the arguments to the constructor. 
-   4. The other argument to the constructor prim-proc is the signature. A list takes two numbers denoted by /number?/ and /nonzero?/ as the denominator can not be zero and gives back a /number?/.
+   2. Use the /prim-proc/ constructor to define the signature of the
+      plus operator. 
+   3. Mention the symbol / as one of the arguments to the
+      constructor. 
+   4. The other argument to the constructor prim-proc is the
+      signature. A list takes two numbers denoted by /number?/ and
+      /nonzero?/ as the denominator can not be zero and gives back a
+      /number?/.
  
 *** Task 3 - Define /*init-env*/.
 
 : It initializes the extended environment. 
 
- + Step 1 - Use /define/ keyword to define this /*init-env*/ function. 
+ + Step 1 - Use /define/ keyword to define this /*init-env*/
+   function. 
 
- + Step 2 - It calls /extended-env/ and gives it three arguments - operator symbols (+ , - , *, /) as constants, list of operator definitions (+p, -p, *p, /p) and /empty-env/. 
+ + Step 2 - It calls /extended-env/ and gives it three arguments -
+   operator symbols (+ , - , *, /) as constants, list of operator
+   definitions (+p, -p, *p, /p) and /empty-env/. 
 
 *** Task 4 - Define /run/. 
 
@@ -498,11 +678,12 @@ Use /define/ to create a function /id?/. Create a local function using the keywo
 
  + Step 2 - It takes an argument /ast/ using the keyword /lambda/. 
 
- + Step 3 - Call the function /eval-ast/ and give the arguments - /ast/ and /*init-env*/. 
+ + Step 3 - Call the function /eval-ast/ and give the arguments -
+   /ast/ and /*init-env*/. 
 
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the upload the button in the right panel. You can test 
-the module by test files by pressing the Test button.
+After you finish writing the module, upload the program using the
+upload the button in the right panel.
 #+END_EXAMPLE
 
 * Exercise

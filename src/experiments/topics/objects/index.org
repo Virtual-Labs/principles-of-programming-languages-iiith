@@ -10,21 +10,31 @@
 You should have read Chapter 9 of the text book *EOPL*. 
 * Learning Objectives of the Experiment 
 
-The goal of this experiment is to understand how to define an object, its methods or functions and how to invoke the method name on the object. 
+The goal of this experiment is to understand how to define an object,
+its methods or functions and how to invoke the method name on the
+object. 
 
 * Theory
 ** Object Oriented Programming
-Object-oriented programming (OOP) is a programming language model, organized around objects rather than actions, data or logic.
+Object-oriented programming (OOP) is a programming language model,
+organized around objects rather than actions, data or logic.
 
-Object-oriented programming takes the view that it is the objects we really care about as we want to manipulate them rather than the logic required to manipulate them.
+Object-oriented programming takes the view that it is the objects we
+really care about as we want to manipulate them rather than the logic
+required to manipulate them.
 
-The first step in OOP is to identify all the objects you want to manipulate and how they relate to each other.
+The first step in OOP is to identify all the objects you want to
+manipulate and how they relate to each other.
 
-Once you have identified an object, you generalize it as a class of objects and define the kind of data it contains and any logic sequences that can manipulate it.
+Once you have identified an object, you generalize it as a class of
+objects and define the kind of data it contains and any logic
+sequences that can manipulate it.
 
 Each distinct logic sequence is known as a method.
 
-A real instance of a class is called an object. You communicate with objects - and they communicate with each other - with well-defined interfaces called messages.
+A real instance of a class is called an object. You communicate with
+objects - and they communicate with each other - with well-defined
+interfaces called messages.
 
 ** Objects
 In order to identify the objects one wants to manipulate, it is
@@ -37,9 +47,11 @@ an object’s methods is known as data encapsulation.
 
 Building the code into individual objects, provides a number of benefits:
 
-1. Modularity: The source code of one object is independent of the other objects.
+1. Modularity: The source code of one object is independent of the
+   other objects.
 
-2. Information-Hiding: Since we can only interact with the object’s methods, the details of internal implementation are hidden.
+2. Information-Hiding: Since we can only interact with the object’s
+   methods, the details of internal implementation are hidden.
 
 3. Code re-use: A existing object can be re-used in another program.
 
@@ -56,7 +68,8 @@ Instructions
 
 #+BEGIN_EXAMPLE
 Concrete Syntax for objects:
-1. (<obj> <field>) returns the value of <field> if it exists; an error otherwise.
+1. (<obj> <field>) returns the value of <field> if it exists; an error
+otherwise.
 2. <obj> is a scheme expression that evaluates to an object.
 3. <field> is an expression that evaluates to a symbol.
 4. (<obj> <field> <val>) sets the value of <field> to <value>.
@@ -75,17 +88,21 @@ Concrete Syntax for objects:
  + Step 3 - Specify a  conditional  on args.  
    - If  /args/ is  /null?/, 
      + either return the  /msg/ in /table/ using the  keyword /hash-ref/ 
-     + else produce the error message: "obj: do not know method ~a" with the value of /msg/.  
-     + And, map the /msg/ to the first element of argument /args/ in /table/. 
+     + else produce the error message: "obj: do not know method ~a"
+       with the value of /msg/.  
+     + And, map the /msg/ to the first element of argument /args/ in
+       /table/. 
 
 ** Module 2 - Create a method for an object
 
 #+BEGIN_EXAMPLE
-Methods are functions that operate on objects. By convention, the object is the first formal parameter of the method 
-and is named this or self.
+Methods are functions that operate on objects. By convention, the
+object is the first formal parameter of the method and is named this
+or self.
 
-Create a method incr-x which increments the value of an object by some amount. The function will have the following 
-signature:
+Create a method incr-x which increments the value of an object by some
+amount. The function will have the following signature:
+
 incr-x: obj? number? -> void?
 #+END_EXAMPLE
 
@@ -105,8 +122,11 @@ incr-x: obj? number? -> void?
 ** Module 3 - Create the lookup function to bind the method and object
 
 #+BEGIN_EXAMPLE
-/send/ sets up a protocol for invoking the method name on the object. It looks up the method corresponding to the 
-method name, and then applies that to the list consisting of the object and the rest of the arguments.
+/send/ sets up a protocol for invoking the method name on the
+object. It looks up the method corresponding to the method name, and
+then applies that to the list consisting of the object and the rest of
+the arguments.
+
 #+END_EXAMPLE
 
 *** Task 1 - Write the lookup function for the increment method defined in the last module. 
@@ -125,15 +145,20 @@ method name, and then applies that to the list consisting of the object and the 
 * Exercise
 
 #+BEGIN_EXAMPLE
-Implement a class point, for representing a two-dimensional point as per the implementation details provided in the 
-Programming section.
+Implement a class point, for representing a two-dimensional point as
+per the implementation details provided in the Programming section.
+
 
 The class should have the following methods:
-set - for setting up the values of the coordinates.
-get - for getting the values of the coordinates.
-dist - for calculating the distance between the point and another point (which is passed as an argument).
-rotate - for updating the coordinate values when the system is rotated about the origin by some specified angle.
-translate - for updating the coordinate values when the system is translated to anothe point.
+- set - for setting up the values of the coordinates.
+- get - for getting the values of the coordinates.
+- dist - for calculating the distance between the point and another
+  point (which is passed as an argument).
+- rotate - for updating the coordinate values when the system is
+  rotated about the origin by some specified angle.
+- translate - for updating the coordinate values when the system is
+  translated to anothe point.
+
 #+END_EXAMPLE
 
 * Further Readings
