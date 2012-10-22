@@ -1,0 +1,63 @@
+#+TITLE : Architecture of POPL Virtual Lab
+
+The lab has been divided into three frames according to the
+functionality provided by the lab.
+- Content
+- Login and Upload Frame
+- Terminal
+
+* Content
+The lab is divided into 9 experiments.  Each of these experiments is
+divided into modules.  The modules are further divided into tasks. And,
+each of these tasks may consist of several steps.  The ideology of such
+a layout is to enable the student to perform the experiment in
+micro-steps, thus, enhancing the learning process by allowing the
+student to build a larger program step by step in smaller chunks.  Each
+of these steps and tasks are testable at a module level currently.
+Thus, enabling the user to upload their programs and verify them.
+
+* Login and Upload Frame
+The upper panel of the right frame provides the user space to login and
+upload their scheme programs. The architecture of this frame is as follows:
+
+** Logging or Registering for the Lab
+login-form script has two options - login and register. When the user
+registers or logs in, the credentials are sent to ldap-exec script which
+contacts the LDAP server for establishing the validity of the
+credentials given or adding the user to the database. If the
+registration of the user is confirmed, the user can login using the
+registered credentials.
+
+** User Space and the Upload frame
+Once these credentials are validated from the
+server, the member-index script is executed and a upload form is
+displayed to the user. The user can upload his scheme programs adhering
+to the naming conventions given in the experiments. Once the user
+uploads, the control gets transferred to the upload-file.php script. The
+file is uploaded temporarily to the /tmp/ folder in the build folder of
+the svn repository.
+
+** Sending files to server
+The file is then sent to the eval1 server through secure copy by
+establishing an ssh connection to the server using the evaluator
+credentials. In the eval1 server, in the home directory of the
+evaluator, we have three different directories - test-cases where all
+the test files for all the experiments are stored, test-results where
+the results of the evaluated test cases are stored for every user inside
+their own directories and upload-files in which the uploaded files for
+each user are stored in their respective directories. The reason why we
+maintain a repository of all the files is to ensure we have an original
+uploaded file with which cross-checking of the results can be done in
+case of any future conflicts.
+
+** How is testing done?  
+The name of the uploaded file is extracted and the respective folder of
+test cases are copied into the user directory of the user in the
+upload-files directory. The parent test file is then run using the
+command "racket testfilename" and the results are directed to the file
+in the respective user directory of the test-results folder.
+
+** Sending the results and file to the user home directories
+A python script "evaluate" sends the test results and the uploaded files
+to the user's home directories. A use can not change any other file
+except for their own files.
