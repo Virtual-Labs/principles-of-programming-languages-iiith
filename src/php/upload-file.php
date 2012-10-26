@@ -34,7 +34,7 @@ if ($_FILES["file"]["size"] < 20000)
 			$upload_file_name = $_FILES["file"]["name"];
 		
 			//create file storage directory for each user
-			$cmd1 = 'mkdir upload_files/' . $_SESSION['username'] .'; mkdir test_results/' . $_SESSION['username'] . ';';
+			$cmd1 = 'mkdir upload-files/' . $_SESSION['username'] .'; mkdir test-results/' . $_SESSION['username'] . ';';
 			ssh2_exec($conn, $cmd1);
   		
 			//path to uploaded files on server
