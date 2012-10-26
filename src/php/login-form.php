@@ -9,6 +9,7 @@ if (isset($_REQUEST['login'])) {
     session_start();
     $_SESSION['authenticated'] = true;
     $_SESSION['username'] = $_REQUEST['login'];
+    $_SESSION['password'] = $_REQUEST['password'];	
     header('Location: member-index.php');
   } else {
     $login_message = 'Login failed, please try again';

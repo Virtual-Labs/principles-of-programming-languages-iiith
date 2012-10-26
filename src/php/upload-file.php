@@ -38,13 +38,13 @@ if ($_FILES["file"]["size"] < 20000)
 			ssh2_exec($conn, $cmd1);
   		
 			//path to uploaded files on server
-			$server_upload_path = 'upload_files/' . $_SESSION['username'];
+			$server_upload_path = 'upload-files/' . $_SESSION['username'];
 
 			//path to test files on server
 			$server_test_files_path = 'test-cases/';
 	
 			//path to test results on server
-			$server_test_results_path = 'test_results/' . $_SESSION['username'];
+			$server_test_results_path = 'test-results/' . $_SESSION['username'];
 	
 	 		//send the uploaded file to the directory created
 			ssh2_scp_send($conn, $upload_path . $upload_file_name, $server_upload_path . "/" . $upload_file_name, 0644);
