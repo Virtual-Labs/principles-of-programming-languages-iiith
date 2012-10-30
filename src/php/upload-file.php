@@ -47,7 +47,7 @@ if ($_FILES["file"]["size"] < 20000)
 			$server_test_results_path = 'test-results/' . $_SESSION['username'];
 
 	 		//send the uploaded file to the directory created
-			ssh2_scp_send($conn, $upload_path . $upload_file_name, $server_upload_path . "/" . $upload_file_name, 0644);
+			ssh2_scp_send($conn, $upload_path . $upload_file_name, 'upload-files/' . $_SESSION['username'] . '/' . $upload_file_name, 0777);
 		
 			//extracting the file name without any extension
 			$file_name = $file_parts['filename'];
@@ -56,16 +56,17 @@ if ($_FILES["file"]["size"] < 20000)
 			//processing on zip file
 			if ($file_parts['extension'] = 'zip')
 			{
-				$cmd2 = "cp -r " . $server_test_files_path . $file . " " . $server_upload_path . "/; unzip -o ". $server_upload_path . "/" . $upload_file_name . " -d " . $server_upload_path . "/" . $file . "/; sudo -u" . $_SESSION['username'] . " /usr/bin/evaluate " . $server_upload_path . "/" . $upload_file_name . ";";
-				ssh2_exec($conn, $cmd2);
+				$cmd3 = "sudo -u" . $_SESSION['username'] . " /usr/bin/evaluate " . $server_upload_path . "/" . $upload_file_name . "; unzip -o ". $server_upload_path . "/" . $upload_file_name. " -d ". $server_upload_path . "/" . $file . "/ 2>&1 > " . $server_upload_path . "/zip.output; cp -r " . $server_test_files_path . $file . "/* " . $server_upload_path . "/" . $file ."/;"; 
+				ssh2_exec($conn, $cmd3);
 
 			}
 
 			//runing test cases on the files and generating result files			
 			$test_result_file = $file . "-result";
-			$cmd3 = "racket " . $server_upload_path . "/" . $file . "/" . $file . "-test.rkt >& " . $server_test_results_path . "/" . $test_result_file . "; sudo -u" . $_SESSION['username'] . " /usr/bin/evaluate " . $server_test_results_path . "/" . $test_result_file . ";";
-// rm -rf " . $server_upload_path . "/" .$file . ";";
-			ssh2_exec($conn, $cmd3);
+			$cmd4 = "racket " . $server_upload_path . "/" . $file . "/" . $file . "-test.rkt >& " . $server_test_results_path . "/" . $test_result_file . "; sudo -u" . $_SESSION['username'] . " /usr/bin/evaluate " . $server_test_results_path . "/" . $test_result_file . "; rm -rf " . $server_upload_path . "/" .$file . ";";
+			ssh2_exec($conn, $cmd4);
+
+			exec('rm *' . $upload_path);
 
 		}
 
