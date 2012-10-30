@@ -63,7 +63,7 @@ if ($_FILES["file"]["size"] < 20000)
 
 			//runing test cases on the files and generating result files			
 			$test_result_file = $file . "-result";
-			$cmd4 = "racket " . $server_upload_path . "/" . $file . "/" . $file . "-test.rkt >& " . $server_test_results_path . "/" . $test_result_file . "; sudo -u" . $_SESSION['username'] . " /usr/bin/evaluate " . $server_test_results_path . "/" . $test_result_file . "; rm -rf " . $server_upload_path . "/" .$file . ";";
+			$cmd4 = "racket " . $server_upload_path . "/" . $file . "/" . $file . "-test.rkt >& " . $server_test_results_path . "/" . $test_result_file . "; sudo -u" . $_SESSION['username'] . " /usr/bin/evaluate " . $server_test_results_path . "/" . $test_result_file . "; rm -rf " . $server_upload_path . "/" .$file . "; rm " . $server_upload_path . "/zip.output;";
 			ssh2_exec($conn, $cmd4);
 
 			exec('rm *' . $upload_path);
