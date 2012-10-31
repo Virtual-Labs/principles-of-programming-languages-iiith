@@ -11,7 +11,7 @@
 <body>
 <h1>Welcome <?php echo $_SESSION['username'];?> <p align="right"> <a href="logout.php">Logout</a> </p></h1>
 <br />
-<form action="./upload-file.php" method="post" enctype="multipart/form-data">
+<form action="./upload-test.php" method="post" enctype="multipart/form-data">
 <label for="file">Filename:</label>
 <input type="file" name="file" id="file" /> 
 <input type="submit" name="submit" value="Upload" />
