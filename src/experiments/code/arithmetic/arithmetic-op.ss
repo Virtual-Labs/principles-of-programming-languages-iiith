@@ -12,7 +12,6 @@
 (require "arithmetic-ast.ss")
 (require "arithmetic-semanticdomain.ss")
 
-
 ;;; nonzero? : any/c -> boolean?
 (define nonzero?
   (lambda (n)
