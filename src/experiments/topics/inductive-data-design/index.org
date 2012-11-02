@@ -102,6 +102,7 @@ Instructions
 
   - Write the scheme program in this file. 
 
+  - Zip all the files required for the experiment and upload them. 
 #+END_EXAMPLE
 
 ** Module 1 - Denote natural numbers as a list. 

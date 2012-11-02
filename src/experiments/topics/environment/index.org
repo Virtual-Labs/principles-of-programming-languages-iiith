@@ -9,13 +9,16 @@
 
 You should have read Chapter - 2, Data Abstraction from the text book
 *EOPL*. 
+
 * Learning Objectives of the Experiment 
 
 The goal of this experiment is to learn how to create and define an
 empty environment and an extended environment from an existing
-environment. We also define a lookup function which looks up an identifier in a given environment. 
+environment. We also define a lookup function which looks up an
+identifier in a given environment.
 
 * Theory
+
 Real programming languages have identifiers, like /x/, /y/, etc. When a
 program runs, these identifiers are bound to denotable values. In
 other words, the identifiers in a program denote values (whose type is
@@ -62,14 +65,11 @@ an environment are
 #+BEGIN_EXAMPLE
 Instructions
 1. Create a file named "environment.ss". 
-2. You can include all the modules in this file, OR,
-3. You can "require" all the modules in this file.
-4. All the modules are verifiable individually. You can also test your
-code by placing them in a single file. 
-5. Make sure you upload all the files before testing them. 
+2. Include all the scheme code in this file. 
+3. Zip all the files required for the experiment and upload them. 
 #+END_EXAMPLE
 
-** Module 1 - Define Abstract Syntax for empty and extended environments.
+** Module 1 - Define Abstract Syntax for empty and extended environments and look-up function to look up an identifier using an environment.
 
 : Create a module "env.ss". 
 Require the modules relevant and provide the functions defined in this module.
@@ -128,10 +128,7 @@ env is "env?". It takes two constructors - empty-env and extended-env.
    - The type predicate for /env/ is /env?/. 
    - It takes two constructors - /empty-env/ and /extended-env/.
 
-** Module 2 - Define a look-up function to look up an identifier using an environment. 
-
-: Create a module "lookup.ss". 
-Require the modules relevant and provide the functions defined in this module.
+*** Task 4 - Define the look-up function. 
 
 #+BEGIN_EXAMPLE
 The lookup function takes an environment and an identifier and returns
@@ -145,45 +142,45 @@ id : symbol?
 env : env?
 #+END_EXAMPLE
  
-*** Task 1 - Define the predicate /empty-env?/. 
+**** Step 1 - Define the predicate /empty-env?/. 
 
- + Step 1 - Use /define/ to define a type /empty-env?/. 
-    - Create a local function using /lambda/ and use /e/ as an
-      argument.
+  + Step 1 - Use /define/ to define a type /empty-env?/. 
+     - Create a local function using /lambda/ and use /e/ as an
+       argument.
 
- + Step 2 -Specify cases on the /env e/. 
-   - Case 1: for /empty-env ()/, it returns true /#t/. 
-   - Case 2: Else false /#f/. 
+  + Step 2 -Specify cases on the /env e/. 
+    - Case 1: for /empty-env ()/, it returns true /#t/. 
+    - Case 2: Else false /#f/. 
 
-*** Task 2 - Define the predicate /empty-env?/. 
+**** Step 2 - Define the predicate /empty-env?/. 
 
- + Step 1 - Use /define/ to define a type /extended-env?/. 
-    - Create a local function using /lambda/ and use /e/ as an
-      argument.
- 
- + Step 2 - Specify cases on the /env e/. 
-   - Case 1: for /empty-env ()/, it returns false /#f/. 
-   - Case 2: Else true /#t/. 
+  + Step 1 - Use /define/ to define a type /extended-env?/. 
+     - Create a local function using /lambda/ and use /e/ as an
+       argument.
+  
+  + Step 2 - Specify cases on the /env e/. 
+    - Case 1: for /empty-env ()/, it returns false /#f/. 
+    - Case 2: Else true /#t/. 
 
-*** Task 3 - Define a procedure /list-index/. 
- + Step 1 - Use /define/ to build a procedure /list-index/. 
-    - Create a local function using /lambda/. 
-    - Use arguments /ls/ and /a/.
+**** Step 3 - Define a procedure /list-index/. 
+  + Step 1 - Use /define/ to build a procedure /list-index/. 
+     - Create a local function using /lambda/. 
+     - Use arguments /ls/ and /a/.
 
- + Step 2 - Create a binding using /letrec/. 
-    - Bind an id /loop/ to the local function created by /lambda/. 
-    - It takes /ls/ and /ans/ as its arguments.
+  + Step 2 - Create a binding using /letrec/. 
+     - Bind an id /loop/ to the local function created by /lambda/. 
+     - It takes /ls/ and /ans/ as its arguments.
 
- + Step 3 - Specify if-else condition inside the /lambda/. 
-   - If list is null?, return -1.
-   - If the first element of list is equal to /a/, return /ans/. 
-   - If true, run the procedure /loop/ on rest of the list and
-     increment /ans/ by 1.
- 
- + Step 4 - Along with the binding at the level of /loop/ in letrec,
-   it also calls the function /loop/ with the arguments /ls/ and /0/. 
+  + Step 3 - Specify if-else condition inside the /lambda/. 
+    - If list is null?, return -1.
+    - If the first element of list is equal to /a/, return /ans/. 
+    - If true, run the procedure /loop/ on rest of the list and
+      increment /ans/ by 1.
+  
+  + Step 4 - Along with the binding at the level of /loop/ in letrec,
+    it also calls the function /loop/ with the arguments /ls/ and /0/. 
 
-*** Task 4 - Define procedure /lookup-env/ to check if an identifier is bound in a given environment.
+**** Step 4 - Define procedure /lookup-env/ to check if an identifier is bound in a given environment.
 
  + Step 1 - Use /define/ to build a procedure /lookup-env/. 
     - Create a local function using /lambda/ with arguments /e/ and
@@ -204,8 +201,9 @@ After you finish writing the module, upload the program using the
 upload the button in the right panel.
 #+END_EXAMPLE
 
+
 * Exercise
-* Further Readings
+
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].
 

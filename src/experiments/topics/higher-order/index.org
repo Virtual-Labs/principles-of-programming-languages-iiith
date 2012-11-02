@@ -52,9 +52,7 @@ Instructions
 1. Create a file named "higher-order.ss". 
 2. You can copy all the modules in this file, OR,
 3. You can "require" all the modules in this file.
-4. All the modules are verifiable individually. You can also test your
-code by placing them in a single 
-5. Make sure you upload all the files before testing them. 
+4. Zip all the files required for the experiment and upload them. 
 #+END_EXAMPLE
 
 ** Module 1 - Reduce a given list.
@@ -237,7 +235,8 @@ upload the button in the right panel.
 The test cases your program passes successfully will be displayed.
 #+END_EXAMPLE
 
+
 * Exercise
-* Further Readings
+
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].
