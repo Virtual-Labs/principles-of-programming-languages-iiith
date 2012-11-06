@@ -66,7 +66,7 @@ an environment are
 Instructions
 1. Create a file named "environment.ss". 
 2. Include all the scheme code in this file. 
-3. Zip all the files required for the experiment and upload them. 
+3. Zip all the files required for the experiment and upload them. The name of the zip file should be environment.zip.
 #+END_EXAMPLE
 
 ** Module 1 - Define Abstract Syntax for empty and extended environments and look-up function to look up an identifier using an environment.

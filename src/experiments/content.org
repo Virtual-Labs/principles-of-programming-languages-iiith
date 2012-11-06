@@ -16,7 +16,6 @@ In this lab, you will be designing programming languages and
 interpreters will be implemented in the Scheme programming
 language.  This approach is at the heart of the EOPL book
 and also this lab.  
-
 * Structure of the  Lab 
 
 The lab is divided into several /experiments/.  Each
@@ -30,6 +29,21 @@ as instructed in the experiment and test them against a
 pre-loaded test suite.  You will be evaluated on the basis
 of number of successful test cases run on your uploaded
 code.
+
+* How to Use the Lab?
+
+The lab consists of nine experiments. The naming conventions have been
+specified in each of the experiments. They should be followed strictly
+for evaluation purposes. 
+
+- Please register with your roll numbers. 
+- While uploading the experiments, the name of the zip file should follow the convention specified in the experiments. 
+- The terminal has been provided to enable scheme on your browser. It gives the command line racket. 
+- You can view your uploaded files in the terminal as well. 
+- To login using the terminal, use the same username and password with which you have registered. And, use following credentials:
+
+Host/IP or SSH URL [localhost]: 10.2.48.12
+Port [22] : 22
 
 * Prerequisites: What you need to know to use this lab
 

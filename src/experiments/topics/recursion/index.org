@@ -60,7 +60,7 @@ Instructions
 1. Create a file named "recursive.ss". 
 2. You can include all the modules in this file, OR,
 3. You can "require" all the modules in this file.
-4. Zip all the files required for the experiment and upload them. 
+4. Zip all the files required for the experiment and upload them. The name of the zip file should be recursion.zip.
 #+END_EXAMPLE
 
 ** Module 1 - Design the Abstract Syntax for the Language with Recursive Functions

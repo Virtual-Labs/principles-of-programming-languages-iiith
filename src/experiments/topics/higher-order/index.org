@@ -52,7 +52,7 @@ Instructions
 1. Create a file named "higher-order.ss". 
 2. You can copy all the modules in this file, OR,
 3. You can "require" all the modules in this file.
-4. Zip all the files required for the experiment and upload them. 
+4. Zip all the files required for the experiment and upload them. The name of the zip file should be higher-order.zip.
 #+END_EXAMPLE
 
 ** Module 1 - Reduce a given list.

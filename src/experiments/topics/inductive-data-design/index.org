@@ -102,7 +102,7 @@ Instructions
 
   - Write the scheme program in this file. 
 
-  - Zip all the files required for the experiment and upload them. 
+  - Zip all the files required for the experiment and upload them. The name of the zip file should be inductive-data-design.zip.
 #+END_EXAMPLE
 
 ** Module 1 - Denote natural numbers as a list. 

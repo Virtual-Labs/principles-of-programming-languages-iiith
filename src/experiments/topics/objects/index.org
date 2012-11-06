@@ -62,7 +62,7 @@ Instructions
 1. Create a file named "objects.ss". 
 2. You can include all the modules in this file, OR,
 3. You can "require" all the modules in this file.
-4. Zip all the files required for the experiment and upload them. 
+4. Upload the file. The name of the file should be objects.zip. 
 #+END_EXAMPLE
 
 ** Module 1 - Create an object
