@@ -43,7 +43,8 @@ for evaluation purposes.
 - To login using the terminal, use the same username and password with which you have registered. And, use following credentials:
 
 Host/IP or SSH URL [localhost]: 10.2.48.12
-Port [22] : 22
+
+Port : 22
 
 * Prerequisites: What you need to know to use this lab
 
