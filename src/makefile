@@ -25,7 +25,7 @@ build-local: permissions
 	sudo rsync -av ${DEST}/ /var/www/build
 
 run-local: build-local
-	echo "Finish this target!"
+	sudo service apache2 restart
 
 export: permissions
 	rsync -av ${DEST}/ cse05@devel.virtual-labs.ac.in:./public_html/final-build
