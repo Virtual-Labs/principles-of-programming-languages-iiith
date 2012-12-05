@@ -2,7 +2,7 @@
 
 * Lab Layout
 
-The lab has been divided into three frames according to the
+The lab has been divided into three frames according to then
 functionality provided by the lab.
 - Content
 - Login and Upload Frame
@@ -52,9 +52,9 @@ The file is then sent to the eval1 server through secure copy by
 establishing an ssh connection to the server using the evaluator
 credentials. In the eval1 server, in the home directory of the
 evaluator, we have three different directories - /test-cases/ where all
-the test files for all the experiments are stored, /test_results/ where
+the test files for all the experiments are stored, /test-results/ where
 the results of the evaluated test cases are stored for every user inside
-their own directories and /upload_files/ in which the uploaded files for
+their own directories and /upload-files/ in which the uploaded files for
 each user are stored in their respective directories. The reason why we
 maintain a repository of all the files is to ensure we have an original
 uploaded file with which cross-checking of the results can be done in
@@ -64,29 +64,46 @@ case of any future conflicts.
 *** How is testing done?  
 The name of the uploaded file is extracted and the respective folder of
 test cases are copied into the user directory of the user in the
-upload-files directory. The parent test file is then run using the
-command "racket testfilename" and the results are directed to the file
-in the respective user directory of the test-results folder.
+=upload-files= directory. The parent test file is then run using the
+command =racket test-file-name= and the results are directed to the file
+in the respective user directory of the =test-results= folder.
+
+There was a proposal to use the user accounts to do the testing of the
+files instead of having a central account. But, this was not successful
+due to the resource limits placed on the user accounts. Racket needs a
+lot of memory space to load its modules in order to run the test cases
+and the limits placed on the memory address for each account restrict
+the modules which can be loaded which is why the command execution gets
+aborted.
 
 
-*** Sending the results and file to the user home directories
-A python script "evaluate" sends the test results and the uploaded files
-to the user's home directories under the directory of uploaded-files. A
+*** The results and file to the user home directories
+A python script =evaluate= sends the test results and the uploaded files
+to the user's home directories from the evaluator account. A
 user can not change any other file except for their own files. 
 
 
 ** Terminal
 
+The terminal has been provided as a part of the browser so as to enable
+the students or the users of the lab to run the Racket software in the
+terminal. Also, the terminal provides a user space for the user where
+they can find the uploaded files and the results of the test cases run
+on those files. They have also been provided the facility of /vi editor/
+in the terminal.
+
+The terminal can be accessed with following particulars:
+Host / IP: 10.2.48.12
+Port : 22
+
+User Name and Password credentials should be the same as used in the
+login frame above.
+
 
 * Current Issues in the Lab
 
-- Registration from the deployed URL is generating error : 
-"Failed to create user: sh: /usr/sbin/ldapadduser: not found"
-
 - Security Concerns
   + How does the container handle when a user uploads a file with infinite loop? 
-
-- Can putting the entire testing script in python help? 
 
 - How to stop the users from accessing any other folder than their home directories?
 
@@ -96,4 +113,5 @@ user can not change any other file except for their own files.
 
 - Try using a scheme program with an infinite loop. 
 
-- Are 12 and 13 different? Racket had to be installed on both separately. 
+- registered users can access others accounts and copy data from there
+
