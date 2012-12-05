@@ -20,8 +20,12 @@ permissions:
 	chmod 777 ${DEST}/tmp
 	chmod 777 -R ${DEST}/test
  
-local: permissions
+build-local: permissions
+	sudo mkdir -p /var/www/build
 	sudo rsync -av ${DEST}/ /var/www/build
+
+run-local: build-local
+	echo "Finish this target!"
 
 export: permissions
 	rsync -av ${DEST}/ cse05@devel.virtual-labs.ac.in:./public_html/final-build
