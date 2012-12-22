@@ -1,0 +1,164 @@
+#+TITLE: Principles of Programming Languages 
+#+SETUPFILE: ../org-templates/level-0.org
+#+LINK_UP: ./content.html
+#+LINK_HOME: ./content.html
+
+* Objective
+Welcome to the Principles of Programming Virtual Lab!  The
+objective of this lab is to build your own little
+programming languages using the principles described in the
+book [[http://www.eopl3.com][Essentials of Programming Languages, 3rd Ed.]] (EOPL) by
+/Friedman/ and /Wand/.  
+
+It must be noted that the Principles of Programming Languages Virtual
+Lab is not provided as a self-contained resource to learn Scheme and the
+concepts of Programming Languages.  You may think of this lab as a
+hands-on companion to the text book, EOPL, mentioned above.  There is
+very little theory provided along with the experiments.  Each experiment
+comes with a Pre-requisites section which specifies the material in the
+EOPL book which should be read before attempting the experiment for
+proper understanding of the tasks.  
+
+
+* Approach: Definitional Interpreters
+
+In this lab, you will be designing programming languages and
+/interpreters/, or virtual machines that run them.  These
+interpreters will be implemented in the Scheme programming
+language.  This approach is at the heart of the EOPL book
+and also this lab.  
+
+
+* Structure of the  Lab 
+
+The lab is divided into nine /experiments/.  Each experiment explores a
+concept or a mini-language in a systematic way.  Each experiment is
+broken down into a number of /modules/.  The concept of module in the
+lab is equivalent to the concept of module in Scheme.  Please read about
+Scheme modules [[http://docs.racket-lang.org/guide/modules.html][here]].  Each module consists of a set of do-able /tasks/.
+Further, each task consists of several /steps/.
+
+All the experiments have test cases except Experiment 9 - Languages with
+Objects.  Instructions have been provided in the start of each experiment
+which should be followed strictly and after each experiment is finished,
+the scheme files may be uploaded using the interface provided in the
+right frame.  These uploaded files would be tested against pre-loaded
+test suites.
+
+
+* How to Use the Lab?
+
+The lab consists of nine experiments. The naming conventions have been
+specified in each of the experiments. They should be followed strictly
+for evaluation purposes. 
+
+- Please register with your roll numbers. 
+
+- While uploading the experiments, the name of the zip file should
+  follow the convention specified in the experiments.
+
+- The terminal has been provided to enable scheme on your browser. It
+  gives the command line racket.
+
+- You can view your uploaded files and the results of the test cases in
+  the terminal as well. The result files are the one which have
+  =-result= appended to the uploaded file names.
+
+- To login using the shell within the browser, use following
+  credentials:
+
+#+BEGIN_EXAMPLE
+Host/IP or SSH URL [localhost]: 10.2.48.12
+Port : 22
+#+END_EXAMPLE
+
+And, follow with using the same username and password with which you
+have registered.
+
+
+* Prerequisites: What you need to know to use this lab
+
+In order to be able to use this lab, you need to be proficient with the
+Scheme programming language.  Several online guides and text books are
+available for learning Scheme.  We recommend the online text book [[http://www.htdp.org][How to
+Design Programs]] by /Felleisen, Findler, Flatt and Krishnamurti/ as an
+introductory text.  We suggest [[http://www.racket-lang.org][Racket]] implementation of Scheme as the
+preferred platform for learning Scheme.
+
+Also, please note that the modules in the experiments are equivalent to
+the concept of modules in Scheme language.  Thus, another pre-requisite
+to use the lab is to know what Scheme modules are and how to write
+them.  You can read more about them in the [[http://docs.racket-lang.org/guide/modules.html][Racket Guide]].
+
+
+* Co-requisites:  What you need to study along with the lab
+
+The material in this lab is designed to follow the narrative
+of the [[http://www.eopl3.com/][EOPL]] by /Friedman/ and /Wand/.  Against each
+experiment, you will find the relevant section as reading
+assignments.  Reading assignments need to be completed
+*before* proceeding with the experiment.
+
+Please download Racket and install it in your machine as per
+the instructions given on the Racket website. The links to
+download Racket and the online available texts are given in
+the [[References]]
+
+
+* List of Experiments
+
+|---------+------------------------------------+-------------------------------|
+| Exp No. | Experiment Name                    | Pre-requisite Readings        |
+|---------+------------------------------------+-------------------------------|
+|       1 | [[file:topics/inductive-data-design/index.org][Design Inductive Data]]              | Section 1.1, Chapter 1 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       2 | [[file:topics/inductive-data-prog/index.org][Programming with Inductive Data]]    | Chapter 1 - EOPL              |
+|---------+------------------------------------+-------------------------------|
+|       3 | [[file:topics/higher-order/index.org][Higher-Order Functions]]             | Chapter 1 - EOPL              |
+|---------+------------------------------------+-------------------------------|
+|       4 | [[file:topics/arithmetic/index.org][Arithmetic Interpreter]]             | Section 3.2, Chapter 3 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       5 | [[file:topics/environment/index.org][Environment]]                        | Section 2.2, Chapter 2 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       6 | [[file:topics/lexical/index.org][Block-Structured Language]]          | Section 3.2, Chapter 3 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       7 | [[file:topics/closure/index.org][Language with Closures]]             | Section 3.3, Chapter 3 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       8 | [[file:topics/recursion/index.org][Language with  Recursive Functions]] | Section 3.4, Chapter 3 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       9 | [[file:topics/objects/index.org][Language with Objects]]              | Chapter 9 - EOPL              |
+|---------+------------------------------------+-------------------------------|
+
+
+* References
+
+** Scheme/Racket
+*** Introduction to Programming books that use Scheme
+
+    - [[http://mitpress.mit.edu/sicp/full-text/book/book.html][Structure and Interpretation of Computer Programs (SICP)]] 
+
+    - [[http://www.cs.berkeley.edu/~bh/ss-toc2.html][Simply Scheme: Introducing Computer Science]]
+
+*** Racket
+    Visit [[http://racket-lang.org/download/][this link]] to download Racket.
+   
+*** Testing 
+
+http://docs.racket-lang.org/rackunit/api.html 
+
+An essential knowledge of what a unit test, a test case and a test
+suite is, and how to text your code using these, should be sufficient
+for this lab.
+
+** Online Texts
+*** [[http://mitpress.mit.edu/sicp/full-text/book/book.html][SICP]]
+
+*** [[http://www.htdp.org/2003-09-26/Book/][HtDP]]
+
+*** [[http://www.cs.brown.edu/~sk/Publications/Books/ProgLangs/][Programming Languages: Applications and Interpretation]]
+
+    
+* Feedback
+
+Please provide your feedback [[here][http://virtual-labs.ac.in/feedback/]]. 
+Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].
