@@ -1,0 +1,11 @@
+#+title: List of Experiments
+
+#+TAGS: readings(r) hw(h)
+#+SETUPFILE: ../../org-templates/level-1.org
+#+LINK_HOME: ../content.html
+#+LINK_UP: ../content.html
+
+* [[./inductive-data-design/index.org][Experiment 1: Inductive data design]]
+
+
+* [[./inductive-data-prog/index.org][Experiment 2: Inductive data programming]]

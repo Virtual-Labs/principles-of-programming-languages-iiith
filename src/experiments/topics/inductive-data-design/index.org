@@ -3,7 +3,7 @@
 #+TAGS: readings(r) hw(h)
 #+SETUPFILE: ../../../org-templates/level-2.org
 #+LINK_HOME: ../../content.html
-#+LINK_UP:  ../../content.html#sec-6
+#+LINK_UP:  ../index.html
 
 * Prerequisites for the Experiment
 

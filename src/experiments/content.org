@@ -1,5 +1,7 @@
 #+TITLE: Principles of Programming Languages 
 #+SETUPFILE: ../org-templates/level-0.org
+#+LINK_UP: ./content.html
+#+LINK_HOME: ./content.html
 
 * Objective
 Welcome to the Principles of Programming Virtual Lab!  The
@@ -72,27 +74,27 @@ the [[References]]
 
 * List of Experiments
 
-|---------+------------------------------------+-------------------------------+-----------------|
-| Exp No. | Experiment Name                    | Reading                       | Expected Effort |
-|---------+------------------------------------+-------------------------------+-----------------|
-|       1 | [[file:topics/inductive-data-design/index.org][Design Inductive Data]]              | Section 1.1, Chapter 1 - EOPL |                 |
-|---------+------------------------------------+-------------------------------+-----------------|
-|       2 | [[file:topics/inductive-data-prog/index.org][Programming with Inductive Data]]    | Chapter 1 - EOPL              |                 |
-|---------+------------------------------------+-------------------------------+-----------------|
-|       3 | [[file:topics/higher-order/index.org][Higher-Order Functions]]             | Chapter 1 - EOPL              |                 |
-|---------+------------------------------------+-------------------------------+-----------------|
-|       4 | [[file:topics/arithmetic/index.org][Arithmetic Interpreter]]             | Section 3.2, Chapter 3 - EOPL |                 |
-|---------+------------------------------------+-------------------------------+-----------------|
-|       5 | [[file:topics/environment/index.org][Environment]]                        | Section 2.2, Chapter 2 - EOPL |                 |
-|---------+------------------------------------+-------------------------------+-----------------|
-|       6 | [[file:topics/lexical/index.org][Block-Structured Language]]          | Section 3.2, Chapter 3 - EOPL |                 |
-|---------+------------------------------------+-------------------------------+-----------------|
-|       7 | [[file:topics/closure/index.org][Language with Closures]]             | Section 3.3, Chapter 3 - EOPL |                 |
-|---------+------------------------------------+-------------------------------+-----------------|
-|       8 | [[file:topics/recursion/index.org][Language with  Recursive Functions]] | Section 3.4, Chapter 3 - EOPL |                 |
-|---------+------------------------------------+-------------------------------+-----------------|
-|       9 | [[file:topics/objects/index.org][Language with Objects]]              | Chapter 9 - EOPL              |                 |
-|---------+------------------------------------+-------------------------------+-----------------|
+|---------+------------------------------------+-------------------------------|
+| Exp No. | Experiment Name                    | Pre-requisite Readings        |
+|---------+------------------------------------+-------------------------------|
+|       1 | [[file:topics/inductive-data-design/index.org][Design Inductive Data]]              | Section 1.1, Chapter 1 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       2 | [[file:topics/inductive-data-prog/index.org][Programming with Inductive Data]]    | Chapter 1 - EOPL              |
+|---------+------------------------------------+-------------------------------|
+|       3 | [[file:topics/higher-order/index.org][Higher-Order Functions]]             | Chapter 1 - EOPL              |
+|---------+------------------------------------+-------------------------------|
+|       4 | [[file:topics/arithmetic/index.org][Arithmetic Interpreter]]             | Section 3.2, Chapter 3 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       5 | [[file:topics/environment/index.org][Environment]]                        | Section 2.2, Chapter 2 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       6 | [[file:topics/lexical/index.org][Block-Structured Language]]          | Section 3.2, Chapter 3 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       7 | [[file:topics/closure/index.org][Language with Closures]]             | Section 3.3, Chapter 3 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       8 | [[file:topics/recursion/index.org][Language with  Recursive Functions]] | Section 3.4, Chapter 3 - EOPL |
+|---------+------------------------------------+-------------------------------|
+|       9 | [[file:topics/objects/index.org][Language with Objects]]              | Chapter 9 - EOPL              |
+|---------+------------------------------------+-------------------------------|
 
 * References
 

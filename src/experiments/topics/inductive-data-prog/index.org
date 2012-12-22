@@ -3,11 +3,12 @@
 #+TAGS: readings(r) hw(h)
 #+SETUPFILE: ../../../org-templates/level-2.org
 #+LINK_HOME: ../../content.html
-#+LINK_UP:  ../../content.html#sec-6
+#+LINK_UP:  ../index.html
 
 * Prerequisites for the Experiment
 You should have read Chapter 1 - Inductive Sets of Data, from the text
-book *EOPL*. 
+book [[http://www.eopl3.com/][EOPL]]. 
+
 * Learning Objective of the Experiment 
 
 The objective of this experiment is to design and implement recursive procedures on inductive data types. 

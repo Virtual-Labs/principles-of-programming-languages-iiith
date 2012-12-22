@@ -1,6 +1,6 @@
 DEST=../build
 
-all: publish init config permissions
+all: init publish config permissions
 
 publish: 
 	emacs --script elisp/publish.el
