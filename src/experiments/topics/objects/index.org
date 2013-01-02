@@ -8,11 +8,13 @@
 * Prerequisites for the Experiment
 
 You should have read Chapter 9 of the text book *EOPL*. 
+
 * Learning Objectives of the Experiment 
 
 The goal of this experiment is to understand how to define an object,
 its methods or functions and how to invoke the method name on the
 object. 
+
 
 * Theory
 ** Object Oriented Programming
@@ -55,14 +57,21 @@ Building the code into individual objects, provides a number of benefits:
 
 3. Code re-use: A existing object can be re-used in another program.
 
+
 * Procedure
 
 #+BEGIN_EXAMPLE
-Instructions
-1. Create a file named "objects.ss". 
-2. You can include all the modules in this file, OR,
-3. You can "require" all the modules in this file.
-4. Upload the file. The name of the file should be objects.zip. 
+Instructions:
+
+  - Create a file named "objects.ss". 
+
+  - You can include all the modules in this file, OR,
+
+  - You can "require" all the modules in this file.
+
+  - Upload the file.  The name of the file should be objects.zip.  Please
+    note that the experiment can not be evaluated as there are no test
+    cases for this Experiment.
 #+END_EXAMPLE
 
 ** Module 1 - Create an object
@@ -94,6 +103,7 @@ otherwise.
      + And, map the /msg/ to the first element of argument /args/ in
        /table/. 
 
+
 ** Module 2 - Create a method for an object
 
 #+BEGIN_EXAMPLE
@@ -120,8 +130,9 @@ incr-x: obj? number? -> void?
    /v/ to /this/. /v/ is the arbitrary amount with which the object is
    incremented.
 
-** Module 3 - Create the lookup function to bind the method and object
 
+** Module 3 - Create the lookup function to bind the method and object
+   
 #+BEGIN_EXAMPLE
 /send/ sets up a protocol for invoking the method name on the
 object. It looks up the method corresponding to the method name, and
@@ -143,12 +154,11 @@ the arguments.
   defined by the keyword /cons/. Bind the object to the method and the
   arguments given.
 
+
 * Exercise
 
-#+BEGIN_EXAMPLE
 Implement a class point, for representing a two-dimensional point as
 per the implementation details provided in the Programming section.
-
 
 The class should have the following methods:
 - set - for setting up the values of the coordinates.
@@ -160,9 +170,7 @@ The class should have the following methods:
 - translate - for updating the coordinate values when the system is
   translated to anothe point.
 
-#+END_EXAMPLE
 
-* Further Readings
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].
 

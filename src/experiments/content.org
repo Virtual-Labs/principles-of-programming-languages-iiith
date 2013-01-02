@@ -28,7 +28,6 @@ interpreters will be implemented in the Scheme programming
 language.  This approach is at the heart of the EOPL book
 and also this lab.  
 
-
 * Structure of the  Lab 
 
 The lab is divided into nine /experiments/.  Each experiment explores a
@@ -44,6 +43,23 @@ which should be followed strictly and after each experiment is finished,
 the scheme files may be uploaded using the interface provided in the
 right frame.  These uploaded files would be tested against pre-loaded
 test suites.
+
+*How is the POPL Virtual Lab different from an Exercises Section at the
+end of chapters in the book?*
+
+The lab has been closely integrated with the book, EOPL, and language,
+Scheme, to provide a hands-on experience with building the interpreters.
+Before attempting any experiment, the user is advised to read the
+Pre-requisite section to get the reference of the chapter or the section in
+the book on which the experiment is based.  After the reference has been
+followed, only then the user should attempt the experiment.
+
+The lab has been designed with the aim to provide a step by step
+approach to build the solutions for the Experiments in form of tasks.
+The solutions have not been provided to encourage a student to think in
+terms of small steps to build a complete solution for the experiments.
+Instead of providing the solutions, the Scheme code written and uploaded
+by the user is tested against pre-defined test cases.
 
 
 * How to Use the Lab?

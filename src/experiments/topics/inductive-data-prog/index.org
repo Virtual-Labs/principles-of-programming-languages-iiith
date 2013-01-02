@@ -9,9 +9,11 @@
 You should have read Chapter 1 - Inductive Sets of Data, from the text
 book [[http://www.eopl3.com/][EOPL]]. 
 
+
 * Learning Objective of the Experiment 
 
 The objective of this experiment is to design and implement recursive procedures on inductive data types. 
+
 
 * Theory
 The structure of inductive datatypes lends itself to an elegant way of
@@ -21,14 +23,20 @@ substructures of the inductive datatype,  but not on the base cases of
 the inductive type. The key point to note is that the structure of the
 recursive programs parallels the structure of the inductive type.
 
+
 * Procedure
 
 #+BEGIN_EXAMPLE
-Instructions
-1. Create a file named "inductive-data-prog.ss". 
-2. You can include all the modules in this file, OR,
-3. You can "require" all the modules in this file.
-4. Zip all the files required for the experiment and upload them. The name of the zip file should be inductive-data-prog.zip.
+Instructions:
+
+  - Create a file named "inductive-data-prog.ss". 
+
+  - You can include all the modules in this file, OR,
+
+  - You can "require" all the modules in this file.
+ 
+  - Zip all the files required for the experiment and upload them. The
+    name of the zip file should be inductive-data-prog.zip.
 #+END_EXAMPLE
 
 ** Module 1 - Compute Factorial of a Number
@@ -60,14 +68,8 @@ program stops calling itself and terminates.
 + Step 2 - Pass an argument /n/ using the keyword /lambda/.
 + Step 3 - Specify the if-else condition using the keyword /cond/.
   - If /n/ is 0, return 1.
-  - Else multiply /n/ with the result of the recursive function /!/
+  - Else multiply /n/ with the result of the recursive function /fact/
     which takes /n-1/ as the argument. 
-
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-The test cases your program passes successfully will be displayed.
-#+END_EXAMPLE
 
 *** Task 2 - Define the function to compute the factorial of a number using an accumulator. 
 
@@ -105,12 +107,6 @@ the current is done and then stored.
 + Step 5 - Make a call to the function /fact-acc/ and give the
   arguments /n/ and 1. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-The test cases your program passes successfully will be displayed.
-#+END_EXAMPLE
-
 ** Module 2 - Compute the length of a list. 
 
 : Create a module "list-length.ss".
@@ -132,11 +128,6 @@ function is:
   - Else, call /list-length/ recursively passing the rest of the list
     /ls/ using the keyword /rest/ and add 1 to this call. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-The test cases your program passes successfully will be displayed.
-#+END_EXAMPLE
 
 ** Module 3 - Compute the sum of the elements in a list. 
 
@@ -159,19 +150,9 @@ signature of the function is:
   - Else
     + Fetch the first element of the list /ls/ using the keyword /first/. 
     + Call the function /list-sum/ recursively by passing the rest of
-      the list /ls/ as argument using the keyword /rest/. 
+      the list /ls/ as argument using the in-built function /rest/. 
     + Add both these elements. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel. 
-The test cases your program passes successfully will be displayed.
-#+END_EXAMPLE
-
-* Further Exercises
-- none
-
-* Further Readings
 
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].

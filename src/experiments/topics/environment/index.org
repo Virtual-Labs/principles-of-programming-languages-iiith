@@ -10,12 +10,14 @@
 You should have read Chapter - 2, Data Abstraction from the text book
 *EOPL*. 
 
+
 * Learning Objectives of the Experiment 
 
 The goal of this experiment is to learn how to create and define an
 empty environment and an extended environment from an existing
 environment. We also define a lookup function which looks up an
 identifier in a given environment.
+
 
 * Theory
 
@@ -60,19 +62,26 @@ an environment are
 2. looking up an identifier, and 
 3. composition of two environments.
 
+
 * Procedure
 
 #+BEGIN_EXAMPLE
-Instructions
-1. Create a file named "environment.ss". 
-2. Include all the scheme code in this file. 
-3. Zip all the files required for the experiment and upload them. The name of the zip file should be environment.zip.
+Instructions:
+
+  - Create a file named "environment.ss". 
+
+  - Include all the scheme code in this file. 
+
+  - Zip the files required for the experiment and upload them. The name
+    of the zip file should be "environment.zip".
 #+END_EXAMPLE
 
 ** Module 1 - Define Abstract Syntax for empty and extended environments and look-up function to look up an identifier using an environment.
 
-: Create a module "env.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "env.ss".  Require the modules relevant and provide the
+functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define an empty environment. 
 
@@ -87,6 +96,7 @@ empty-env. The signature of the empty-env is:
 + Step 1 - Define the constructor for the empty environment.
    - The constructor is named empty-env. 
    - It takes no arguments. 
+
 
 *** Task 2 - Define an extended environment from a given old environment. 
 
@@ -115,6 +125,7 @@ old-env : env?
    - It takes /ids/, /vals/ and /old-env/. 
    - Write the type predicates along with the arguments.
 
+
 *** Task 3 - Define the datatype /env/. 
 
 #+BEGIN_EXAMPLE
@@ -127,6 +138,7 @@ env is "env?". It takes two constructors - empty-env and extended-env.
    - Use the construct /define-datatype/ to define /env/. 
    - The type predicate for /env/ is /env?/. 
    - It takes two constructors - /empty-env/ and /extended-env/.
+
 
 *** Task 4 - Define the look-up function. 
 
@@ -196,13 +208,6 @@ env : env?
       arguments /outer-env/ and /x/. Else, if it returns true, return
       the element in /vals/ at position /j/.
     
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
-
-
-* Exercise
 
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].

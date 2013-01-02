@@ -8,8 +8,10 @@
 * Prerequisites for the Experiment
 You should have read Section 1.1 - Recursively Specified Data of
 Chapter 1 - Inductive Sets of Data, from the text book *EOPL*. 
+
 * Learning Objectives of the Experiment 
 The goal of this experiment is to learn how to define the functions using higher order functions. 
+
 
 * Theory
 
@@ -45,26 +47,34 @@ will  take  as an  argument,  the operation  that  is  required to  be
 done.  As is  seen, higher  order functions  are an  integral  part of
 inductive datatypes.
 
+
 * Procedure
 
 #+BEGIN_EXAMPLE
-Instructions
-1. Create a file named "higher-order.ss". 
-2. You can copy all the modules in this file, OR,
-3. You can "require" all the modules in this file.
-4. Zip all the files required for the experiment and upload them. The name of the zip file should be higher-order.zip.
+Instructions:
+
+  - Create a file named "higher-order.ss". 
+
+  - You can copy all the modules in this file, OR,
+
+  - You can "require" all the modules in this file.
+
+  - Zip all the files required for the experiment and upload them. The
+    name of the zip file should be "higher-order.zip".
 #+END_EXAMPLE
 
 ** Module 1 - Reduce a given list.
 
 *** Task 1 - Define the function /list-reduce/. 
 
-: Create a module named "list-reduce.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module named "list-reduce.ss". Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 "list-reduce" takes a list and returns a list. 
+
 It can be explained in terms of type variables A and B as:
 
 [A, [(B, A) -> A]] -> [(listof B) -> A]
@@ -83,9 +93,10 @@ It can be explained in terms of type variables A and B as:
 
 *** Task 2 - Define the function /list-reduce/ function using an auxiliary variable.
 
-: Create a module "list-reduce-auxiliary.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module named "list-reduce-auxiliary.ss". Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 + Step 1 - Define the function /list-reduce/ that takes /seed/ and
   /bop/ as its input arguments using the keyword /lambda/.
@@ -100,11 +111,13 @@ module.
      /ls/ as an argument using the keyword /rest/.
 + Step 4 - Bind the id /f/ to the code in the above step. 
  
+
 ** Module 2 - Use list-reduce to generate list-length function
 
-: Create a module named "listlength.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module named "listlength.ss". Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Write the function /list-length/ using /list-reduce/.  
 
@@ -127,16 +140,17 @@ listlength : list? -> number?
 
 ** Module 3 - list-map function
 
-: Create a module named "list-map.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module named "list-map.ss". Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Write the list-map function
 
 #+BEGIN_EXAMPLE
-The list-map function takes a function f and a list ls and returns a
-new list whose each element is the result of applying f to the
-corresponding element of ls. Formally speaking:
+The list-map function takes a function f and a list ls and returns a new
+list whose each element is the result of applying f to the corresponding
+element of ls. Formally speaking:
 
 (length (list-map f ls)) = (length ls), and
 (list-ref (list-map f ls) i) = (f (list-ref ls i)), 
@@ -144,7 +158,6 @@ corresponding element of ls. Formally speaking:
 
 Expressing list-map in terms of type predicates A and B, 
    [(A -> B) , (listof A)] -> (listof B)
-
 #+END_EXAMPLE
 
  + Step 1 - Define the function /list-map/. 
@@ -161,17 +174,14 @@ Expressing list-map in terms of type predicates A and B,
       recursive call to /list-map/ which takes arguments /f/ and rest
       of the elements of the list /ls/ using the keyword /rest/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel. 
-The test cases your program passes successfully will be displayed.
-#+END_EXAMPLE
 
 ** Module 5 - Implement filter
 
-: Create a module named "filter.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module named "filter.ss". Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
+
 *** Task 1 - Write the filter function.
 
 #+BEGIN_EXAMPLE
@@ -199,18 +209,13 @@ that satisfy pred?. Expressing it in terms of type predicate A:
     - Else, again put a recursive call to /filter/ using the arguments
       /pred?/ and rest of the elements of the list /ls/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel. The test cases your program
-passes successfully will be displayed.
-#+END_EXAMPLE
-
 ** Module 6 - Implement count 
 
-: Create a module named "filter.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
-
+#+BEGIN_EXAMPLE
+Create a module named "count.ss". Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
+   
 *** Task 1 - Write the count function.
 
 #+BEGIN_EXAMPLE
@@ -229,14 +234,7 @@ Expressing it in terms of type predicate A:
  + Step 3 - Use the keyword /length/ and call function /filter/ as an
    argument to /length/. /filter/ takes two arguments - /pred?/ and
    /ls/. 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel. 
-The test cases your program passes successfully will be displayed.
-#+END_EXAMPLE
 
-
-* Exercise
 
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].

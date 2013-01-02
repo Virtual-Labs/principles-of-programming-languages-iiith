@@ -8,10 +8,12 @@
 * Prerequisites for the Experiment
 You should have read Chapter - 3, Expressions from the text book
 *EOPL*. 
+
 * Learning Objectives of the Experiment 
 The goal of this experiment is to design and implement the abstract
 syntax, evaluator and parser for a simple Arithmetic language which
 evaluates expressions. 
+
 * Theory
 A first-class object is an entity that can be passed as a parameter,
 assigned to a variable, or returned from a subroutine. Such first
@@ -58,19 +60,28 @@ will give the following output:
 
 6
 
+
 * Procedure
 
 #+BEGIN_EXAMPLE
-Instructions
-1. Create a file named "closure.ss". 
-2. You can include all the modules in this file, OR,
-3. You can "require" all the modules in this file.
-4. Zip all the files required for the experiment and upload them. The name of the zip file should be closure.zip.
+Instructions:
+
+  - Create a file named "closure.ss". 
+ 
+  - You can include all the modules in this file, OR,
+
+  - You can "require" all the modules in this file.
+
+  - Zip all the files required for the experiment and upload them. The
+    name of the zip file should be "closure.zip".
 #+END_EXAMPLE
+
 ** Module 1 - Design the Abstract Syntax for the Language with Closures
 
-: Create a module "closure-ast.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "closure-ast.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Write the function to define the abstract syntax tree for the expressions.
 
@@ -166,6 +177,7 @@ body : ast?
     - It has a constructor /number/, /app/, /id-ref/, /assume/ and
       /function/.
 
+
 *** Task 2 - Define other functions. 
 
  + Step 1 - Define  the type /bind?/.  
@@ -193,15 +205,13 @@ body : ast?
  + Step 4 - Define /id?/. 
     - Define /id?/ to take values of the type /symbol?/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 2 - Define the Semantic Domains for the Language with Closures
 
-: Create a module "closure-semanticdomain.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "closure-semanticdomain.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 While designing any programming language, it is highly important to
@@ -230,6 +240,7 @@ expressible-value? : any/c -> boolean?
     - It can return any value from number or proc. Thus, use /or\/c/
       to specify that the return type can be a /number?/ or /proc?/. 
 
+
 *** Task 2 - Define the domain values of the expressions for the language. 
 
 #+BEGIN_EXAMPLE
@@ -244,6 +255,7 @@ denotable-value? : any/c -> boolean?
     - Define a predicate /denotable-value?/. 
     - It can return any value from number or proc. Thus, use /or\/c/
       to specify that the return type can be a /number?/ or /proc?/. 
+
 
 *** Task 3 - Define type /proc?/. 
 
@@ -265,6 +277,7 @@ denotable-value? : any/c -> boolean?
     - The type predicate for the function is /proc?/. 
     - It consists of two constructors /prim-proc/ and /closure/.
 
+
 *** Task 4 - Define types /prim-proc?/ and /closure?/. 
 
  + Step 1 - Define /prim-proc?/. 
@@ -283,11 +296,13 @@ denotable-value? : any/c -> boolean?
          false /#f/. 
        - Else, it returns true /#t/. 
 
+
 ** Module 3 - Define the environment. 
 
-: Create a module "closure-env.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module "closure-env.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define a lookup function. 
 
@@ -337,16 +352,13 @@ module.
   5. Along with the binding at the level of /loop/ in letrec, it again
      calls the binding /loop/ with the arguments /ls/ and /0/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 4 - Define the Evaluator for the Language with closures. 
 
-: Create a module "closure-eval.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module "closure-eval.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 The evaluator takes an ast and returns the value obtained by
@@ -441,6 +453,7 @@ operator and apply "apply-prim-proc", else we apply the function using
       - Else, produce the error message: "eval-ast "application rator
         is not a proc ~a" with the argument /a/. 
 
+
 *** Task 2 - Define other functions. 
 
   + Step 1 - Define procedure /apply-proc/. 
@@ -487,16 +500,13 @@ operator and apply "apply-prim-proc", else we apply the function using
    3. Call /eval-ast/ recursively with arguments /body/ and
       /new-env/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 5 - Design the Parser
 
-: Create a module "closure-parser.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module "closure-parser.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 The concrete syntax of this language is as follows:
@@ -534,7 +544,6 @@ has a list of operands, and an ast to apply on these operands.
 In case of an application expression, we parse the closure to figure
 out if it is a primitive procedure or not; and then call the parse
 function for the list of expressions (i.e. the operands).
-
 #+END_EXAMPLE
 
  + Step 1 - Define a procedure /parse/. 
@@ -588,6 +597,7 @@ function for the list of expressions (i.e. the operands).
       an error message is produced: parse "don't know how to parse ~a"
       along with the argument /d/. 
 
+
 *** Task 2 - Define the type /id?/.
 - Use /define/ to create a function /id?/. 
 - Create a local function using the keyword /lamba/ and name the
@@ -599,9 +609,10 @@ function for the list of expressions (i.e. the operands).
 
 ** Module 6 - Run the interpreter. 
 
-: Create a module "closure-run.ss".
- Require the modules relevant and provide the functions defined in
- this module. 
+#+BEGIN_EXAMPLE
+Create a module "closure-run.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define a nonzero function. 
 
@@ -612,6 +623,7 @@ function for the list of expressions (i.e. the operands).
 
  + Step 2 - Use the keyword /and/c/, /number?/, /not/c/ and /zero?/ to
    check if the given number is 0 or not. 
+
 
 *** Task 2 - Define the operators. 
 
@@ -658,6 +670,7 @@ function for the list of expressions (i.e. the operands).
       /nonzero?/ as the denominator can not be zero and gives back a
       /number?/.
  
+
 *** Task 3 - Define /*init-env*/.
 
 : It initializes the extended environment. 
@@ -669,8 +682,9 @@ function for the list of expressions (i.e. the operands).
    operator symbols (+ , - , *, /) as constants, list of operator
    definitions (+p, -p, *p, /p) and /empty-env/. 
 
-*** Task 4 - Define /run/. 
 
+*** Task 4 - Define /run/. 
+    
  + Step 1 - Use keyword /define/. The name of the function is /run/. 
 
  + Step 2 - It takes an argument /ast/ using the keyword /lambda/. 
@@ -678,10 +692,6 @@ function for the list of expressions (i.e. the operands).
  + Step 3 - Call the function /eval-ast/ and give the arguments -
    /ast/ and /*init-env*/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 * Exercise
 
@@ -695,9 +705,12 @@ bool ::= 0 | 1
 op ::= & | || | ~
 #+end_example
 
-Define all the modules and include them in a file /boolean.ss/ and upload it. The module names should be prefixed by /bool/ instead of /num/ from the experiment modules. Let the other functions names be the same. 
+Define all the modules and include them in a file /boolean.ss/ and
+upload it. The module names should be prefixed by /bool/ instead of
+/num/ from the experiment modules. Let the other functions names be the
+same.
 
-* Further Readings
+
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].
 

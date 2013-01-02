@@ -9,3 +9,24 @@
 
 
 * [[./inductive-data-prog/index.org][Experiment 2: Inductive data programming]]
+
+
+* [[./higher-order/index.org][Experiment 3: Higher-Order Functions]]
+
+
+* [[./arithmetic/index.org][Experiment 4: Arithmetic Interpreter]]
+
+
+* [[./environment/index.org][Experiment 5: Environment]]
+
+
+* [[./lexical/index.org][Experiment 6: Block-Structured Language]]
+
+
+* [[./closure/index.org][Experiment 7: Language with Closures]]
+
+
+* [[./recursive/index.org][Experiment 8: Language with Recursive Functions]]
+
+
+* [[./objects/index.org][Experiment 9: Language with Objects]]

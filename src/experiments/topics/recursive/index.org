@@ -9,10 +9,12 @@
 You should have read Chapter - 3, Expressions from the text book
 *EOPL*. 
 
+
 * Learning Objectives of the Experiment 
 
 The goal of this experiment is to design and implement the abstract
 syntax, parser and evaluator of a language with recursive functions. 
+
 
 * Theory
 Most high-level computer programming languages support recursion by
@@ -53,20 +55,28 @@ and will give the following output:
 
 (#f boolean)
 
+
 * Procedure
 
 #+BEGIN_EXAMPLE
-Instructions
-1. Create a file named "recursive.ss". 
-2. You can include all the modules in this file, OR,
-3. You can "require" all the modules in this file.
-4. Zip all the files required for the experiment and upload them. The name of the zip file should be recursion.zip.
+Instructions:
+
+  - Create a file named "recursive.ss". 
+
+  - You can include all the modules in this file, OR,
+
+  - You can "require" all the modules in this file.
+
+  - Zip all the files required for the experiment and upload them. The
+    name of the zip file should be "recursion.zip".
 #+END_EXAMPLE
 
 ** Module 1 - Design the Abstract Syntax for the Language with Recursive Functions
 
-: Create a module "recursive-ast.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "recursive-ast.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Write the function to define the abstract syntax tree for the expressions.
 
@@ -179,6 +189,7 @@ body : ast?
     - It has the following constructors: /number/, /app/, /function/,
       /id-ref/, /assume/, /ifte/ and /recursive/. 
 
+
 *** Task 2 - Define other functions. 
 
  + Step 1 - Define  the type /bind?/.  
@@ -237,15 +248,13 @@ body : ast?
         arguments /fb-id/ and /fb-formals/ and /fb-body/ and returns
         /fb-body/.
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 2 - Define the Semantic Domains for the Language with Recursive Functions
 
-: Create a module "recursive-semanticdomain.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "recursive-semanticdomain.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 While designing any programming language, it is highly important to
@@ -274,6 +283,7 @@ expressible-value? : any/c -> boolean?
     - It can return any value from number or proc. Thus, use or/c to
       specify that the return type can be a /number?/ or /proc?/. 
 
+      
 *** Task 2 - Define the domain values of the expressions for the language. 
 
 #+BEGIN_EXAMPLE
@@ -287,6 +297,7 @@ denotable-value? : any/c -> boolean?
     - Define a predicate /denotable-value?/. 
     - It can return any value from number or proc. Thus, use or/c to
       specify that the return type can be a /number?/ or /proc?/. 
+
 
 *** Task 3 - Define type /proc?/. 
 
@@ -308,6 +319,7 @@ denotable-value? : any/c -> boolean?
    2. The type predicate for the function is /proc?/. 
    3. It consists of two constructors /prim-proc/ and /closure/.
 
+
 *** Task 4 - Define types /prim-proc?/ and /closure?/. 
 
  + Step 1 - Define /prim-proc?/. 
@@ -326,11 +338,13 @@ denotable-value? : any/c -> boolean?
         returns true /#t/. 
       - Else, it returns false /#f/. 
 
+
 ** Module 3 - Define the environment. 
 
-: Create a module "recursive-env.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module "recursive-env.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define Abstract Syntax for empty, extended and extended recursive environments.
 
@@ -397,6 +411,7 @@ and extended-rec-env.
     - Use the construct /define-datatype/ to define /env/. The type
       predicate for /env/ is /env?/. It takes three constructors -
       /empty-env/, /extended-env/ and /extended-rec-env/. 
+
 
 *** Task 2 - Define a look-up function to look up an identifier using an environment. 
 
@@ -495,16 +510,13 @@ env : env?
             +  Now, call the procedure /closure/  and pass the
                arguments /formals/, /body/ and /e/.
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel. 
-#+END_EXAMPLE
 
 ** Module 4 - Define the Evaluator for the Language with Recursive Functions.
  
-: Create a module "recursive-eval.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module "recursive-eval.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define the Evaluator for Language with Recursive Functions. 
 
@@ -634,6 +646,7 @@ environment. The actual recursion takes place when using the lookup.
    7. Make a recursive call to the procedure /eval-ast/ and provide
       the arguments /body/ and /new-env/. 
 
+
 *** Task 2 - Define other functions. 
 
   + Step 1 - Define procedure /apply-proc/. 
@@ -679,16 +692,13 @@ environment. The actual recursion takes place when using the lookup.
       as arguments. 
    3. Call /eval-ast/ recursively with arguments /body/ and /new-env/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 5 - Design the Parser
 
-: Create a module "recursive-parser.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module "recursive-parser.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 The concrete syntax of this language is as follows:
@@ -820,6 +830,7 @@ The template of the Scheme code should be:
       an error message is produced: parse "don't know how to parse ~a"
       along with the argument /d/. 
 
+
 *** Task 2 - Define the type /id?/.
 
  + Step 1 - Use /define/ to create a function /id?/. 
@@ -833,6 +844,7 @@ The template of the Scheme code should be:
  + Step 4 - Use the keyword /memq/ to find /x/ in the list of
    /*keywords*/.
 
+
 *** Task 3 - Define list of keywords. 
  
  + Step 1 - Use /define/ keyword to define a list of keywords. 
@@ -842,16 +854,13 @@ The template of the Scheme code should be:
  + Step 3 - The defined list of keywords includes /ifte/, /assume/,
    /function/ and /recursive/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel. 
-#+END_EXAMPLE
 
 ** Module 6 - Run the interpreter. 
 
-: Create a module "recursive-run.ss". 
-Require the modules relevant and provide the functions defined in this
-module. 
+#+BEGIN_EXAMPLE
+Create a module "recursive-run.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define a nonzero function. 
 
@@ -862,6 +871,7 @@ module.
 
  + Step 2 - Use the keyword /and/c/, /number?/, /not/c/ and /zero?/ to
    check if the given number is 0 or not. 
+
 
 *** Task 2 - Define the operators. 
 
@@ -905,6 +915,7 @@ module.
       /nonzero?/ as the denominator can not be zero and gives back a
       /number?/.
  
+
 *** Task 3 - Define /*init-env*/.
 
 : It initializes the extended environment. 
@@ -916,6 +927,7 @@ module.
    operator symbols (+ , - , *, /) as constants, list of operator
    definitions (+p, -p, *p, /p) and /empty-env/. 
 
+
 *** Task 4 - Define /run/. 
 
  + Step 1 - Use keyword /define/. The name of the function is /run/. 
@@ -924,6 +936,7 @@ module.
 
  + Step 3 - Call the function /eval-ast/ and give the arguments -
    /ast/ and /*init-env*/. 
+
 
 *** Task 5 - Define /go/.
 
@@ -936,10 +949,6 @@ module.
  + Step 3 - Call the function /run/ which in turn calls /parse/ and
    takes the argument /e/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 * Exercise
 
@@ -953,9 +962,12 @@ bool ::= 0 | 1
 op ::= & | || | ~
 #+end_example
 
-Define all the modules and include them in a file /boolean.ss/ and upload it. The module names should be prefixed by /bool/ instead of /num/ from the experiment modules. Let the other functions names be the same. 
+Define all the modules and include them in a file /boolean.ss/ and
+upload it. The module names should be prefixed by /bool/ instead of
+/num/ from the experiment modules. Let the other functions names be the
+same.
 
-* Further Readings
+
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].
 

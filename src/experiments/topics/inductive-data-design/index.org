@@ -10,9 +10,11 @@
 You should have read Section 1.1 - Recursively Specified Data of
 Chapter 1 - Inductive Sets of Data, from the text book *EOPL*. 
 
+
 * Learning Objective of the Experiment 
 The objective of  this experiment is to define  the natural numbers as
 an inductive datatype using the representation of lists.
+
 * Theory 
 
 Informally, an inductive datatype is a datatype whose
@@ -93,6 +95,7 @@ following rules:
      - In the particular case of *N*, the /m/ above is called /the
        predecessor of n/.
 
+
 * Procedure
 
 #+BEGIN_EXAMPLE
@@ -102,7 +105,8 @@ Instructions
 
   - Write the scheme program in this file. 
 
-  - Zip all the files required for the experiment and upload them. The name of the zip file should be inductive-data-design.zip.
+  - Zip all the files required for the experiment and upload them. The
+    name of the zip file should be inductive-data-design.zip.
 #+END_EXAMPLE
 
 ** Module 1 - Denote natural numbers as a list. 
@@ -213,7 +217,8 @@ upload the button in the right panel.
 The number of test cases your code has passed will be displayed.
 #+END_EXAMPLE
 
-* Additional Exercises
+
+* Exercises
 #+BEGIN_EXAMPLE
 Problem 1:
  - Nullary constructors can instead be replaced by constants.
@@ -229,7 +234,6 @@ Problem 2:
    representation.
 #+END_EXAMPLE
 
-* Further Readings
 
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].

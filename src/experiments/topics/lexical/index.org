@@ -10,12 +10,14 @@
 You should have read Chapter - 3, Expressions from the text book
 *EOPL*. 
 
+
 * Learning Objectives of the Experiment 
 
 The goal of this experiment is to design and implement the abstract
 syntax, parser and evaluator of a block structured language along with
 defining the semantic domains, environment and operators applicable in
 the language.
+
 
 * Theory
 
@@ -47,20 +49,28 @@ The evaluator is responsible for evaluating the abstract syntax tree
 produced by the parser in order to come up with the output of the
 input program sequence.
 
+
 * Procedure
 
 #+BEGIN_EXAMPLE
-Instructions
-1. Create a file named "lexical.ss". 
-2. You can include all the modules in this file, OR,
-3. You can "require" all the modules in this file.
-4. Zip all the files required for the experiment and upload them. The name of the zip file should be lexical.zip.
+Instructions: 
+
+  - Create a file named "lexical.ss". 
+
+  - You can include all the modules in this file, OR,
+
+  - You can "require" all the modules in this file.
+
+  - Zip all the files required for the experiment and upload them. The
+    name of the zip file should be "lexical.zip".
 #+END_EXAMPLE
 
 ** Module 1 - Design the Abstract Syntax for the Block-Structured Language
 
-: Create a module "lexical-ast.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "lexical-ast.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Write the function to define the abstract syntax tree for the expressions.
 
@@ -140,6 +150,7 @@ body : ast?
     - It has a constructor /number/, /prim-app/, /id-ref/ and
       /assume/.
 
+
 *** Task 2 - Create a list of operator symbols and check for a given operator if it is present in the defined list or not.
 
  + Step 1 - Create a list of operator symbols.
@@ -151,6 +162,7 @@ body : ast?
    defined list or not.
     - Use /define/. 
     - Name the function /arthmetic-op-symbol?/. 
+
 
 *** Task 3 - Define other functions. 
 
@@ -178,15 +190,13 @@ body : ast?
  + Step 4 - Define /id?/. 
     - Define /id?/ to take values of the type /symbol?/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 2 - Define the Semantic Domains for the Block-Structured Language
 
-: Create a module "lexical-semanticdomain.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "lexical-semanticdomain.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 While designing any programming language, it is highly important to
@@ -214,6 +224,7 @@ expressible-value? : any/c -> boolean?
       number, the set of expressible values would be (number). Thus,
       /thing/ is checked against the type predicate /number?/.
 
+
 *** Task 2 - Define the domain values of the results of evaluation of the expressions.
 
 #+BEGIN_EXAMPLE
@@ -230,10 +241,13 @@ denotable-value? : any/c -> boolean?
       number, the set of denotable values would be (number). Thus,
       /thing/ is checked against the type predicate /number?/.
 
+
 ** Module 3 - Define the environment
 
-: Create a module "lexical-env.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "lexical-env.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define Abstract Syntax for empty and extended environments.
 
@@ -283,6 +297,7 @@ env is "env?". It takes two constructors - empty-env and extended-env.
    - Use the construct /define-datatype/ to define /env/. 
    - The type predicate for /env/ is /env?/. It takes two
      constructors - /empty-env/ and /extended-env/.
+
 
 *** Task 2 - Define a look-up function to look up an identifier using an environment. 
 
@@ -341,17 +356,16 @@ env : env?
         give the arguments /outer-env/ and /x/. Else, if it returns
         true, return the element in /vals/ at position /j/.
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel. 
-#+END_EXAMPLE
 
 ** Module 4 - Define the operators. 
 
-: Create a module "lexical-op.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "lexical-op.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define a function to check if the given number is zero or not. 
+
  + Step 1 - Name the function /non-zero?/. 
  
  + Step 2 - Specify a local function within the function /non-zero/
@@ -359,6 +373,7 @@ Require the modules relevant and provide the functions defined in this module.
 
  + Step 3 - Evaluate if /n/ is of type /number?/ and is not equal to
    /zero?/. 
+
 
 *** Task 2 - Define operators. 
 
@@ -386,6 +401,7 @@ Require the modules relevant and provide the functions defined in this module.
    - Use /define-struct/ construct. Name the structure /op/. Add three fields to the structure /name/, /prim/ and /sig/. 
    - It includes the operator definitions /+op/, /-op/, /*op/ and /\/op/. 
 
+
 *** Task 3 - Define a module to check if the given operator is present in the defined list of operators. 
     
  + Step 1 - Define a list of operators. 
@@ -400,15 +416,13 @@ Require the modules relevant and provide the functions defined in this module.
     - Create another local function using /lambda/ and give an argument /op/. 
     - Use the equal keyword /eq?/ to check for the equality of /opsym/ and /op-name/ of the argument /op/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 5 - Define the Evaluator
 
-: Create a module "lexical-eval.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "lexical-eval.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 The evaluator takes an ast and returns the value obtained by
@@ -488,12 +502,17 @@ ast : ast?
    7. Call the procedure /eval-ast/ with the arguments /body/ and
       /new-env/. 
 
+
 *** Task 2 - Define the function to compare the signatures. 
+
 + Define a function /match-sig?/. 
   - Create a local function using /lambda/. 
   - Use the arguments /sig?/ and /val/. 
   - Return /sig?/ and /val/. 
+
+
 *** Task 3 - Define a procedure to type check the input. 
+
  + Step 1 - Use /define/ and create procedure /apply-prim-op/. 
 
  + Step 2 - Create a local function using the keyword /lambda/. Use
@@ -518,15 +537,13 @@ ast : ast?
       "incorrect number or type of arguments to ~a"" with the argument
       /opsym/. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 6 - Design the Parser
 
-: Create a module "lexical-parser.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "lexical-parser.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 The concrete syntax of this language is as follows:
@@ -591,6 +608,7 @@ code : any/c?
  + Step 6 - Call function /parse-error/. 
     - Else, call the function /parse-error/ with the argument /d/.
 
+
 *** Task 2 - Define /parse-error/. 
 
 + Step 1 - Define the function /parse-error/ with the keyword
@@ -600,18 +618,15 @@ code : any/c?
 + Step 2 - Display the error "parse-error "invalid syntax ~a"" and
   display the argument /d/.
 
+
 ** Module 7 - Run the interpreter
 
-: Create a module "lexical-run.ss". 
-Require the modules relevant and provide the functions defined in this module.
-
 #+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
+Create a module "lexical-run.ss".  Require the modules relevant and
+provide the functions defined in this module.
 #+END_EXAMPLE
 
-* Exercise
-* Further Readings
+
 
 * Feedback 
 Please provide your feedback [[http://virtual-labs.ac.in/feedback/][here]].

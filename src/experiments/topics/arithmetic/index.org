@@ -89,21 +89,27 @@ would be the following
 * Procedure
 
 #+BEGIN_EXAMPLE
-Instructions
-1. Create a file named "arithmetic.ss". 
-2. You can include all the modules in this file, OR,
-3. You can "require" all the modules in this file.
-4. Zip all the files required for the experiment and upload them. The name of the zip file should be arithmetic.zip. 
+Instructions:
+
+  - Create a file named "arithmetic.ss". 
+
+  - You can include all the modules in this file, OR,
+
+  - You can "require" all the modules in this file.
+  
+  - Zip all the files required for the experiment and upload them. The
+    name of the zip file should be "arithmetic.zip".
 #+END_EXAMPLE
 
 ** Module 1 - Design the Abstract Syntax for the Arithmetic Interpreter
 
-: Create a module "arithmetic-ast.ss". 
-Require the modules relevant and provide the functions defined in this
-module.
+#+BEGIN_EXAMPLE
+Create a module "arithmetic-ast.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Write the function to define the abstract syntax tree for the expressions.
-
+    
 #+BEGIN_EXAMPLE
 Things to know for this module:
  - What is a constructor?
@@ -163,6 +169,7 @@ The template of the abstract syntax should be:
     [...expressions constructor...])
 #+end_example
 
+
 *** Task 2 - Create a list of operator symbols and check for a given operator if it is present in the defined list or not.
 
  + Step 1 - Create a list of operator symbols.
@@ -189,15 +196,13 @@ The template of the abstract syntax should be:
        else ...return value...)))
 #+end_example
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 2 - Define the Semantic Domains of the Interpreter
 
-: Create a module "arithmetic-semantic-domain.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "arithmetic-semanticdomain.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define the domain values of the expressions. 
 
@@ -237,10 +242,13 @@ The template of the abstract syntax should be:
       (...specify thing as a number...)))
 #+end_example
 
+    
 ** Module 3 - Define the operators. 
 
-: Create a module "arithmetic-op.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "arithmetic-op.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define a function to check if the given number is zero or not. 
 
@@ -259,6 +267,7 @@ The template of the abstract syntax should be:
     (lambda (n)
       (...body of the function...)))
 #+end_example
+
 
 *** Task 2 - Define operators. 
 
@@ -302,6 +311,7 @@ The template of the abstract syntax should be:
   (...structure of divide...)
 #+end_example
 
+
 *** Task 3 - Define a module to check if the given operator is present in the defined list of operators. 
 
  + Step 1 - Define a list of operators. 
@@ -329,17 +339,16 @@ The template of the abstract syntax should be:
       (...body of the function...)))
 #+end_example
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel. 
-#+END_EXAMPLE
 
 ** Module 4 - Define the Evaluator for the Arithmetic Interpreter
 
-: Create a module "arithmetic-eval.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "arithmetic-eval.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define the evaluator. 
+
 #+BEGIN_EXAMPLE
 The evaluator takes an ast and returns the value obtained by
 evaluating the ast, i.e. an expressible value. Hence its signature
@@ -383,6 +392,7 @@ The template of the abstract syntax should be:
 	[...evaluator for expressions...])))
 #+end_example
 
+
 *** Task 2 - Define the function to compare the signatures. 
 
  + Step 1 - Define a function /match-sig?/. 
@@ -393,6 +403,7 @@ The template of the abstract syntax should be:
 
  + Step 4 - Return /sig?/ and /val/. 
 
+   
 *** Task 3 - Define a procedure to type check the input. 
 
  + Step 1 - Use /define/ and create procedure /apply-prim-op/. 
@@ -421,15 +432,13 @@ The template of the abstract syntax should be:
      "incorrect number or type of arguments to ~a"" with the argument
      /opsym/ being printed out. 
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 5 - Design the Parser for Arithmetic Interpreter
 
-: Create a module "arithmetic-parser.ss".
- Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "arithmetic-parser.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
 The concrete syntax of this language is as follows:
@@ -489,6 +498,7 @@ The template of the abstract syntax should be:
 	[else (...return value...)])))
 #+end_example
 
+
 *** Task 2 - Define /parse-error/. 
 
  + Step 1 - Define the function /parse-error/ with the keyword
@@ -506,15 +516,13 @@ The template of the abstract syntax should be:
       (...error message with the argument...)))
 #+end_example
 
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 ** Module 6 - Write the run function to execute the interpreter
 
-: Create a module "arithmetic-run.ss". 
-Require the modules relevant and provide the functions defined in this module.
+#+BEGIN_EXAMPLE
+Create a module "arithmetic-run.ss".  Require the modules relevant and
+provide the functions defined in this module.
+#+END_EXAMPLE
 
 *** Task 1 - Define the /run/. 
 
@@ -525,11 +533,6 @@ Require the modules relevant and provide the functions defined in this module.
  + Step 2 - Call the function /eval-ast/. As an argument to
    /eval-ast/, call the function /parse/ and pass /e/ as an argument
    to /parse/. 
-
-#+BEGIN_EXAMPLE
-After you finish writing the module, upload the program using the
-upload the button in the right panel.
-#+END_EXAMPLE
 
 
 * Exercise
