@@ -28,6 +28,7 @@ interpreters will be implemented in the Scheme programming
 language.  This approach is at the heart of the EOPL book
 and also this lab.  
 
+
 * Structure of the  Lab 
 
 The lab is divided into nine /experiments/.  Each experiment explores a
@@ -84,7 +85,7 @@ for evaluation purposes.
   credentials:
 
 #+BEGIN_EXAMPLE
-Host/IP or SSH URL [localhost]: 10.2.48.12
+Host/IP or SSH URL [localhost]: ssh.cse05.virtual-labs.ac.in
 Port : 22
 #+END_EXAMPLE
 

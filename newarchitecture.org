@@ -1,0 +1,37 @@
+#+TITLE: Proposed Architecture
+
+* Portability in the current Architecture
+
+The current Architecture of the POPL Lab lacks portability.  The current
+architecture requires a dedicated LDAP server and three containers for
+the lab support - one acts as a SSH gateway, one container provides the
+file server facility for the users and the third is a testing machine
+which runs the test cases on the upload files.  When ever the lab needs
+to be deployed at any other place, all the machines have to be recreated
+for the proper running of the lab.
+
+Thus, a new architecture was proposed which hopes to address the
+portability issue.  This architecture can be scaled across all the
+Virtual Labs.  Currently, the new design is proposed for SASL and POPL Labs. 
+
+* Proposed Architecture
+
+[[./drawing.png][Image]]
+
+There would be a dedicated file server and LDAP server for all the labs.
+Whenever a new user registers with the LDAP, a home directory is created
+for the user in the file server.  And, each lab would have a separate
+container.  LDAP server would have two categories - Users and Groups.
+All the labs would have separate Groups.  And, each user would be added
+to the lab group according to the labs they use.  Whenever a lab is
+opened by the user, it asks for the "Allow" or "Deny" permission and
+then add the user to the respective lab group in LDAP.  According to the
+groups, the users will have corresponding lab folders in their home
+directory.  Whenever a user logs in to access the file server, SSH or
+HTTP connection is used to authenticate the users and when the log in
+succeeds, a request is made to the file server using the authentication
+details provided by the user at the time of log in to copy the files of
+the user to the lab container.  The files would be copied on a need
+basis.  For example, if a user is using POPL Lab, only that lab's folder
+would be copied.  Each user would have a limited storage capacity and
+only the text files can be stored.
