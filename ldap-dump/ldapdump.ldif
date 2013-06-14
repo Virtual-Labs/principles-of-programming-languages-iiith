@@ -1,0 +1,86 @@
+dn: dc=swaroop,dc=org
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: swaroop.org
+dc: swaroop
+structuralObjectClass: organization
+entryUUID: ef3cf236-6608-1032-89a4-b500fcea7fb0
+creatorsName: cn=admin,dc=swaroop,dc=org
+createTimestamp: 20130610110207Z
+entryCSN: 20130610110207.005297Z#000000#000#000000
+modifiersName: cn=admin,dc=swaroop,dc=org
+modifyTimestamp: 20130610110207Z
+
+dn: cn=admin,dc=swaroop,dc=org
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: LDAP administrator
+userPassword:: e1NTSEF9V0FUWG40elFNdHZzci9lZ2pJS2ZWL0wydFY0VVRVbmY=
+structuralObjectClass: organizationalRole
+entryUUID: ef3da244-6608-1032-89a5-b500fcea7fb0
+creatorsName: cn=admin,dc=swaroop,dc=org
+createTimestamp: 20130610110207Z
+entryCSN: 20130610110207.009812Z#000000#000#000000
+modifiersName: cn=admin,dc=swaroop,dc=org
+modifyTimestamp: 20130610110207Z
+
+dn: ou=People,dc=swaroop,dc=org
+objectClass: organizationalUnit
+ou: People
+structuralObjectClass: organizationalUnit
+entryUUID: 2abff984-6609-1032-9a9a-97822ca35539
+creatorsName: cn=admin,dc=swaroop,dc=org
+createTimestamp: 20130610110346Z
+entryCSN: 20130610110346.849582Z#000000#000#000000
+modifiersName: cn=admin,dc=swaroop,dc=org
+modifyTimestamp: 20130610110346Z
+
+dn: ou=Groups,dc=swaroop,dc=org
+objectClass: organizationalUnit
+ou: Groups
+structuralObjectClass: organizationalUnit
+entryUUID: 2ac01c34-6609-1032-9a9b-97822ca35539
+creatorsName: cn=admin,dc=swaroop,dc=org
+createTimestamp: 20130610110346Z
+entryCSN: 20130610110346.850477Z#000000#000#000000
+modifiersName: cn=admin,dc=swaroop,dc=org
+modifyTimestamp: 20130610110346Z
+
+dn: cn=admin,ou=Groups,dc=swaroop,dc=org
+objectClass: posixGroup
+cn: miners
+cn: admin
+gidNumber: 5000
+structuralObjectClass: posixGroup
+entryUUID: 2ac2ff58-6609-1032-9a9c-97822ca35539
+creatorsName: cn=admin,dc=swaroop,dc=org
+createTimestamp: 20130610110346Z
+entryCSN: 20130610110346.869398Z#000000#000#000000
+modifiersName: cn=admin,dc=swaroop,dc=org
+modifyTimestamp: 20130610110346Z
+
+dn: uid=swaroop,ou=People,dc=swaroop,dc=org
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: Swaroop
+sn: Kundeti
+givenName: Swaroop
+cn: Swaroop Kundeti
+displayName: Swaroop Kundeti
+uidNumber: 6001
+gidNumber: 5000
+userPassword:: YWRtaW4xMjM=
+gecos: John Doe
+loginShell: /bin/bash
+homeDirectory: /home/swaroop
+structuralObjectClass: inetOrgPerson
+entryUUID: 2ac315ec-6609-1032-9a9d-97822ca35539
+creatorsName: cn=admin,dc=swaroop,dc=org
+createTimestamp: 20130610110346Z
+entryCSN: 20130610110346.869977Z#000000#000#000000
+modifiersName: cn=admin,dc=swaroop,dc=org
+modifyTimestamp: 20130610110346Z
+
