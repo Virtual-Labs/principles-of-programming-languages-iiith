@@ -10,6 +10,7 @@ init:
 
 config:
 	rsync -avC html/index.html ${DEST}/index.html
+	rsync -avC html/message.html ${DEST}/html/message.html
 	rsync -avC js ${DEST}
 	rsync -avC php ${DEST}
 	rsync -avC python ${DEST}
