@@ -24,7 +24,7 @@ if (isset($_REQUEST['login'])) {
 </head>
 <body>
 <h2><?php echo $login_message;?></h2>
- id="loginForm" name="loginForm" method="post" action="login-form.php">
+<id="loginForm" name="loginForm" method="post" action="login-form.php">
   <table width="300" border="0" align="center" cellpadding="2" cellspacing="0">
     <tr>
       <td width="112"><b>Login</b></td>
