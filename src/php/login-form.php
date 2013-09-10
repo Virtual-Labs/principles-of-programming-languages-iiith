@@ -23,11 +23,8 @@ if (isset($_REQUEST['login'])) {
 <link href="loginmodule.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-The feature not available currently. Please visit back after sometime. 
-<!--
 <h2><?php echo $login_message;?></h2>
-<p>&nbsp;</p>
-<form id="loginForm" name="loginForm" method="post" action="login-form.php">
+ id="loginForm" name="loginForm" method="post" action="login-form.php">
   <table width="300" border="0" align="center" cellpadding="2" cellspacing="0">
     <tr>
       <td width="112"><b>Login</b></td>
@@ -44,6 +41,6 @@ The feature not available currently. Please visit back after sometime.
   </table>
 
   <center>For new users, <a href="register-form.php">register here</a>.</center> 
-</form> -->
+</form>
 </body>
 </html>

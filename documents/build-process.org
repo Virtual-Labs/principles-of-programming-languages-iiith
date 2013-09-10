@@ -1,0 +1,23 @@
+#+TITLE: Developer Guide - How to Build the Lab?
+
+* How to build the lab?
+
+The sources of the lab are stored in the svn repository. The =php=
+folder has all the scripts for the authentication and testing of the
+uploaded files. The =experiment= folder has the entire content for the
+lab including the experiments, objectives of the lab, quizzes and
+instructions on how to use the lab. Any change done to these files would
+be automatically incorporated in the build. The =makefile= exists in the
+=src= folder. It provides us with the option of making a build using the
+command =make all=. =make run-local= builds the lab on the localhost to
+enable the testing of the lab without hosting it on the =test server=. 
+
+
+* Server Side Dependencies
+ - PHP : =php5-ldap=
+ - Apache Web Server : =libapache2-mod-php5=
+ - LDAP : =ldap-utils= and =ldapscripts=
+
+These are the packages needed to run the lab successfully on the local
+machine or on the server side.
+ 

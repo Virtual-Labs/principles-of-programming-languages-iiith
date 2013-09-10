@@ -1,7 +1,7 @@
 <?php
 
 // ldaphost
-$ldap_host = "10.2.48.10";
+$ldap_host = "10.2.52.10";
 $ldap_port = 389;
 
 //Start session
@@ -9,7 +9,7 @@ $ldap_port = 389;
 
 // using ldap bind 
 $ldap_admin_dn  = 'cn=admin,dc=virtual-labs,dc=ac,dc=in';     // ldap rdn or dn 
-$ldap_admin_pass = 'Sha8Aev=';  // associated password 
+$ldap_admin_pass = 'Sha8Aev=';  //old password = "Sha8Aev=" associated password 
 $ldap_base_user_dn = 'ou=People,dc=virtual-labs,dc=ac,dc=in';
 
 function check_user_account($username, $password) {
@@ -45,7 +45,7 @@ function create_user_account($username, $password, $confirm_password) {
   exec("/usr/sbin/ldapsetpasswd " . escapeshellarg($username) . " $password_hash");
 
   //logging into the 12 server to create the home directory
-  $conn = ssh2_connect('10.2.48.12', 22);
+  $conn = ssh2_connect('10.2.52.12', 22);
   ssh2_auth_password($conn, $username, $password);
   ssh2_exec($conn, 'su -u ls -la');
 
