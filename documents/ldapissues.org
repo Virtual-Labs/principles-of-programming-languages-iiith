@@ -6,6 +6,9 @@ In the file /usr/share/ldapscripts/runtime, the line USER=$(logname
 2>/dev/null) should be changed to USER=`id -nu`. It shows the current
 user of the script.
 
+This is the link to the forum where the error is documented:
+https://bitbucket.org/autonomy/blackbox-12.04/issue/1/latest-version-of-ldapscripts-prevents
+
 * Error: Could not resolve vlusers to gid
 
 The files in /etc/ldapscripts/ have to edited. 
