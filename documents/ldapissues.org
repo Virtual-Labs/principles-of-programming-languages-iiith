@@ -1,0 +1,27 @@
+#+TITLE: LDAP Errors and Solutions
+
+* Error: Could not guess User
+
+In the file /usr/share/ldapscripts/runtime, the line USER=$(logname
+2>/dev/null) should be changed to USER=`id -nu`. It shows the current
+user of the script.
+
+* Error: Could not resolve vlusers to gid
+
+The files in /etc/ldapscripts/ have to edited. 
+
+- ldapscripts.conf : The server, suffix, gsuffix, usuffix, binddn
+  should all be changed properly.
+- ldapscripts.passwd : The correct password should be given. Instead
+  of editing the file directly, use the following command: 
+echo -n "password" > /etc/ldapscripts/ldapscripts.passwd
+
+Also, the ldapscripts.passwd should be readable only by the owner and
+the group and the group owner of the file should be www-data.
+-rw-r----- 1 root www-data 9 Sep 11 11:17 ldapscripts.passwd
+
+* Error: ldapscripts.log is not writebale
+
+The file /var/log/ldapscripts.log should have group ownership of
+www-data and should have write permissions as well.
+-rw-rw-r-- 1 root www-data 2012 Sep 11 11:37 /var/log/ldapscripts.log
