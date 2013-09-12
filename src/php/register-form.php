@@ -9,6 +9,12 @@ if (isset($_REQUEST['Submit'])) {
   } catch (Exception $exception) {
     $register_message = $exception->getMessage();
   }
+
+ if($register_message == "Registration")
+        echo "Congratulations! You have successfully registered.";
+  else
+        echo "Oops! Some error occurred. <br/>" . $register_message;
+
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
