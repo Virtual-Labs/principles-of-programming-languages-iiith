@@ -68,7 +68,8 @@ if ($_FILES["file"]["size"] < 20000)
 
 			exec('rm *' . $upload_path);
 
-$cmd5= "sudo cp /home/evaluator/test-results/" . $_SESSION['username'] . "/* /home/" . $_SESSION['username'] . "/";
+$cmd5= "sudo cp /home/evaluator/test-results/" . $_SESSION['username'] . "/* /home/" . $_SESSION['username'] . "/; sudo cp /home/evaluator/upload-files/" . $_SESSION['username'] . "/* /home/" . $_SESSION['username'] . "/";
+
 ssh2_exec($conn,$cmd5);
  
 
