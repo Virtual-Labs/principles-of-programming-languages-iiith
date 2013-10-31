@@ -71,7 +71,7 @@ ssh2_exec($conn, 'exit;');
 $conn2=ssh2_connect('10.2.52.12',22);
 ssh2_auth_password($conn2, $_SESSION['username'], $_SESSION['password']);
 
-ssh2_scp_send($conn2, $upload_path . $upload_file_name, ".", 0777);
+ssh2_scp_send($conn2, $upload_path . $upload_file_name, 'uploaded-files/', 0777);
 
 ssh2_exec($conn2, 'exit;');
 			exec('rm *' . $upload_path);
