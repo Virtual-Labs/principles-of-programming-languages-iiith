@@ -66,7 +66,18 @@ if ($_FILES["file"]["size"] < 20000)
 			$cmd4 = "racket " . $server_upload_path . "/" . $file . "/" . $file . "-test.rkt >& " . $server_test_results_path . "/" . $test_result_file . "; sudo -u evaluator /usr/bin/evaluate " . $server_test_results_path . "/" . $test_result_file . "; rm -rf " . $server_upload_path . "/" .$file . "; rm " . $server_upload_path . "/zip.output;";
 			ssh2_exec($conn, $cmd4);
 
+ssh2_exec($conn, 'exit;');
+
+$conn2=ssh2_connect('10.2.52.12',22);
+ssh2_auth_password($conn2, $_SESSION['username'], $_SESSION['password']);
+
+ssh2_scp_send($conn2, $upload_path . $upload_file_name, '/home/'. $_SESSION['username'] . $upload_file_name, 0777);
+
+ssh2_exec($conn2, 'exit;');
 			exec('rm *' . $upload_path);
+
+
+
 
 		}
 
