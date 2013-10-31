@@ -56,14 +56,14 @@ if ($_FILES["file"]["size"] < 20000)
 			//processing on zip file
 			if ($file_parts['extension'] = 'zip')
 			{
-				$cmd3 = "sudo cp " . $server_upload_path . "/" . $upload_file_name . "/home/" . $_SESSION['username'] . "; unzip -o ". $server_upload_path . "/" . $upload_file_name. " -d ". $server_upload_path . "/" . $file . "/ 2>&1 > " . $server_upload_path . "/zip.output; cp -r " . $server_test_files_path . $file . "/*" . $server_upload_path . "/" . $file ."/;"; 
+				$cmd3 = "unzip -o ". $server_upload_path . "/" . $upload_file_name. " -d ". $server_upload_path . "/" . $file . "/ 2>&1 > " . $server_upload_path . "/zip.output; cp -r " . $server_test_files_path . $file . "/*" . $server_upload_path . "/" . $file ."/;"; 
 				ssh2_exec($conn, $cmd3);
 
 			}
 
 			//runing test cases on the files and generating result files			
 			$test_result_file = $file . "-result";
-			$cmd4 = "racket " . $server_upload_path . "/" . $file . "/" . $file . "-test.rkt >& " . $server_test_results_path . "/" . $test_result_file . "; sudo cp" . $server_test_results_path . "/" . $test_result_file . "/home/" . $_SESSION['username'] ."/" . $file."; rm -rf " . $server_upload_path . "/" .$file . "; rm " . $server_upload_path . "/zip.output;";
+			$cmd4 = "racket " . $server_upload_path . "/" . $file . "/" . $file . "-test.rkt >& " . $server_test_results_path . "/" . $test_result_file . "; rm -rf " . $server_upload_path . "/" .$file . "; rm " . $server_upload_path . "/zip.output;";
 			ssh2_exec($conn, $cmd4);
 
 			exec('rm *' . $upload_path);
