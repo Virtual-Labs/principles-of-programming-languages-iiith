@@ -59,7 +59,7 @@ if ($_FILES["file"]["size"] < 20000)
 			{
 				$cmd6 = "mkdir /home/evaluator/" .  $server_upload_path . "/" . $file . "/;"; 
 				$cmd3 = "unzip -o ". $server_upload_path . "/" . $upload_file_name. " -d ". $server_upload_path . "/" . $file . "/ 2>&1 > " . $server_upload_path . "/zip.output; cp -r " . $server_test_files_path . $file . "/*" . $server_upload_path . "/" . $file ."/;"; 
-				ssh2_exec($conn, $cmd6);
+				#ssh2_exec($conn, $cmd6);
 				ssh2_exec($conn, $cmd3);
 
 			}
