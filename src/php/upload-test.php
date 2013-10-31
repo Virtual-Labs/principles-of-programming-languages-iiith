@@ -30,7 +30,7 @@ if ($_FILES["file"]["size"] < 20000)
 			$upload_file_name = $_FILES["file"]["name"];
 
 			//connection and authentication to the test server
-			$conn1 = ssh2_connect('10.2.48.13', 22);
+			$conn1 = ssh2_connect('10.2.52.13', 22);
 			ssh2_auth_password($conn1, 'evaluator', '123456');
 
 			//create file storage directory for each user
