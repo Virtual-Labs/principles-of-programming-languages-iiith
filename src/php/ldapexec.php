@@ -1,7 +1,7 @@
 <?php
 
 // ldaphost
-$ldap_host = "10.2.52.10";
+$ldap_host = "10.4.14.151";
 $ldap_port = 389;
 
 //Start session
@@ -45,7 +45,7 @@ function create_user_account($username, $password, $confirm_password) {
   exec("/usr/sbin/ldapsetpasswd " . escapeshellarg($username) . " $password_hash");
 
   //logging into the 12 server to create the home directory
-  $conn = ssh2_connect('10.2.52.12', 22);
+  $conn = ssh2_connect('10.4.14.150', 22);
   ssh2_auth_password($conn, $username, $password);
   ssh2_exec($conn, 'su -u ls -la');
 

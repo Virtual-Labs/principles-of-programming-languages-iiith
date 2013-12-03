@@ -3,7 +3,7 @@
 require_once('auth.php');
 
 //connection and authentication to the test server
-$conn = ssh2_connect('10.2.52.13', 22);
+$conn = ssh2_connect('10.4.14.147', 22);
 ssh2_auth_password($conn, 'evaluator', '123456');
 
 //upload errors
