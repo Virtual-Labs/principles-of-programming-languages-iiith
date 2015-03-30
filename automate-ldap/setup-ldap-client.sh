@@ -26,6 +26,10 @@ rm /etc/ldapscripts/ldapscripts.conf.bak
 mv /etc/ldapscripts/ldapscripts.conf /etc/ldapscripts/ldapscripts.conf.bak
 sed -e "s/\#BINDPWDFILE\=\"\/etc\/ldapscripts\/ldapscripts\.passwd\"/BINDPWDFILE\=\"\/etc\/ldapscripts\/ldapscripts\.passwd\"/" /etc/ldapscripts/ldapscripts.conf.bak > /etc/ldapscripts/ldapscripts.conf
 rm /etc/ldapscripts/ldapscripts.conf.bak
+#MODIFY bind password entry
+mv /etc/ldapscripts/ldapscripts.conf /etc/ldapscripts/ldapscripts.conf.bak
+sed -e "s/\#BINDPWD\=\"secret\"/BINDPWD\=\"password\"/" /etc/ldapscripts/ldapscripts.conf.bak > /etc/ldapscripts/ldapscripts.conf
+rm /etc/ldapscripts/ldapscripts.conf.bak
 #CHANGE the password mentioned in /etc/ldapscripts/ldapscripts.passwd file to your ldap-server password
 echo -n "password" > /etc/ldapscripts/ldapscripts.passwd
 #MODIFY /etc/nsswitch.conf file
